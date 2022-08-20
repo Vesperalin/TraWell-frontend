@@ -15,7 +15,42 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "~/api/*": [
+        "./api/*"
+      ],
+      "~/assets/*": [
+        "./assets/*"
+      ],
+      "~/components/*": [
+        "./components/*"
+      ],
+      "~/context/*": [
+        "./context/*"
+      ],
+      "~/enums/*": [
+        "./enums/*"
+      ],
+      "~/features/*": [
+        "./features/*"
+      ],
+      "~/hooks/*": [
+        "./hooks/*"
+      ],
+      "~/models/*": [
+        "./models/*"
+      ],
+      "~/pages/*": [
+        "./pages/*"
+      ],
+      "~/themes/*": [
+        "./themes/*"
+      ],
+      "~/utils/*": [
+        "./utils/*"
+      ],
+    },
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
