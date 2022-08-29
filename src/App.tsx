@@ -1,5 +1,7 @@
+import { Recurrence } from '~/components/Recurrence';
+
 const App = () => {
-  return <div>App</div>;
+  return <Recurrence />;
 };
 
 export { App };
