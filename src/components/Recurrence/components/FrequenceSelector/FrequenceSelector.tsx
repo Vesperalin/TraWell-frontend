@@ -2,11 +2,11 @@ import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Dropdown } from './components/Dropdown';
 import { FrequenceInput } from './components/FrequenceInput';
-import { frequencyTypes } from './utils/FrequenciesLabels';
+import { frequencyTypes } from './utils/frequencyTypes';
 import { FrequencyType } from '~/enums/FrequencyType';
 
 const FrequenceSelector = () => {
-  // do contextu wysłane będzie
+  // will be send to context
   const [frequencyType, setFrequencyType] = useState<string>(FrequencyType.Monthly);
   const [occurrences, setOccurrences] = useState<number>(1);
   const [selectedWeekDays, setSelectedWeekDays] = useState<Array<string>>([]);

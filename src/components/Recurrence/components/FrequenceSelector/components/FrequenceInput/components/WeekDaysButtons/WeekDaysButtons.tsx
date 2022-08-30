@@ -1,6 +1,6 @@
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { weekDays } from '../../../../utils/FrequenciesLabels';
+import { weekDays } from '../../../../utils/weekDays';
 
 interface Props {
   value: Array<string>;

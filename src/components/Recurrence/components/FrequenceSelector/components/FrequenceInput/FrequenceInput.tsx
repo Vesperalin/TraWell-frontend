@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import InputNumber from 'antd/lib/input-number';
-import { FrequencyType } from '~/enums/FrequencyType';
-import { getOccurrenceLabel } from '../../utils/FrequenciesLabels';
+import { getOccurrenceLabel } from '../../utils/occurrenceLabel';
 import { WeekDaysButtons } from './components/WeekDaysButtons';
+import { FrequencyType } from '~/enums/FrequencyType';
 
 interface Props {
   occurrences: number;
