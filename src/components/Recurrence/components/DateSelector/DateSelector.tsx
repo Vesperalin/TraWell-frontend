@@ -1,16 +1,16 @@
 import TextField from '@mui/material/TextField';
+import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
 import { Dayjs } from 'dayjs';
 
-interface DateSelectorProps {
+interface Props {
   date: Dayjs | null;
   setDate: (date: Dayjs | null) => void;
   label: string;
 }
 
-const DateSelector = ({ date, setDate, label }: DateSelectorProps) => {
+const DateSelector = ({ date, setDate, label }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker

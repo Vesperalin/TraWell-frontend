@@ -1,17 +1,17 @@
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { weekDays } from '../../utils/FrequenciesLabels';
+import { weekDays } from '../../../../utils/FrequenciesLabels';
 
-interface WeekDaysButtonsProps {
+interface Props {
   value: Array<string>;
-  onChange: (event: React.MouseEvent<HTMLElement>, value: string[]) => void;
+  onChange: (value: string[]) => void;
 }
 
-const WeekDaysButtons = ({ value, onChange }: WeekDaysButtonsProps) => {
+const WeekDaysButtons = ({ value, onChange }: Props) => {
   return (
     <ToggleButtonGroup
       value={value}
-      onChange={onChange}
+      onChange={(_event, newValue) => onChange(newValue)}
       aria-label='week-days-occurrences'
     >
       {weekDays.map((day) => (

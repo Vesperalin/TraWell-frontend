@@ -1,16 +1,17 @@
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { DropdownOption } from '../../models/DropdownOption';
 
-interface DropdownProps {
+interface Props {
   options: Array<DropdownOption>;
   label: string;
   value: string;
   onChange: (value: string) => void;
 }
 
-const Dropdown = ({ options, label, onChange, value }: DropdownProps) => {
+const Dropdown = ({ options, label, onChange, value }: Props) => {
   return (
     <FormControl
       sx={{ m: 1, minWidth: 120 }}

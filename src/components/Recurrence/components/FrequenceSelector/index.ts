@@ -1,1 +1,1 @@
-export {FrequenceSelector} from './FrequenceSelector';
+export { FrequenceSelector } from './FrequenceSelector';

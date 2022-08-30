@@ -1,16 +1,15 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { FrequencyType } from '~/enums/RecurrenceType';
-import { Dropdown } from './components/Dropdown/Dropdown';
-import { InputNumber } from 'antd';
-import { frequencyTypes, getOccurrenceLabel } from './utils/FrequenciesLabels';
-import { WeekDaysButtons } from './components/WeekDaysButtons';
+import { Dropdown } from './components/Dropdown';
+import { FrequenceInput } from './components/FrequenceInput';
+import { frequencyTypes } from './utils/FrequenciesLabels';
+import { FrequencyType } from '~/enums/FrequencyType';
 
 const FrequenceSelector = () => {
   // do contextu wysłane będzie
   const [frequencyType, setFrequencyType] = useState<string>(FrequencyType.Monthly);
   const [occurrences, setOccurrences] = useState<number>(1);
-  const [selectedWeekDays, setSelectedWeekDays] = useState<Array<string>>(() => []);
+  const [selectedWeekDays, setSelectedWeekDays] = useState<Array<string>>([]);
 
   useEffect(() => {
     if (frequencyType !== FrequencyType.Weekly) {
@@ -22,31 +21,9 @@ const FrequenceSelector = () => {
     setOccurrences(value);
   };
 
-  const handleWeekDays = (event: React.MouseEvent<HTMLElement>, newWeekDays: string[]) => {
+  const handleWeekDays = (newWeekDays: string[]) => {
     setSelectedWeekDays(newWeekDays);
   };
-
-  const renderFrequencyComponents = () => (
-    <>
-      <Grid item>
-        <InputNumber
-          size='large'
-          min={1}
-          onChange={onChange}
-          defaultValue={occurrences}
-          addonAfter={<Typography>{getOccurrenceLabel(frequencyType)}</Typography>}
-        />
-      </Grid>
-      {frequencyType === FrequencyType.Weekly && (
-        <Grid item>
-          <WeekDaysButtons
-            value={selectedWeekDays}
-            onChange={handleWeekDays}
-          />
-        </Grid>
-      )}
-    </>
-  );
 
   return (
     <Grid
@@ -63,10 +40,15 @@ const FrequenceSelector = () => {
           }}
         />
       </Grid>
-      <Grid
-        item
-        children={renderFrequencyComponents()}
-      ></Grid>
+      <Grid item>
+        <FrequenceInput
+          occurrences={occurrences}
+          frequencyType={frequencyType}
+          onChange={onChange}
+          selectedWeekDays={selectedWeekDays}
+          handleWeekDays={handleWeekDays}
+        />
+      </Grid>
     </Grid>
   );
 };

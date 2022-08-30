@@ -1,16 +1,10 @@
-import { useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
-import { makeStyles } from '@mui/styles';
 import { Grid } from '@mui/material';
-import { FrequenceSelector } from './components/FrequenceSelector';
+import dayjs, { Dayjs } from 'dayjs';
+import { useState } from 'react';
 import { DateSelector } from './components/DateSelector';
+import { FrequenceSelector } from './components/FrequenceSelector';
 import { TimeSelector } from './components/TimeSelector';
-
-const useStyles = makeStyles((theme?: any) => ({
-  reccurence: {
-    padding: '20px',
-  },
-}));
+import { useStyles } from './Recurrence.style';
 
 const Recurrence = () => {
   const classes = useStyles();

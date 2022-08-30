@@ -1,1 +1,1 @@
-export {TimeSelector} from './TimeSelector';
+export { TimeSelector } from './TimeSelector';
