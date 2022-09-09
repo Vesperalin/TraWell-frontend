@@ -26,6 +26,8 @@ module.exports = {
   root: true,
   ignorePatterns: ['build'],
   rules: {
+    'prettier/prettier': 2,
+    'max-len': ['error', { code: 100 }],
     'react/react-in-jsx-scope': 'off',
     'eol-last': [2, 'always'],
     quotes: ['error', 'single'],
