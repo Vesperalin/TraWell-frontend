@@ -18,8 +18,17 @@ const theme = createTheme({
 
 theme.typography.caption = {
   fontSize: '10px',
+  fontWeight: '400',
   [theme.breakpoints.up('md')]: {
     fontSize: '14px',
+  },
+};
+
+theme.typography.subtitle2 = {
+  fontSize: '16px',
+  fontWeight: '500',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '18px',
   },
 };
 
