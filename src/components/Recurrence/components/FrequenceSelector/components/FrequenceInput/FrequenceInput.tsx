@@ -1,6 +1,6 @@
+import { InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import InputNumber from 'antd/lib/input-number';
+import TextField from '@mui/material/TextField';
 import { getOccurrenceLabel } from '../../utils/occurrenceLabel';
 import { WeekDaysButtons } from './components/WeekDaysButtons';
 import { FrequencyType } from '~/enums/FrequencyType';
@@ -23,12 +23,22 @@ const FrequenceInput = ({
   return (
     <>
       <Grid item>
-        <InputNumber
-          size='large'
-          min={1}
-          onChange={onChange}
-          defaultValue={occurrences}
-          addonAfter={<Typography>{getOccurrenceLabel(frequencyType)}</Typography>}
+        <TextField
+          type='number'
+          sx={{
+            '& legend': { display: 'none' },
+            '& fieldset': { top: 0 },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>{getOccurrenceLabel(frequencyType)}</InputAdornment>
+            ),
+            value: occurrences,
+            onChange: (event) => {
+              onChange(Number(event.target.value));
+            },
+            inputProps: { min: 0, step: 1 },
+          }}
         />
       </Grid>
       {frequencyType === FrequencyType.Weekly && (
