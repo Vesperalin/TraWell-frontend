@@ -6,7 +6,6 @@ import { Paths } from '~/enums/Paths';
 import { Wrapper, Container, Content, StyledCircularProgress } from './App.style';
 
 const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: module.Home })));
-const Test = lazy(() => import('./pages/Test/Test'));
 
 const App = () => {
   return (
@@ -19,10 +18,6 @@ const App = () => {
               <Route
                 path={Paths.Home}
                 element={<Home />}
-              />
-              <Route
-                path='xd'
-                element={<Test />}
               />
             </Routes>
           </Suspense>
