@@ -7,6 +7,7 @@ export const StyledBox = styled(Box)({
   flexGrow: '1',
   height: '80px',
   display: 'flex',
+  justifyContent: 'flex-end',
 });
 
 export const StyledLink = styled(Link)({
