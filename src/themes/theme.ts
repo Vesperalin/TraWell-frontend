@@ -25,10 +25,10 @@ theme.typography.caption = {
 };
 
 theme.typography.subtitle2 = {
-  fontSize: '16px',
+  fontSize: '15px',
   fontWeight: '500',
   [theme.breakpoints.up('md')]: {
-    fontSize: '18px',
+    fontSize: '17px',
   },
 };
 
