@@ -19,9 +19,7 @@ export const StyledLink = styled(Link)({
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.blue,
-  padding: '10px',
-  paddingTop: '15px',
-  paddingBottom: '15px',
+  padding: '15px 20px',
   borderRadius: '10px',
   '&:hover': {
     backgroundColor: theme.palette.common.dimmedWhite,
