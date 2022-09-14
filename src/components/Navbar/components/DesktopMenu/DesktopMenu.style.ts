@@ -21,11 +21,14 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.blue,
   padding: '15px 20px',
   borderRadius: '10px',
-  fontSize: '14px !important',
   '&:hover': {
     backgroundColor: theme.palette.common.dimmedWhite,
   },
   '&:active': {
     backgroundColor: '#F3F5F7',
+  },
+
+  [theme.breakpoints.down(980)]: {
+    fontSize: '14px',
   },
 }));
