@@ -21,7 +21,7 @@ export const Container = styled('div')({
   alignItems: 'center',
 });
 
-export const Content = styled('div')({
+export const Content = styled('div')(({ theme }) => ({
   padding: 0,
   margin: 0,
   maxWidth: '1200px',
@@ -31,7 +31,12 @@ export const Content = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-});
+
+  [theme.breakpoints.up('sm')]: {
+    paddingLeft: '24px',
+    paddingRight: '24px',
+  },
+}));
 
 export const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
   color: theme.palette.common.blue,
