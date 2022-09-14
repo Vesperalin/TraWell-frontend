@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const StyledBox = styled(Box)({
   flexGrow: '1',
-  height: '80px',
+  height: '75px',
   display: 'flex',
   justifyContent: 'flex-end',
 });
@@ -21,6 +21,7 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.blue,
   padding: '15px 20px',
   borderRadius: '10px',
+  fontSize: '14px !important',
   '&:hover': {
     backgroundColor: theme.palette.common.dimmedWhite,
   },
