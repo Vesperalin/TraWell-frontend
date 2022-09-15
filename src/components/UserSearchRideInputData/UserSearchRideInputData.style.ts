@@ -37,11 +37,13 @@ export const StyledArrow = styled('img')(({ theme }) => ({
 
 export const Place = styled(Typography)({
   lineHeight: '26px',
+  marginRight: '7px',
+  overflowWrap: 'anywhere',
 });
 
 export const ExactPlace = styled(Typography)({
   lineHeight: '24px',
-  marginLeft: '7px',
+  overflowWrap: 'anywhere',
 });
 
 export const Date = styled(Typography)(({ theme }) => ({
