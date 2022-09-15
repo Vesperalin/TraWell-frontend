@@ -17,18 +17,18 @@ const theme = createTheme({
 });
 
 theme.typography.h4 = {
-  fontSize: '15px',
+  fontSize: '16px',
   fontWeight: '700',
   [theme.breakpoints.up('md')]: {
-    fontSize: '18px',
+    fontSize: '17px',
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: '20px',
+    fontSize: '19px',
   },
 };
 
 theme.typography.h5 = {
-  fontSize: '12px',
+  fontSize: '14px',
   fontWeight: '300',
   [theme.breakpoints.up('md')]: {
     fontSize: '15px',
@@ -39,7 +39,7 @@ theme.typography.h5 = {
 };
 
 theme.typography.caption = {
-  fontSize: '10px',
+  fontSize: '13px',
   fontWeight: '400',
   [theme.breakpoints.up('md')]: {
     fontSize: '14px',
@@ -53,10 +53,10 @@ theme.typography.subtitle2 = {
   fontSize: '15px',
   fontWeight: '500',
   [theme.breakpoints.up('md')]: {
-    fontSize: '17px',
+    fontSize: '16px',
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: '19px',
+    fontSize: '18px',
   },
 };
 

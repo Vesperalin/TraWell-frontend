@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Dayjs } from 'dayjs';
 import arrow from '~/assets/images/arrow.webp';
+import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
 import {
   StyledBox,
   StyledArrow,
@@ -21,8 +22,6 @@ interface Props {
   exactPlaceTo: string;
   date: Dayjs;
 }
-
-const transformToDoubleDigit = (value: number): string => (value < 9 ? `0${value}` : `${value}`);
 
 export const UserSearchRideInputData = ({
   placeFrom,

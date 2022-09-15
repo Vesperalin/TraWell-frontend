@@ -7,7 +7,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   width: '100%',
   boxShadow: '0px 3px 3px 2px rgba(0, 0, 0, 0.15)',
   borderRadius: '10px',
-  padding: '20px 70px',
+  padding: '15px 70px',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -37,11 +37,13 @@ export const StyledArrow = styled('img')(({ theme }) => ({
 
 export const Place = styled(Typography)({
   lineHeight: '26px',
+  marginRight: '7px',
+  overflowWrap: 'anywhere',
 });
 
 export const ExactPlace = styled(Typography)({
   lineHeight: '24px',
-  marginLeft: '7px',
+  overflowWrap: 'anywhere',
 });
 
 export const Date = styled(Typography)(({ theme }) => ({

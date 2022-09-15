@@ -1,14 +1,16 @@
 import dayjs from 'dayjs';
-import { UserSearchRideInputData } from '~/components/UserSearchRideInputData';
+import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 
 export const Home = () => {
   return (
-    <UserSearchRideInputData
-      placeFrom='Kołaczkówqqqqqqqqqqq'
-      exactPlaceFrom='ul. Mazurska'
-      placeTo='Baleszkowo'
-      exactPlaceTo='koło restauracji "Egipt"'
-      date={dayjs()}
+    <TimeLocationOfRide
+      startDate={dayjs()}
+      isCar={true}
+      placeFrom='Piotrków Trybunalski'
+      exactPlaceFrom='Więzienie'
+      lengthInMinutes={232}
+      placeTo='Radom'
+      exactPlaceTo='Sąd'
     />
   );
 };
