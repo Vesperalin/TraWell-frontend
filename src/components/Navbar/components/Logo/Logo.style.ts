@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 export const StyledLogo = styled('img')(({ theme }) => ({
   display: 'inline-block',
-  height: '36px',
-  width: '121px',
+  height: '45px',
+  width: '150px',
 
   [theme.breakpoints.up('md')]: {
     height: '68px',
@@ -13,7 +13,7 @@ export const StyledLogo = styled('img')(({ theme }) => ({
 }));
 
 export const StyledLink = styled(Link)(({ theme }) => ({
-  height: '36px',
+  height: '45',
 
   [theme.breakpoints.up('md')]: {
     height: '68px',
