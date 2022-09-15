@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export const StyledBox = styled(Box)({
   flexGrow: '1',
-  height: '80px',
+  height: '75px',
   display: 'flex',
   justifyContent: 'flex-end',
 });
@@ -26,5 +26,9 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   },
   '&:active': {
     backgroundColor: '#F3F5F7',
+  },
+
+  [theme.breakpoints.down(980)]: {
+    fontSize: '14px',
   },
 }));
