@@ -1,16 +1,11 @@
-import dayjs from 'dayjs';
-import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
+import { AdditionalRideInfo } from '../RideSearchResults/components/AdditionalRideInfo';
 
 export const Home = () => {
   return (
-    <TimeLocationOfRide
-      startDate={dayjs()}
-      isCar={true}
-      placeFrom='Piotrków Trybunalski'
-      exactPlaceFrom='Więzienie'
-      lengthInMinutes={232}
-      placeTo='Radom'
-      exactPlaceTo='Sąd'
+    <AdditionalRideInfo
+      seats={4}
+      takenSeats={2}
+      cost={56}
     />
   );
 };
