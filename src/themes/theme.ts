@@ -16,11 +16,36 @@ const theme = createTheme({
   },
 });
 
+theme.typography.h4 = {
+  fontSize: '15px',
+  fontWeight: '700',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '18px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '20px',
+  },
+};
+
+theme.typography.h5 = {
+  fontSize: '12px',
+  fontWeight: '300',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '15px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '17px',
+  },
+};
+
 theme.typography.caption = {
   fontSize: '10px',
   fontWeight: '400',
   [theme.breakpoints.up('md')]: {
     fontSize: '14px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '16px',
   },
 };
 
@@ -29,6 +54,9 @@ theme.typography.subtitle2 = {
   fontWeight: '500',
   [theme.breakpoints.up('md')]: {
     fontSize: '17px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '19px',
   },
 };
 
