@@ -18,10 +18,10 @@ interface Props {
   startDate: Dayjs;
   isCar: boolean;
   placeFrom: string;
-  exactPlaceFrom: string;
+  exactPlaceFrom?: string;
   lengthInMinutes: number;
   placeTo: string;
-  exactPlaceTo: string;
+  exactPlaceTo?: string;
 }
 
 export const TimeLocationOfRide = ({
@@ -53,7 +53,7 @@ export const TimeLocationOfRide = ({
       <Wrapper>
         <Time variant='h4'>{`${transformedStartHour}:${transformedStartMinutes}`}</Time>
         <Place variant='h4'>{placeFrom}</Place>
-        <ExactPlace variant='h5'>{exactPlaceFrom}</ExactPlace>
+        {exactPlaceFrom && <ExactPlace variant='h5'>{exactPlaceFrom}</ExactPlace>}
       </Wrapper>
       <Wrapper>
         <TimeLength variant='caption'>
@@ -67,7 +67,7 @@ export const TimeLocationOfRide = ({
       <Wrapper>
         <Time variant='h4'>{`${finishHour}:${finishMinute}`}</Time>
         <Place variant='h4'>{placeTo}</Place>
-        <ExactPlace variant='h5'>{exactPlaceTo}</ExactPlace>
+        {exactPlaceTo && <ExactPlace variant='h5'>{exactPlaceTo}</ExactPlace>}
       </Wrapper>
     </>
   );
