@@ -45,7 +45,7 @@ export const TimeLocationOfRide = ({
   );
 
   return (
-    <>
+    <div>
       <Wrapper>
         <Date variant='h4'>{`${transformedDay}.${transformedMonth}.${startDate.year()}`}</Date>
         {isCar ? <DirectionsCarFilledTwoToneIcon /> : <DirectionsBusFilledTwoToneIcon />}
@@ -69,6 +69,6 @@ export const TimeLocationOfRide = ({
         <Place variant='h4'>{placeTo}</Place>
         {exactPlaceTo && <ExactPlace variant='h5'>{exactPlaceTo}</ExactPlace>}
       </Wrapper>
-    </>
+    </div>
   );
 };

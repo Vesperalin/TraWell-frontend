@@ -21,6 +21,7 @@ export const User = ({
     <Wrapper
       isAvatarFirstDesktop={isAvatarFirstDesktop}
       isAvatarFirstMobile={isAvatarFirstMobile}
+      onClick={() => console.log('tu bedzie przeniesienie do strony o uytkowniku')}
     >
       <AvatarWrapper>
         <Avatar
