@@ -32,6 +32,10 @@ export const AvatarWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });
 
 export const ReviewWrapper = styled(Box)({

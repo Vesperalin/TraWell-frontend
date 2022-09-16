@@ -6,7 +6,7 @@ export const Wrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  margin: '4px 0',
+  margin: '6px 0',
   flexWrap: 'wrap',
 });
 

@@ -17,7 +17,7 @@ export const AdditionalRideInfo = ({ seats, takenSeats, cost }: Props) => {
       </Text>
       <Text variant='h4'>
         Cost:&nbsp;
-        <span>{cost}zł</span>
+        <span>{cost.toFixed(2)}zł</span>
       </Text>
     </Wrapper>
   );
