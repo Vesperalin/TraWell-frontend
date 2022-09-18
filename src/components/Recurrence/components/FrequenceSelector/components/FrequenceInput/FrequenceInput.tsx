@@ -1,4 +1,4 @@
-import { InputAdornment } from '@mui/material';
+import { InputAdornment, InputLabel } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { getOccurrenceLabel } from '../../utils/occurrenceLabel';
@@ -23,6 +23,7 @@ const FrequenceInput = ({
   return (
     <>
       <Grid item>
+        <InputLabel>Frequence</InputLabel>
         <TextField
           type='number'
           sx={{
@@ -37,7 +38,7 @@ const FrequenceInput = ({
             onChange: (event) => {
               onChange(Number(event.target.value));
             },
-            inputProps: { min: 0, step: 1 },
+            inputProps: { min: 1, step: 1 },
           }}
         />
       </Grid>

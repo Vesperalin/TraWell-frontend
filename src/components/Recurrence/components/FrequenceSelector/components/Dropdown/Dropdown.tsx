@@ -1,7 +1,7 @@
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import { InputLabel, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { ChangeEvent } from 'react';
 import { DropdownOption } from '../../models/DropdownOption';
 
 interface Props {
@@ -13,15 +13,23 @@ interface Props {
 
 const Dropdown = ({ options, label, onChange, value }: Props) => {
   return (
-    <FormControl
-      sx={{ m: 1, minWidth: 120 }}
-      size='small'
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
     >
       <InputLabel>{label}</InputLabel>
-      <Select
+      <TextField
+        select
+        sx={{
+          '& legend': { display: 'none' },
+          '& fieldset': { top: 0 },
+        }}
         value={value}
-        label={label}
-        onChange={(event: SelectChangeEvent) => {
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
           onChange(event.target.value);
         }}
       >
@@ -33,8 +41,8 @@ const Dropdown = ({ options, label, onChange, value }: Props) => {
             {option.value}
           </MenuItem>
         ))}
-      </Select>
-    </FormControl>
+      </TextField>
+    </Box>
   );
 };
 
