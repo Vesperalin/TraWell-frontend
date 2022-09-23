@@ -24,11 +24,11 @@ export const CommentWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const UpperWrapper = styled(Box)(({ theme }) => ({
+export const UpperWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-}));
+});
 
 export const LowerWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -108,11 +108,11 @@ export const SmallGrayStar = styled(StarIcon)(({ theme }) => ({
   },
 }));
 
-export const AsWhoTypography = styled(Typography)(({ theme }) => ({
+export const AsWhoTypography = styled(Typography)({
   span: {
     fontWeight: '500',
   },
-}));
+});
 
 export const Description = styled(Typography)(({ theme }) => ({
   textAlign: 'justify',
@@ -122,15 +122,15 @@ export const Description = styled(Typography)(({ theme }) => ({
   },
 }));
 
-export const Rating = styled(Box)(({ theme }) => ({
+export const Rating = styled(Box)({
   display: 'flex',
   alignItems: 'center',
-}));
+});
 
-export const RatingTypography = styled(Typography)(({ theme }) => ({
+export const RatingTypography = styled(Typography)({
   fontWeight: '500',
   marginRight: '5px',
-}));
+});
 
 export const Date = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
