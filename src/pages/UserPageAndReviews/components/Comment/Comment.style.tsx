@@ -43,7 +43,7 @@ export const LowerWrapper = styled(Box)(({ theme }) => ({
 
 export const MediumTrashIcon = styled(DeleteForeverIcon)(({ theme }) => ({
   transition: 'all .2s ease-in-out',
-  opacity: '0.6',
+  opacity: '0.3',
   color: theme.palette.common.darkNavy,
 
   '&:hover': {
@@ -58,7 +58,7 @@ export const MediumTrashIcon = styled(DeleteForeverIcon)(({ theme }) => ({
 
 export const SmallTrashIcon = styled(DeleteForeverIcon)(({ theme }) => ({
   transition: 'all .2s ease-in-out',
-  opacity: '0.6',
+  opacity: '0.3',
   color: theme.palette.common.darkNavy,
   display: 'none',
 

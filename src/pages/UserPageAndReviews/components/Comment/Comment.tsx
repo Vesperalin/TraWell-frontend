@@ -54,28 +54,16 @@ export const Comment = ({ isOwnComment, asWho, description, givenStars, date }: 
         <Rating>
           <RatingTypography variant='h5'>Rating: </RatingTypography>
           {[...new Array(givenStars).keys()].map((rating) => (
-            <>
-              <MediumGoldenStar
-                key={rating}
-                fontSize='medium'
-              />
-              <SmallGoldenStar
-                key={rating}
-                fontSize='small'
-              />
-            </>
+            <div key={rating}>
+              <MediumGoldenStar fontSize='medium' />
+              <SmallGoldenStar fontSize='small' />
+            </div>
           ))}
           {[...new Array(5 - givenStars).keys()].map((rating) => (
-            <>
-              <MediumGrayStar
-                key={rating}
-                fontSize='medium'
-              />
-              <SmallGrayStar
-                key={rating}
-                fontSize='small'
-              />
-            </>
+            <div key={rating}>
+              <MediumGrayStar fontSize='medium' />
+              <SmallGrayStar fontSize='small' />
+            </div>
           ))}
         </Rating>
         <Date variant='caption'>
