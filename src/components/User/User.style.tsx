@@ -41,9 +41,22 @@ export const AvatarWrapper = styled(Box)({
 export const ReviewWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
 });
 
-export const Icon = styled(StarIcon)(({ theme }) => ({
+export const MediumIcon = styled(StarIcon)(({ theme }) => ({
   color: theme.palette.common.orange,
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+export const SmallIcon = styled(StarIcon)(({ theme }) => ({
+  color: theme.palette.common.orange,
+  display: 'none',
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'block',
+  },
 }));

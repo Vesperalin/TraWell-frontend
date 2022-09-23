@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import { Wrapper, Avatar, ReviewWrapper, Icon, AvatarWrapper } from './User.style';
+import { Wrapper, Avatar, ReviewWrapper, MediumIcon, SmallIcon, AvatarWrapper } from './User.style';
 
 export interface Props {
-  isAvatarFirstDesktop: boolean;
-  isAvatarFirstMobile: boolean;
+  isAvatarFirstDesktop?: boolean;
+  isAvatarFirstMobile?: boolean;
   name: string;
   imageSource: string;
   reviewMean: number;
@@ -33,7 +33,8 @@ export const User = ({
         <Typography variant='h5'>{name}</Typography>
         <ReviewWrapper>
           <Typography variant='h4'>{reviewMean}</Typography>
-          <Icon />
+          <MediumIcon fontSize='medium' />
+          <SmallIcon fontSize='small' />
         </ReviewWrapper>
       </Box>
     </Wrapper>
