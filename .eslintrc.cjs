@@ -32,7 +32,7 @@ module.exports = {
     'eol-last': [2, 'always'],
     quotes: ['error', 'single'],
     'no-used-vars': 'off',
-    indent: ['error', 2],
+    indent: ['error', 2, { ignoredNodes: ['VariableDeclaration[declarations.length=0]'] }],
     '@typescript-eslint/no-used-vars': ['off'],
     semi: ['error', 'always'],
     camelcase: 'error',

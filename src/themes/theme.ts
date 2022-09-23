@@ -38,14 +38,22 @@ theme.typography.h5 = {
   },
 };
 
+theme.typography.h6 = {
+  fontSize: '14px',
+  fontWeight: '400',
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '15px',
+  },
+};
+
 theme.typography.caption = {
-  fontSize: '13px',
+  fontSize: '12px',
   fontWeight: '400',
   [theme.breakpoints.up('md')]: {
-    fontSize: '14px',
+    fontSize: '13px',
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: '16px',
+    fontSize: '14px',
   },
 };
 
