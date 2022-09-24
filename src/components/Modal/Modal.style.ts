@@ -51,16 +51,34 @@ export const StyledHeader = styled(Typography)({
   marginBottom: '10px',
 });
 
-export const PrimaryButton = styled(Button)(({ theme }) => ({
+export const MediumPrimaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.dimmedWhite,
   color: theme.palette.common.darkNavy,
 
   '&:hover': {
     backgroundColor: '#D4D6D8',
   },
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
-export const SecondaryButton = styled(Button)(({ theme }) => ({
+export const SmallPrimaryButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.dimmedWhite,
+  color: theme.palette.common.darkNavy,
+  display: 'none',
+
+  '&:hover': {
+    backgroundColor: '#D4D6D8',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'block',
+  },
+}));
+
+export const MediumSecondaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.darkNavy,
   color: theme.palette.common.dimmedWhite,
   borderColor: theme.palette.common.dimmedWhite,
@@ -68,5 +86,25 @@ export const SecondaryButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     borderColor: '#C3C5C7',
     color: '#C3C5C7',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+export const SmallSecondaryButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.darkNavy,
+  color: theme.palette.common.dimmedWhite,
+  borderColor: theme.palette.common.dimmedWhite,
+  display: 'none',
+
+  '&:hover': {
+    borderColor: '#C3C5C7',
+    color: '#C3C5C7',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    display: 'block',
   },
 }));

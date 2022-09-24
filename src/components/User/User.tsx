@@ -31,7 +31,10 @@ export const User = ({
       </AvatarWrapper>
       <Box>
         <Typography variant='h5'>{name}</Typography>
-        <ReviewWrapper>
+        <ReviewWrapper
+          isAvatarFirstDesktop={isAvatarFirstDesktop}
+          isAvatarFirstMobile={isAvatarFirstMobile}
+        >
           <Typography variant='h4'>{reviewMean}</Typography>
           <MediumIcon fontSize='medium' />
           <SmallIcon fontSize='small' />
