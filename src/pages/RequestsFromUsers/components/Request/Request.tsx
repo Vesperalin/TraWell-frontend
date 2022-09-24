@@ -1,5 +1,5 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import dayjs from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { User } from '~/components/User';
 import { Paths } from '~/enums/Paths';
@@ -15,22 +15,48 @@ import {
   ButtonsWrapper,
 } from './Request.style';
 
-export const Request = () => {
+interface Props {
+  startDate: Dayjs;
+  isCar: boolean;
+  placeFrom: string;
+  exactPlaceFrom?: string;
+  lengthInMinutes: number;
+  placeTo: string;
+  exactPlaceTo?: string;
+  detailsPath: Paths;
+  userName: string;
+  imageSource: string;
+  reviewMean: number;
+}
+
+export const Request = ({
+  startDate,
+  isCar,
+  placeFrom,
+  exactPlaceFrom,
+  lengthInMinutes,
+  placeTo,
+  exactPlaceTo,
+  detailsPath,
+  userName,
+  imageSource,
+  reviewMean,
+}: Props) => {
   return (
     <Wrapper>
       <FirstInnerWrapper>
         <TimeLocationOfRide
-          startDate={dayjs()}
-          isCar={false}
-          placeFrom='Wadowice'
-          exactPlaceFrom='pomnik JP2'
-          lengthInMinutes={40}
-          placeTo='Radomsko'
-          exactPlaceTo='dom sołtysa'
+          startDate={startDate}
+          isCar={isCar}
+          placeFrom={placeFrom}
+          exactPlaceFrom={exactPlaceFrom}
+          lengthInMinutes={lengthInMinutes}
+          placeTo={placeTo}
+          exactPlaceTo={exactPlaceTo}
         />
         <StyledLink
           style={{ textDecoration: 'none' }}
-          to={Paths.Home}
+          to={detailsPath}
         >
           details
           <ArrowForwardIcon fontSize='small' />
@@ -39,9 +65,9 @@ export const Request = () => {
       <SecondInnerWrapper>
         <User
           isAvatarFirstDesktop={false}
-          name='Krzysztof'
-          imageSource='https://minimaltoolkit.com/images/randomdata/male/3.jpg'
-          reviewMean={4.3}
+          name={userName}
+          imageSource={imageSource}
+          reviewMean={reviewMean}
         />
         <ButtonsWrapper>
           <MediumSecondaryButton size='medium'>reject</MediumSecondaryButton>
