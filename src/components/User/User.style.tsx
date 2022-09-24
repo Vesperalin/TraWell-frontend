@@ -17,6 +17,18 @@ export const Wrapper = styled(Box, {
   },
 }));
 
+export const ReviewWrapper = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isAvatarFirstDesktop' && prop !== 'isAvatarFirstMobile',
+})<StyleProps>(({ theme, isAvatarFirstDesktop, isAvatarFirstMobile }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: isAvatarFirstDesktop ? 'flex-start' : 'flex-end',
+
+  [theme.breakpoints.down('md')]: {
+    justifyContent: isAvatarFirstMobile ? 'flex-start' : 'flex-end',
+  },
+}));
+
 export const Avatar = styled('img')(({ theme }) => ({
   height: '50px',
   width: '50px',
@@ -36,12 +48,6 @@ export const AvatarWrapper = styled(Box)({
   '&:hover': {
     cursor: 'pointer',
   },
-});
-
-export const ReviewWrapper = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
 });
 
 export const MediumIcon = styled(StarIcon)(({ theme }) => ({
