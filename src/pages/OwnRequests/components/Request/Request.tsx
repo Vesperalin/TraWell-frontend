@@ -1,5 +1,4 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Typography from '@mui/material/Typography';
 import { Dayjs } from 'dayjs';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { User } from '~/components/User';
