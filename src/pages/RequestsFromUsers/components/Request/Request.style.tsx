@@ -23,11 +23,11 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const FirstInnerWrapper = styled(Box)(({ theme }) => ({
+export const FirstInnerWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
-}));
+});
 
 export const SecondInnerWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -42,10 +42,10 @@ export const SecondInnerWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const ButtonsWrapper = styled(Box)(({ theme }) => ({
+export const ButtonsWrapper = styled(Box)({
   display: 'flex',
   gap: '10px',
-}));
+});
 
 export const StyledLink = styled(Link)(({ theme }) => ({
   textTransform: 'uppercase',
