@@ -64,6 +64,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 export const MediumPrimaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.blue,
   color: theme.palette.common.dimmedWhite,
+  width: '80px',
 
   '&:hover': {
     backgroundColor: '#36A4EE',
@@ -78,6 +79,7 @@ export const SmallPrimaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.blue,
   color: theme.palette.common.dimmedWhite,
   display: 'none',
+  width: '80px',
 
   '&:hover': {
     backgroundColor: '#36A4EE',
@@ -94,6 +96,7 @@ export const MediumSecondaryButton = styled(Button)(({ theme }) => ({
   borderColor: theme.palette.common.blue,
   borderWidth: '1px',
   borderStyle: 'solid',
+  width: '80px',
 
   '&:hover, &:active': {
     backgroundColor: '#e4f1f9',
@@ -111,6 +114,7 @@ export const SmallSecondaryButton = styled(Button)(({ theme }) => ({
   borderWidth: '1px',
   borderStyle: 'solid',
   display: 'none',
+  width: '80px',
 
   '&:hover, &:active': {
     backgroundColor: '#e4f1f9',

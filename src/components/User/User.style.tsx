@@ -12,7 +12,7 @@ export const Wrapper = styled(Box, {
   flexDirection: isAvatarFirstDesktop ? 'row' : 'row-reverse',
   gap: '7px',
 
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     flexDirection: isAvatarFirstMobile ? 'row' : 'row-reverse',
   },
 }));
@@ -24,7 +24,7 @@ export const ReviewWrapper = styled(Box, {
   alignItems: 'center',
   justifyContent: isAvatarFirstDesktop ? 'flex-start' : 'flex-end',
 
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     justifyContent: isAvatarFirstMobile ? 'flex-start' : 'flex-end',
   },
 }));
