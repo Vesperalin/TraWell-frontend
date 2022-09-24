@@ -12,7 +12,7 @@ import {
   Time,
   TimeLength,
   StyledArrow,
-} from './TimeLocationOfRide.stye';
+} from './TimeLocationOfRide.style';
 
 interface Props {
   startDate: Dayjs;
