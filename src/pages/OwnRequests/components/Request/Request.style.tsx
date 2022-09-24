@@ -40,19 +40,19 @@ export const SecondInnerWrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'space-between',
   height: '205px',
-  width: '100%',
 
   [theme.breakpoints.down('sm')]: {
     marginTop: '10px',
     height: 'auto',
     gap: '10px',
+    width: '100%',
   },
 }));
 
 export const StatusWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'requestStatus',
 })<StyleProps>(({ theme, requestStatus }) => ({
-  paddingTop: '20px',
+  paddingTop: '40px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',
