@@ -23,7 +23,6 @@ export interface Props {
   lengthInMinutes: number;
   placeTo: string;
   exactPlaceTo?: string;
-  detailsPath: Paths;
   userName: string;
   imageSource: string;
   reviewMean: number;
@@ -38,7 +37,6 @@ export const Request = ({
   lengthInMinutes,
   placeTo,
   exactPlaceTo,
-  detailsPath,
   userName,
   imageSource,
   reviewMean,
@@ -62,7 +60,7 @@ export const Request = ({
         />
         <StyledLink
           style={{ textDecoration: 'none' }}
-          to={detailsPath}
+          to={Paths.Home}
         >
           details
           <ArrowForwardIcon fontSize='small' />
