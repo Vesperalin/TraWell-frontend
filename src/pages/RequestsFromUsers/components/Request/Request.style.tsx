@@ -95,9 +95,8 @@ export const MediumSecondaryButton = styled(Button)(({ theme }) => ({
   borderWidth: '1px',
   borderStyle: 'solid',
 
-  '&:hover': {
-    borderColor: '#C3C5C7',
-    color: '#C3C5C7',
+  '&:hover, &:active': {
+    backgroundColor: '#e4f1f9',
   },
 
   [theme.breakpoints.down('sm')]: {
@@ -113,9 +112,8 @@ export const SmallSecondaryButton = styled(Button)(({ theme }) => ({
   borderStyle: 'solid',
   display: 'none',
 
-  '&:hover': {
-    borderColor: '#C3C5C7',
-    color: '#C3C5C7',
+  '&:hover, &:active': {
+    backgroundColor: '#e4f1f9',
   },
 
   [theme.breakpoints.down('sm')]: {

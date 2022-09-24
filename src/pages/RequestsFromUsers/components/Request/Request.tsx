@@ -42,6 +42,14 @@ export const Request = ({
   imageSource,
   reviewMean,
 }: Props) => {
+  const onAccept = () => {
+    console.log('onAccept');
+  };
+
+  const onReject = () => {
+    console.log('onReject');
+  };
+
   return (
     <Wrapper>
       <FirstInnerWrapper>
@@ -70,10 +78,30 @@ export const Request = ({
           reviewMean={reviewMean}
         />
         <ButtonsWrapper>
-          <MediumSecondaryButton size='medium'>reject</MediumSecondaryButton>
-          <SmallSecondaryButton size='small'>reject</SmallSecondaryButton>
-          <MediumPrimaryButton size='medium'>accept</MediumPrimaryButton>
-          <SmallPrimaryButton size='small'>accept</SmallPrimaryButton>
+          <MediumSecondaryButton
+            size='medium'
+            onClick={onReject}
+          >
+            reject
+          </MediumSecondaryButton>
+          <SmallSecondaryButton
+            size='small'
+            onClick={onReject}
+          >
+            reject
+          </SmallSecondaryButton>
+          <MediumPrimaryButton
+            size='medium'
+            onClick={onAccept}
+          >
+            accept
+          </MediumPrimaryButton>
+          <SmallPrimaryButton
+            size='small'
+            onClick={onAccept}
+          >
+            accept
+          </SmallPrimaryButton>
         </ButtonsWrapper>
       </SecondInnerWrapper>
     </Wrapper>
