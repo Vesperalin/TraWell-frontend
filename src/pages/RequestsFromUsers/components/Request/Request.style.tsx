@@ -79,7 +79,7 @@ export const SmallPrimaryButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.common.blue,
   color: theme.palette.common.dimmedWhite,
   display: 'none',
-  width: '80px',
+  width: '70px',
 
   '&:hover': {
     backgroundColor: '#36A4EE',
@@ -114,7 +114,7 @@ export const SmallSecondaryButton = styled(Button)(({ theme }) => ({
   borderWidth: '1px',
   borderStyle: 'solid',
   display: 'none',
-  width: '80px',
+  width: '70px',
 
   '&:hover, &:active': {
     backgroundColor: '#e4f1f9',
