@@ -5,8 +5,10 @@ import {
   StyledModal,
   StyledHeader,
   ButtonsStyledBox,
-  PrimaryButton,
-  SecondaryButton,
+  MediumPrimaryButton,
+  SmallPrimaryButton,
+  MediumSecondaryButton,
+  SmallSecondaryButton,
 } from './Modal.style';
 
 interface Props {
@@ -44,41 +46,37 @@ const CustomModal = ({
           <Typography variant='h5'>{text}</Typography>
           <ButtonsStyledBox>
             {secondaryButtonText && secondaryButtonAction && (
-              <SecondaryButton
+              <MediumSecondaryButton
                 size='medium'
                 variant='outlined'
                 onClick={secondaryButtonAction}
-                sx={{ display: { xs: 'none', md: 'block' } }}
               >
                 {secondaryButtonText}
-              </SecondaryButton>
+              </MediumSecondaryButton>
             )}
             {secondaryButtonText && secondaryButtonAction && (
-              <SecondaryButton
+              <SmallSecondaryButton
                 size='small'
                 variant='outlined'
                 onClick={secondaryButtonAction}
-                sx={{ display: { xs: 'block', md: 'none' } }}
               >
                 {secondaryButtonText}
-              </SecondaryButton>
+              </SmallSecondaryButton>
             )}
-            <PrimaryButton
+            <MediumPrimaryButton
               size='medium'
               variant='contained'
               onClick={primaryButtonAction}
-              sx={{ display: { xs: 'none', md: 'block' } }}
             >
               {primaryButtonText}
-            </PrimaryButton>
-            <PrimaryButton
+            </MediumPrimaryButton>
+            <SmallPrimaryButton
               size='small'
               variant='contained'
               onClick={primaryButtonAction}
-              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {primaryButtonText}
-            </PrimaryButton>
+            </SmallPrimaryButton>
           </ButtonsStyledBox>
         </StyledBox>
       </StyledModal>
