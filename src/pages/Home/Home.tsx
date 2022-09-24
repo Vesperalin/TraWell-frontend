@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Paths } from '~/enums/Paths';
-import { Request } from '../RequestsFromUsers/components/Request';
+import { RequestStatus } from '~/enums/RequestStatus';
+import { Request } from '../OwnRequests/components/Request';
 
 export const Home = () => {
   return (
@@ -16,6 +17,7 @@ export const Home = () => {
       userName='Krzysztof'
       imageSource='https://minimaltoolkit.com/images/randomdata/male/3.jpg'
       reviewMean={4.3}
+      requestStatus={RequestStatus.Accepted}
     />
   );
 };
