@@ -6,11 +6,9 @@ import { DurationSelector } from './components/DurationSelector';
 import { FrequenceSelector } from './components/FrequenceSelector';
 import { Duration } from './components/FrequenceSelector/models/Duration';
 import { TimeSelector } from './components/TimeSelector';
-import { useStyles } from './Recurrence.style';
+import { ReccurenceGrid } from './Recurrence.style';
 
 const Recurrence = () => {
-  const classes = useStyles();
-
   // to wszystko + frequence powinno wylądować w Context (jutro ogarnę, bo muszę ściągnąć z projektu w pracy xd)
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
@@ -18,15 +16,15 @@ const Recurrence = () => {
   const [duration, setDuration] = useState<Duration>({ hours: 0, minutes: 0 });
 
   return (
-    <Grid
+    <ReccurenceGrid
       container
-      spacing={2}
+      spacing={6}
       direction='column'
-      className={classes.reccurence}
     >
       <Grid
         item
         container
+        spacing={2}
       >
         <Grid item>
           <DateSelector
@@ -49,6 +47,7 @@ const Recurrence = () => {
       <Grid
         item
         container
+        spacing={2}
       >
         <Grid item>
           <TimeSelector
@@ -64,7 +63,7 @@ const Recurrence = () => {
           />
         </Grid>
       </Grid>
-    </Grid>
+    </ReccurenceGrid>
   );
 };
 

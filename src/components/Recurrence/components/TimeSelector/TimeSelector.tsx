@@ -1,8 +1,8 @@
-import { InputLabel } from '@mui/material';
-import TextField from '@mui/material/TextField';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
+import { StyledTextField } from '../FrequenceSelector/components/FrequenceInput/FrequenceInput.style';
+import { StyledInputLabel } from './TimeSelector.style';
 
 interface Props {
   time: Dayjs | null;
@@ -13,13 +13,13 @@ interface Props {
 const TimeSelector = ({ time, setTime, label }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <InputLabel>{label}</InputLabel>
+      <StyledInputLabel>{label}</StyledInputLabel>
       <TimePicker
         value={time}
         onChange={(newValue) => {
           setTime(newValue);
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <StyledTextField {...params} />}
       />
     </LocalizationProvider>
   );

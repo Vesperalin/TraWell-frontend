@@ -21,34 +21,41 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
 
   return (
     <>
-      <InputLabel>Duration</InputLabel>
-      <Grid container>
-        <TextField
-          type='number'
-          sx={{
-            '& legend': { display: 'none' },
-            '& fieldset': { top: 0 },
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position='end'>h</InputAdornment>,
-            value: duration.hours,
-            onChange: (event: ChangeEvent<HTMLInputElement>) => handleChangeHours(event),
-            inputProps: { min: 0, step: 1 },
-          }}
-        />
-        <TextField
-          type='number'
-          sx={{
-            '& legend': { display: 'none' },
-            '& fieldset': { top: 0 },
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position='end'>min</InputAdornment>,
-            value: duration.minutes,
-            onChange: (event: ChangeEvent<HTMLInputElement>) => handleChangeMinutes(event),
-            inputProps: { min: 0, max: 59, step: 1 },
-          }}
-        />
+      <InputLabel sx={{ color: 'white' }}>Duration</InputLabel>
+      <Grid
+        container
+        spacing={2}
+      >
+        <Grid item>
+          <TextField
+            type='number'
+            sx={{
+              '& legend': { display: 'none' },
+              '& fieldset': { top: 0 },
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>h</InputAdornment>,
+              value: duration.hours,
+              onChange: (event: ChangeEvent<HTMLInputElement>) => handleChangeHours(event),
+              inputProps: { min: 0, step: 1 },
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            type='number'
+            sx={{
+              '& legend': { display: 'none' },
+              '& fieldset': { top: 0 },
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>min</InputAdornment>,
+              value: duration.minutes,
+              onChange: (event: ChangeEvent<HTMLInputElement>) => handleChangeMinutes(event),
+              inputProps: { min: 0, max: 59, step: 1 },
+            }}
+          />
+        </Grid>
       </Grid>
     </>
   );

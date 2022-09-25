@@ -1,11 +1,6 @@
-import { Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Grid } from '@mui/material';
+import { styled } from '@mui/system';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStyles = makeStyles((_theme?: Theme) => ({
-  reccurence: {
-    padding: '20px',
-  },
-}));
-
-export { useStyles };
+export const ReccurenceGrid = styled(Grid)({
+  padding: '20px',
+});

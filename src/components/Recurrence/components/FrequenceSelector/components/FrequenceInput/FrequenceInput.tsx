@@ -1,8 +1,8 @@
-import { InputAdornment, InputLabel } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import { getOccurrenceLabel } from '../../utils/occurrenceLabel';
 import { WeekDaysButtons } from './components/WeekDaysButtons';
+import { StyledInputLabel, StyledTextField } from './FrequenceInput.style';
 import { FrequencyType } from '~/enums/FrequencyType';
 
 interface Props {
@@ -21,15 +21,16 @@ const FrequenceInput = ({
   handleWeekDays,
 }: Props) => {
   return (
-    <>
+    <Grid
+      container
+      item
+      spacing={2}
+      direction='column'
+    >
       <Grid item>
-        <InputLabel>Frequence</InputLabel>
-        <TextField
+        <StyledInputLabel>Frequence</StyledInputLabel>
+        <StyledTextField
           type='number'
-          sx={{
-            '& legend': { display: 'none' },
-            '& fieldset': { top: 0 },
-          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>{getOccurrenceLabel(frequencyType)}</InputAdornment>
@@ -50,7 +51,7 @@ const FrequenceInput = ({
           />
         </Grid>
       )}
-    </>
+    </Grid>
   );
 };
 

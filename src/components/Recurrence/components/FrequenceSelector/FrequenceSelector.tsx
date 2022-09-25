@@ -28,7 +28,8 @@ const FrequenceSelector = () => {
   return (
     <Grid
       container
-      direction={'column'}
+      direction='column'
+      spacing={2}
     >
       <Grid item>
         <Dropdown
