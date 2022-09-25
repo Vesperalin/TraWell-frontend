@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
-import { Paths } from '~/enums/Paths';
-import { RequestStatus } from '~/enums/RequestStatus';
-import { Request } from '../OwnRequests/components/Request';
+import { RideType } from '~/enums/RideType';
+import { Ride } from '../OwnRides/components/Ride';
 
 export const Home = () => {
   return (
-    <Request
+    <Ride
       startDate={dayjs()}
       isCar={false}
       placeFrom='Wadowice'
@@ -13,11 +12,7 @@ export const Home = () => {
       lengthInMinutes={40}
       placeTo='Radomsko'
       exactPlaceTo='dom sołtysa'
-      detailsPath={Paths.Home}
-      userName='Krzysztof'
-      imageSource='https://minimaltoolkit.com/images/randomdata/male/3.jpg'
-      reviewMean={4.3}
-      requestStatus={RequestStatus.Accepted}
+      rideType={RideType.Singular}
     />
   );
 };
