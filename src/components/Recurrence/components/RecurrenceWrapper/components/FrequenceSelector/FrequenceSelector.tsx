@@ -1,28 +1,31 @@
 import { Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+import RecurrenceContext from '../../../../context/RecurrenceContext';
 import { Dropdown } from './components/Dropdown';
 import { FrequenceInput } from './components/FrequenceInput';
 import { frequencyTypes } from './utils/frequencyTypes';
 import { FrequencyType } from '~/enums/FrequencyType';
 
 const FrequenceSelector = () => {
-  // will be send to context
-  const [frequencyType, setFrequencyType] = useState<string>(FrequencyType.Monthly);
-  const [occurrences, setOccurrences] = useState<number>(1);
-  const [selectedWeekDays, setSelectedWeekDays] = useState<Array<string>>([]);
+  const { recurrence, onFieldChange } = useContext(RecurrenceContext);
 
   useEffect(() => {
-    if (frequencyType !== FrequencyType.Weekly) {
-      setSelectedWeekDays([]);
+    if (recurrence.frequencyType !== FrequencyType.Weekly) {
+      onFieldChange('weekDays', []);
     }
-  }, [frequencyType]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recurrence.frequencyType]);
 
   const onChange = (value: number) => {
-    setOccurrences(value);
+    onFieldChange('ocurrences', value);
   };
 
   const handleWeekDays = (newWeekDays: string[]) => {
-    setSelectedWeekDays(newWeekDays);
+    onFieldChange('weekDays', newWeekDays);
+  };
+
+  const handleFrequencyType = (newFrequencyType: string) => {
+    onFieldChange('frequencyType', newFrequencyType);
   };
 
   return (
@@ -34,19 +37,17 @@ const FrequenceSelector = () => {
       <Grid item>
         <Dropdown
           label='Frequency Type'
-          value={frequencyType}
+          value={recurrence.frequencyType}
           options={frequencyTypes}
-          onChange={(newValue) => {
-            setFrequencyType(newValue);
-          }}
+          onChange={handleFrequencyType}
         />
       </Grid>
       <Grid item>
         <FrequenceInput
-          occurrences={occurrences}
-          frequencyType={frequencyType}
+          occurrences={recurrence.frequenceOcurrences}
+          frequencyType={recurrence.frequencyType}
           onChange={onChange}
-          selectedWeekDays={selectedWeekDays}
+          selectedWeekDays={recurrence.weekDays}
           handleWeekDays={handleWeekDays}
         />
       </Grid>

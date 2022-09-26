@@ -7,5 +7,5 @@ export const StyledTextField = styled(TextField)({
 });
 
 export const StyledInputLabel = styled(InputLabel)({
-  color: '#FFFFFF',
+  // color: '#FFFFFF',
 });

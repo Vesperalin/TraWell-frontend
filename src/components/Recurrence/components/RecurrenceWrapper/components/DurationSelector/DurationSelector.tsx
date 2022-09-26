@@ -1,7 +1,7 @@
-import { Grid, InputAdornment, InputLabel } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import { Grid, InputAdornment } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { Duration } from '../FrequenceSelector/models/Duration';
+import { StyledInputLabel, StyledTextField } from './DurationSelector.style';
 
 interface Props {
   duration: Duration;
@@ -21,18 +21,14 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
 
   return (
     <>
-      <InputLabel sx={{ color: 'white' }}>Duration</InputLabel>
+      <StyledInputLabel>Duration</StyledInputLabel>
       <Grid
         container
         spacing={2}
       >
         <Grid item>
-          <TextField
+          <StyledTextField
             type='number'
-            sx={{
-              '& legend': { display: 'none' },
-              '& fieldset': { top: 0 },
-            }}
             InputProps={{
               endAdornment: <InputAdornment position='end'>h</InputAdornment>,
               value: duration.hours,
@@ -42,12 +38,8 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
           />
         </Grid>
         <Grid item>
-          <TextField
+          <StyledTextField
             type='number'
-            sx={{
-              '& legend': { display: 'none' },
-              '& fieldset': { top: 0 },
-            }}
             InputProps={{
               endAdornment: <InputAdornment position='end'>min</InputAdornment>,
               value: duration.minutes,

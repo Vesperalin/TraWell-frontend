@@ -11,5 +11,5 @@ export const DropdownInput = styled(TextField)({
 });
 
 export const StyledInputLabel = styled(InputLabel)({
-  color: '#FFFFFF',
+  // color: '#FFFFFF',
 });
