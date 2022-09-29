@@ -1,0 +1,1 @@
+export { osmnamesCityAutocompleteClient } from './osmnamesCityAutocompleteClient';
