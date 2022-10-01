@@ -1,13 +1,13 @@
 import { useQuery } from 'react-query';
-import { osmnamesCityAutocompleteClient } from '~/api/clients';
-import { OsmnamesPlace } from '~/models/OsmnamesPlace';
+import { cityAutocompleteClient } from '~/api/clients';
+import { AutocompletePlace } from '~/models/AutocompletePlace';
 
 export default {
   useAutocompletePlaces: (phrase: string) => {
-    return useQuery<OsmnamesPlace[], Error>(
+    return useQuery<AutocompletePlace[], Error>(
       ['phrase', phrase],
       async () => {
-        const response = await osmnamesCityAutocompleteClient.get(`${phrase}.js`);
+        const response = await cityAutocompleteClient.get(`${phrase}.js`);
         return response.data.results;
       },
       {
