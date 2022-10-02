@@ -28,10 +28,10 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
     }
   }, [inputValue, refetch]);
 
-  const transformToText = (name: string, county: string, state: string, country: string) => {
-    return `${name + (name === '' ? '' : ', ')}${county + (county === '' ? '' : ', ')}${
-      state + (state === '' ? '' : ', ')
-    }${country}`;
+  const transformToText = (name: string, state: string, country: string, county?: string) => {
+    return `${name + (name === '' ? '' : ', ')}${
+      county ? county + (county === '' ? '' : ', ') : ''
+    }${state + (state === '' ? '' : ', ')}${country}`;
   };
 
   return (
@@ -40,7 +40,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
       getOptionLabel={(option) =>
         typeof option === 'string'
           ? option
-          : transformToText(option.name, option.county, option.state, option.country)
+          : transformToText(option.name, option.state, option.country)
       }
       size={isSmallScreen ? 'small' : 'medium'}
       options={options}
@@ -68,7 +68,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
       )}
       renderOption={(props, option) => {
         const { name, state, country, county, id } = option;
-        const place = transformToText(name, county, state, country);
+        const place = transformToText(name, state, country, county);
 
         return (
           <li
@@ -76,12 +76,16 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
             key={id}
           >
             <InputWrapper container>
-              <Grid item>
+              <Grid
+                item
+                fontSize={isSmallScreen ? 'small' : 'medium'}
+              >
                 <InnerBox component={LocationOnIcon} />
               </Grid>
               <Grid
                 item
                 xs
+                fontSize={isSmallScreen ? 'small' : 'medium'}
               >
                 {place}
               </Grid>
