@@ -17,6 +17,7 @@ export const DataPicker = ({ date, setDate }: Props) => {
   const theme = useTheme();
   const { datePicker } = useStyles(theme);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   const handleDateChange = (newDate: Dayjs | null) => {
     setDate(newDate);
   };
