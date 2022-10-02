@@ -1,4 +1,4 @@
-export interface OsmnamesPlace {
+export interface AutocompletePlace {
   wikipedia: string;
   rank: number;
   county: string;
