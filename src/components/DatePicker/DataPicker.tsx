@@ -35,6 +35,7 @@ export const DataPicker = ({ date, setDate }: Props) => {
               {...params}
               size='small'
               variant='outlined'
+              placeholder='Date'
             />
           )}
         />
@@ -48,6 +49,7 @@ export const DataPicker = ({ date, setDate }: Props) => {
             <TextField
               {...params}
               variant='outlined'
+              placeholder='Date'
             />
           )}
         />
