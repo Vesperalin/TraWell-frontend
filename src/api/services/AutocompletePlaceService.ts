@@ -21,6 +21,7 @@ export default {
       },
       {
         enabled: false,
+        refetchOnWindowFocus: false,
       },
     );
   },
