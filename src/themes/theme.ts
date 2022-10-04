@@ -16,6 +16,18 @@ const theme = createTheme({
   },
 });
 
+theme.typography.h2 = {
+  fontSize: '24px',
+  fontWeight: '500',
+  letterSpacing: '1px',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '26px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '28px',
+  },
+};
+
 theme.typography.h3 = {
   fontSize: '17px',
   fontWeight: '700',
