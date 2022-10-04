@@ -1,8 +1,12 @@
-import Osmnames from '~/api/services/Osmnames';
 import { Carousel } from './components/Carousel';
+import { SearchRideForm } from './components/SearchRideForm';
+import { Wrapper } from './Home.style';
 
 export const Home = () => {
-  const { data } = Osmnames.useAutocompletePlaces('lesz');
-  console.log(data && data.forEach((element) => console.log(element.display_name)));
-  return <Carousel />;
+  return (
+    <Wrapper>
+      <SearchRideForm />
+      <Carousel />
+    </Wrapper>
+  );
 };

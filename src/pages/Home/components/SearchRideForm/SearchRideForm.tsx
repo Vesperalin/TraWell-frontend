@@ -7,9 +7,7 @@ import { PrimaryButton } from '~/components/PrimaryButton';
 import { TimePicker } from '~/components/TimePicker';
 import { Sizes } from '~/enums/StyleSettings';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
-import { Wrapper, Title, RowWrapper, Error } from './SearchRideForm.style';
-
-// TODO: style home page
+import { Wrapper, Title, RowWrapper, Error, ButtonWrapper } from './SearchRideForm.style';
 
 export const SearchRideForm = () => {
   const [placeFrom, setPlaceFrom] = useState<AutocompletePlace | null>(null);
@@ -73,13 +71,15 @@ export const SearchRideForm = () => {
           setAmountOfPeople={setAmountOfPeople}
         />
       </RowWrapper>
-      <PrimaryButton
-        label='Find'
-        onClick={handleButtonClick}
-        desktopSize={Sizes.Large}
-        mobileSize={Sizes.Medium}
-      />
-      {error !== '' && <Error>{error}</Error>}
+      <ButtonWrapper>
+        <PrimaryButton
+          label='Find'
+          onClick={handleButtonClick}
+          desktopSize={Sizes.Large}
+          mobileSize={Sizes.Medium}
+        />
+      </ButtonWrapper>
+      {error !== '' && <Error variant='h5'>{error}</Error>}
     </Wrapper>
   );
 };

@@ -6,8 +6,9 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.darkNavy,
   borderRadius: '10px',
   width: '90%',
-  padding: '20px 50px',
+  padding: '25px 50px',
   marginBottom: '50px',
+  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
 
   [theme.breakpoints.down('md')]: {
     padding: '20px',
@@ -15,12 +16,13 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const Title = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.blue,
+  color: theme.palette.common.dimmedWhite,
 }));
 
 export const Error = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.lightRed,
   margin: '15px 0',
+  fontWeight: '500',
 }));
 
 export const RowWrapper = styled(Box)({
@@ -30,3 +32,11 @@ export const RowWrapper = styled(Box)({
   margin: '15px 0',
   flexWrap: 'wrap',
 });
+
+export const ButtonWrapper = styled(Box)(({ theme }) => ({
+  margin: '30px 0 15px 0',
+
+  [theme.breakpoints.down('md')]: {
+    margin: '20px 0 5px 0',
+  },
+}));
