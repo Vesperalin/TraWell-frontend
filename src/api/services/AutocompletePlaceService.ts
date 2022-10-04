@@ -28,6 +28,7 @@ export default {
       {
         enabled: false,
         refetchOnWindowFocus: false,
+        retry: 3,
       },
     );
   },
