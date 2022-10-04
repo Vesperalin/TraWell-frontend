@@ -6,6 +6,6 @@ export const StyledPrimaryButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.dimmedWhite,
 
   '&:hover': {
-    backgroundColor: '#0252CE',
+    backgroundColor: '#36A4EE',
   },
 }));
