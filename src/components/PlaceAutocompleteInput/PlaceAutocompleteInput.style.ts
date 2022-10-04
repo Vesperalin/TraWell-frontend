@@ -7,9 +7,14 @@ import { styled } from '@mui/system';
 
 const useStyles = makeStyles<Theme>((theme: Theme) => ({
   autocomplete: {
-    width: '425px',
+    width: '100%',
     borderRadius: '10px',
     backgroundColor: theme.palette.common.white,
+    flexGrow: '1',
+
+    [theme.breakpoints.down('md')]: {
+      flexGrow: '0',
+    },
   },
 }));
 

@@ -40,7 +40,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
       getOptionLabel={(option) =>
         typeof option === 'string'
           ? option
-          : transformToText(option.name, option.state, option.country)
+          : transformToText(option.name, option.state, option.country, option.county)
       }
       size={isSmallScreen ? 'small' : 'medium'}
       options={options}
