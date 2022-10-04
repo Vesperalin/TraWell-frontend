@@ -33,7 +33,7 @@ export const StyledImage = styled('img')(({ theme }) => ({
   objectFit: 'cover',
   height: '100%',
   width: '275px',
-  borderRadius: '20px 0 0 20px',
+  borderRadius: '10px 0 0 10px',
   boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)',
 
   [theme.breakpoints.down('md')]: {
@@ -53,7 +53,7 @@ export const StyledImage = styled('img')(({ theme }) => ({
 
 export const TextWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.dimmedWhite,
-  borderRadius: '0 20px 20px 0',
+  borderRadius: '0 10px 10px 0',
   boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)',
   textAlign: 'center',
   padding: '120px 70px 0 70px',
