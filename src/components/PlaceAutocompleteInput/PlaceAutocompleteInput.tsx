@@ -19,7 +19,8 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { autocomplete } = useStyles(theme);
   const [inputValue, setInputValue] = useState('');
-  const { data, refetch, isLoading } = AutocompletePlaceService.useAutocompletePlaces(inputValue);
+  const { data, refetch, isLoading, isError } =
+    AutocompletePlaceService.useAutocompletePlaces(inputValue);
   const options: readonly AutocompletePlace[] = data ? data : [];
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
       includeInputInList
       filterSelectedOptions
       loading={isLoading}
-      loadingText='Loading ...'
+      loadingText={isError ? 'No options' : 'Loading ...'}
       noOptionsText={inputValue.trim() === '' ? 'Type place name' : 'No options'}
       value={value}
       onChange={(_event: SyntheticEvent<Element, Event>, newValue: AutocompletePlace | null) => {
