@@ -16,7 +16,13 @@ export default {
       ['phrase', phrase],
       async () => {
         const response = await cityAutocompleteClient.get<Response>(`${phrase}.js`);
-        const data = response.data.results.filter((result) => result.type === 'city');
+        const data = response.data.results.filter(
+          (result) =>
+            result.type === 'city' ||
+            result.type === 'state_district' ||
+            result.type === 'village' ||
+            result.type === 'city_district',
+        );
         return data;
       },
       {
