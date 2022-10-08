@@ -10,6 +10,7 @@ const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
 const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
+const Test = lazy(() => import('~/pages/Test').then((module) => ({ default: module.Test })));
 
 const App = () => {
   return (
@@ -30,6 +31,10 @@ const App = () => {
               <Route
                 path={Paths.NotFound}
                 element={<NotFound />}
+              />
+              <Route
+                path='/test'
+                element={<Test />}
               />
             </Routes>
           </Suspense>
