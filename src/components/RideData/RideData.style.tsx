@@ -13,6 +13,7 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   padding: '20px 50px',
   gap: '20px',
   transition: 'all .2s ease-in-out',
+  alignSelf: 'start',
 
   '&:hover': {
     transform: 'scale(1.03)',
