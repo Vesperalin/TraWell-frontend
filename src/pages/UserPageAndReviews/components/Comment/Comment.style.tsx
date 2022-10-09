@@ -21,7 +21,6 @@ export const CommentWrapper = styled(Box)(({ theme }) => ({
   },
 
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
     gap: '5px',
   },
 }));

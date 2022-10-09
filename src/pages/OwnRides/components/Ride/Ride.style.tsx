@@ -14,10 +14,6 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   borderRadius: '15px',
   width: '100%',
 
-  [theme.breakpoints.down('md')]: {
-    width: '90%',
-  },
-
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     alignItems: 'flex-start',
