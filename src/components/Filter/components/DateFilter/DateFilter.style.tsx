@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles<Theme>((theme: Theme) => ({
   dateFilter: {
     borderRadius: '10px',
-    backgroundColor: theme.palette.common.dimmedWhite,
+    backgroundColor: theme.palette.common.white,
     color: theme.palette.common.darkNavy,
     width: '100%',
   },
