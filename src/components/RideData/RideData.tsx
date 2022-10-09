@@ -15,11 +15,12 @@ interface Props {
   seats: number;
   takenSeats: number;
   cost: number;
-  isAvatarFirstDesktop: boolean;
-  isAvatarFirstMobile: boolean;
+  isAvatarFirstDesktop?: boolean;
+  isAvatarFirstMobile?: boolean;
   name: string;
   imageSource: string;
   reviewMean: number;
+  isHistoryRide?: boolean;
 }
 
 export const RideData = ({
@@ -33,11 +34,12 @@ export const RideData = ({
   seats,
   takenSeats,
   cost,
-  isAvatarFirstDesktop,
-  isAvatarFirstMobile,
+  isAvatarFirstDesktop = false,
+  isAvatarFirstMobile = false,
   name,
   imageSource,
   reviewMean,
+  isHistoryRide = false,
 }: Props) => {
   return (
     <Wrapper onClick={() => console.log('to będzie przenosić do info o przejeździe')}>
@@ -56,13 +58,15 @@ export const RideData = ({
           takenSeats={takenSeats}
           cost={cost}
         />
-        <User
-          isAvatarFirstDesktop={isAvatarFirstDesktop}
-          isAvatarFirstMobile={isAvatarFirstMobile}
-          name={name}
-          imageSource={imageSource}
-          reviewMean={reviewMean}
-        />
+        {!isHistoryRide && (
+          <User
+            isAvatarFirstDesktop={isAvatarFirstDesktop}
+            isAvatarFirstMobile={isAvatarFirstMobile}
+            name={name}
+            imageSource={imageSource}
+            reviewMean={reviewMean}
+          />
+        )}
       </InnerWrapper>
     </Wrapper>
   );
