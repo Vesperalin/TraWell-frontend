@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import { RadioButtonsFilterType } from '../../models/FilterType';
-import { StyledFormLabel, StyledRadio } from './EnumFilter.style';
+import { StyledFormLabel, StyledRadio, StyledFormControlLabel } from './EnumFilter.style';
 
 interface Props {
   filter: RadioButtonsFilterType;
@@ -26,7 +26,7 @@ export const EnumFilter = ({ filter }: Props) => {
       >
         {options.map((option) => {
           return (
-            <FormControlLabel
+            <StyledFormControlLabel
               key={option.label}
               value={option.value}
               control={<StyledRadio size='small' />}
