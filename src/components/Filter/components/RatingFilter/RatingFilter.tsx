@@ -11,15 +11,17 @@ export const RatingFilter = ({ filter }: Props) => {
   const { value, setValue } = filter;
 
   return (
-    <FormControl>
-      <StyledFormLabel>Driver review:</StyledFormLabel>
-      <Rating
-        name='simple-controlled'
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      />
-    </FormControl>
+    <div>
+      <FormControl>
+        <StyledFormLabel>Driver review:</StyledFormLabel>
+        <Rating
+          name='simple-controlled'
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        />
+      </FormControl>
+    </div>
   );
 };
