@@ -1,11 +1,11 @@
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
-import { RadioButtonFilterType } from '../../models/FilterType';
+import { RadioButtonsFilterType } from '../../models/FilterType';
 import { StyledFormLabel, StyledRadio } from './EnumFilter.style';
 
 interface Props {
-  filter: RadioButtonFilterType;
+  filter: RadioButtonsFilterType;
 }
 
 export const EnumFilter = ({ filter }: Props) => {
