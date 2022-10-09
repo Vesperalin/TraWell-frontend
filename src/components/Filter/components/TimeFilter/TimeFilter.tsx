@@ -23,7 +23,7 @@ export const TimeFilter = ({ filter }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MUITimePicker
-        label='Time'
+        label='Start Time'
         className={timePicker}
         value={value}
         onChange={handleTimeChange}
@@ -31,7 +31,7 @@ export const TimeFilter = ({ filter }: Props) => {
           <TextField
             {...params}
             size='small'
-            placeholder='Time'
+            placeholder='Start Time'
           />
         )}
       />

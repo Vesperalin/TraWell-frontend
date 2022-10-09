@@ -27,7 +27,7 @@ export const DateFilter = ({ filter }: Props) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {isSmallScreen ? (
         <MobileDatePicker
-          label='Date'
+          label='Start Date'
           className={dateFilter}
           inputFormat='DD/MM/YYYY'
           value={value}
@@ -37,13 +37,13 @@ export const DateFilter = ({ filter }: Props) => {
               {...params}
               size='small'
               variant='outlined'
-              placeholder='Date'
+              placeholder='Start Date'
             />
           )}
         />
       ) : (
         <DesktopDatePicker
-          label='Date'
+          label='Start Date'
           inputFormat='DD/MM/YYYY'
           className={dateFilter}
           value={value}
@@ -53,7 +53,7 @@ export const DateFilter = ({ filter }: Props) => {
               {...params}
               size='small'
               variant='outlined'
-              placeholder='Date'
+              placeholder='Start Date'
             />
           )}
         />
