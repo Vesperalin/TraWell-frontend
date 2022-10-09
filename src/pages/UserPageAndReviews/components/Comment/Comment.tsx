@@ -41,8 +41,14 @@ export const Comment = ({ isOwnComment, asWho, description, givenStars, date }: 
         />
         {isOwnComment && (
           <>
-            <MediumTrashIcon fontSize='large' />
-            <SmallTrashIcon fontSize='medium' />
+            <MediumTrashIcon
+              fontSize='large'
+              onClick={() => console.log('usun')}
+            />
+            <SmallTrashIcon
+              fontSize='medium'
+              onClick={() => console.log('usun')}
+            />
           </>
         )}
       </UpperWrapper>

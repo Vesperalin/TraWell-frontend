@@ -8,12 +8,13 @@ export const CommentWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.dimmedWhite,
   color: theme.palette.common.darkNavy,
   boxShadow: '0px 3px 3px 2px rgba(0, 0, 0, 0.15)',
-  width: '670px',
   borderRadius: '20px',
   padding: '20px 30px',
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
+  maxWidth: '675px',
+  width: '100%',
 
   [theme.breakpoints.down('md')]: {
     width: '570px',
