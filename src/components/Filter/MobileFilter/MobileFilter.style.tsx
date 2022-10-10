@@ -24,19 +24,19 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const CloseWrapper = styled(Box)(({ theme }) => ({
+export const CloseWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
 
   '& svg:hover': {
     cursor: 'pointer',
   },
-}));
+});
 
-export const ButtonWrapper = styled(Box)(({ theme }) => ({
+export const ButtonWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
-}));
+});
 
 export const FilterWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.dimmedWhite,
