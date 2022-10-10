@@ -6,7 +6,6 @@ import { Wrapper, InnerWrapper } from './RideData.style';
 
 interface Props {
   startDate: Dayjs;
-  isCar: boolean;
   placeFrom: string;
   exactPlaceFrom: string;
   lengthInMinutes: number;
@@ -20,12 +19,11 @@ interface Props {
   name: string;
   imageSource: string;
   reviewMean: number;
-  isHistoryRide?: boolean;
+  isHistoryRideAsPassenger?: boolean;
 }
 
 export const RideData = ({
   startDate,
-  isCar,
   placeFrom,
   exactPlaceFrom,
   lengthInMinutes,
@@ -39,13 +37,12 @@ export const RideData = ({
   name,
   imageSource,
   reviewMean,
-  isHistoryRide = false,
+  isHistoryRideAsPassenger = false,
 }: Props) => {
   return (
     <Wrapper onClick={() => console.log('to będzie przenosić do info o przejeździe')}>
       <TimeLocationOfRide
         startDate={startDate}
-        isCar={isCar}
         placeFrom={placeFrom}
         exactPlaceFrom={exactPlaceFrom}
         lengthInMinutes={lengthInMinutes}
@@ -58,7 +55,7 @@ export const RideData = ({
           takenSeats={takenSeats}
           cost={cost}
         />
-        {!isHistoryRide && (
+        {!isHistoryRideAsPassenger && (
           <User
             isAvatarFirstDesktop={isAvatarFirstDesktop}
             isAvatarFirstMobile={isAvatarFirstMobile}

@@ -38,5 +38,6 @@ export const InnerWrapper = styled(Box)(({ theme }) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: '12px',
   },
 }));
