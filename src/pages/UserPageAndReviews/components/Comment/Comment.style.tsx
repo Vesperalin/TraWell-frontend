@@ -13,12 +13,7 @@ export const CommentWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
-  maxWidth: '675px',
   width: '100%',
-
-  [theme.breakpoints.down('md')]: {
-    width: '570px',
-  },
 
   [theme.breakpoints.down('sm')]: {
     gap: '5px',
