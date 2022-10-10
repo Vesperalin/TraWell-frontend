@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
-import { DataPicker } from '~/components/DatePicker';
+import { DatePicker } from '~/components/DatePicker';
 import { PlaceAutocompleteInput } from '~/components/PlaceAutocompleteInput';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { TimePicker } from '~/components/TimePicker';
@@ -58,7 +58,7 @@ export const SearchRideForm = () => {
         />
       </RowWrapper>
       <RowWrapper>
-        <DataPicker
+        <DatePicker
           date={date}
           setDate={setDate}
         />

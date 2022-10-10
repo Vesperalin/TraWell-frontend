@@ -12,9 +12,10 @@ interface Props {
   value: AutocompletePlace | null;
   setValue(value: AutocompletePlace | null): void;
   label: string;
+  isSmall?: boolean;
 }
 
-export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
+export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Props) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { autocomplete } = useStyles(theme);
@@ -43,7 +44,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
           ? option
           : transformToText(option.name, option.state, option.country, option.county)
       }
-      size={isSmallScreen ? 'small' : 'medium'}
+      size={isSmallScreen || isSmall ? 'small' : 'medium'}
       options={options}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       autoComplete
@@ -78,7 +79,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
           >
             <InputWrapper
               container
-              fontSize={isSmallScreen ? 'small' : 'medium'}
+              fontSize={isSmallScreen || isSmall ? 'small' : 'medium'}
             >
               <Grid
                 item
@@ -89,7 +90,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label }: Props) => {
               <Grid
                 item
                 xs
-                fontSize={isSmallScreen ? 'small' : 'medium'}
+                fontSize={isSmallScreen || isSmall ? 'small' : 'medium'}
               >
                 {place}
               </Grid>

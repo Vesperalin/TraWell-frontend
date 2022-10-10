@@ -5,13 +5,14 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  maxWidth: '675px',
+  width: '100%',
   backgroundColor: theme.palette.common.dimmedWhite,
   boxShadow: '0px 3px 3px 2px rgba(0, 0, 0, 0.15)',
   borderRadius: '20px',
   padding: '20px 50px',
   gap: '20px',
   transition: 'all .2s ease-in-out',
+  alignSelf: 'start',
 
   '&:hover': {
     transform: 'scale(1.03)',
@@ -37,5 +38,6 @@ export const InnerWrapper = styled(Box)(({ theme }) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: '12px',
   },
 }));

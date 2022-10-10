@@ -6,7 +6,6 @@ import { Wrapper, InnerWrapper } from './RideData.style';
 
 interface Props {
   startDate: Dayjs;
-  isCar: boolean;
   placeFrom: string;
   exactPlaceFrom: string;
   lengthInMinutes: number;
@@ -15,16 +14,16 @@ interface Props {
   seats: number;
   takenSeats: number;
   cost: number;
-  isAvatarFirstDesktop: boolean;
-  isAvatarFirstMobile: boolean;
+  isAvatarFirstDesktop?: boolean;
+  isAvatarFirstMobile?: boolean;
   name: string;
   imageSource: string;
   reviewMean: number;
+  isHistoryRideAsPassenger?: boolean;
 }
 
 export const RideData = ({
   startDate,
-  isCar,
   placeFrom,
   exactPlaceFrom,
   lengthInMinutes,
@@ -33,17 +32,17 @@ export const RideData = ({
   seats,
   takenSeats,
   cost,
-  isAvatarFirstDesktop,
-  isAvatarFirstMobile,
+  isAvatarFirstDesktop = false,
+  isAvatarFirstMobile = false,
   name,
   imageSource,
   reviewMean,
+  isHistoryRideAsPassenger = false,
 }: Props) => {
   return (
     <Wrapper onClick={() => console.log('to będzie przenosić do info o przejeździe')}>
       <TimeLocationOfRide
         startDate={startDate}
-        isCar={isCar}
         placeFrom={placeFrom}
         exactPlaceFrom={exactPlaceFrom}
         lengthInMinutes={lengthInMinutes}
@@ -56,13 +55,15 @@ export const RideData = ({
           takenSeats={takenSeats}
           cost={cost}
         />
-        <User
-          isAvatarFirstDesktop={isAvatarFirstDesktop}
-          isAvatarFirstMobile={isAvatarFirstMobile}
-          name={name}
-          imageSource={imageSource}
-          reviewMean={reviewMean}
-        />
+        {!isHistoryRideAsPassenger && (
+          <User
+            isAvatarFirstDesktop={isAvatarFirstDesktop}
+            isAvatarFirstMobile={isAvatarFirstMobile}
+            name={name}
+            imageSource={imageSource}
+            reviewMean={reviewMean}
+          />
+        )}
       </InnerWrapper>
     </Wrapper>
   );

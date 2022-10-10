@@ -6,14 +6,14 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { Dayjs } from 'dayjs';
-import { useStyles } from './DataPicker.style';
+import { useStyles } from './DatePicker.style';
 
 interface Props {
   date: Dayjs | null;
   setDate: (newDate: Dayjs | null) => void;
 }
 
-export const DataPicker = ({ date, setDate }: Props) => {
+export const DatePicker = ({ date, setDate }: Props) => {
   const theme = useTheme();
   const { datePicker } = useStyles(theme);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));

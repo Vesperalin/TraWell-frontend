@@ -9,14 +9,14 @@ interface Props {
 export const AdditionalRideInfo = ({ seats, takenSeats, cost }: Props) => {
   return (
     <Wrapper>
-      <Text variant='h4'>
+      <Text variant='h5'>
         Available seats:&nbsp;
         <span>
           {takenSeats}/{seats}
         </span>
       </Text>
-      <Text variant='h4'>
-        Cost:&nbsp;
+      <Text variant='h5'>
+        Price:&nbsp;
         <span>{cost.toFixed(2)}zł</span>
       </Text>
     </Wrapper>

@@ -10,7 +10,6 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     width: '100%',
     borderRadius: '10px',
     backgroundColor: theme.palette.common.white,
-    flexGrow: '1',
 
     [theme.breakpoints.down('md')]: {
       flexGrow: '0',
