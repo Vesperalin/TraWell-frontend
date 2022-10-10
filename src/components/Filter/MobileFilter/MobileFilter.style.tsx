@@ -16,8 +16,11 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
 export const StyledBox = styled(Box)(({ theme }) => ({
   '& > svg': {
     cursor: 'pointer',
-    color: theme.palette.common.navy,
+    color: 'gray',
+    opacity: 0.8,
   },
+  marginLeft: '10px',
+  borderRadius: '20px',
 
   [theme.breakpoints.up('md')]: {
     display: 'none',
