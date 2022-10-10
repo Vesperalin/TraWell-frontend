@@ -1,6 +1,7 @@
-import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
+import { PlaceAutocompleteInput } from '~/components/PlaceAutocompleteInput';
 import { InputFilterType } from '../../models/FilterType';
-import { StyledFormLabel, StyledTextField, StyledBox } from './InputFilter.style';
+import { StyledFormControl, StyledFormLabel } from './InputFilter.style';
 
 interface Props {
   filter: InputFilterType;
@@ -9,31 +10,23 @@ interface Props {
 export const InputFilter = ({ filter }: Props) => {
   const { from, setFrom, to, setTo } = filter;
 
-  const handleFromChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFrom(event.target.value);
-  };
-
-  const handleToChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTo(event.target.value);
-  };
-
   return (
-    <StyledBox>
-      <FormControl fullWidth>
+    <Box>
+      <StyledFormControl fullWidth>
         <StyledFormLabel>Places:</StyledFormLabel>
-        <StyledTextField
-          label='From'
+        <PlaceAutocompleteInput
           value={from}
-          onChange={handleFromChange}
-          size='small'
+          setValue={setFrom}
+          label='From'
+          isSmall={true}
         />
-        <StyledTextField
-          label='To'
+        <PlaceAutocompleteInput
           value={to}
-          onChange={handleToChange}
-          size='small'
+          setValue={setTo}
+          label='To'
+          isSmall={true}
         />
-      </FormControl>
-    </StyledBox>
+      </StyledFormControl>
+    </Box>
   );
 };

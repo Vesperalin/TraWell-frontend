@@ -1,4 +1,5 @@
 import { Dayjs } from 'dayjs';
+import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { TypeOfFilter } from '../enums/TypeOfFilter';
 
 export interface FilterType {
@@ -28,10 +29,10 @@ export interface RatingFilterType extends FilterType {
 }
 
 export interface InputFilterType extends FilterType {
-  from: string;
-  setFrom(value: string): void;
-  to: string;
-  setTo(value: string): void;
+  from: AutocompletePlace | null;
+  setFrom(value: AutocompletePlace | null): void;
+  to: AutocompletePlace | null;
+  setTo(value: AutocompletePlace | null): void;
 }
 
 export interface PriceFilterType extends FilterType {

@@ -9,6 +9,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '15px',
+  alignSelf: 'start',
 
   [theme.breakpoints.down('md')]: {
     display: 'none',
