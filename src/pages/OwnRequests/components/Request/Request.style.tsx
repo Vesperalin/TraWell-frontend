@@ -17,7 +17,6 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.dimmedWhite,
   boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)',
   borderRadius: '15px',
-  maxWidth: '675px',
   width: '100%',
 
   [theme.breakpoints.down('sm')]: {

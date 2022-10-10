@@ -5,7 +5,6 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  maxWidth: '675px',
   width: '100%',
   backgroundColor: theme.palette.common.dimmedWhite,
   boxShadow: '0px 3px 3px 2px rgba(0, 0, 0, 0.15)',
