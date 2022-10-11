@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Carousel } from './components/Carousel';
 import { Recurrence } from '~/components/Recurrence';
 import { FrequencyType } from '~/enums/FrequencyType';
-import { RecurrenceType } from '~/enums/RecurrenceType';
+import { RecurrenceType } from '~/models/RecurrenceType';
+import { Carousel } from './components/Carousel';
 
 export const Home = () => {
   const today = dayjs();
@@ -12,7 +12,7 @@ export const Home = () => {
     endDate: today,
     frequencyType: FrequencyType.Weekly,
     startTime: today,
-    frequenceOcurrences: 1,
+    frequenceOccurrences: 1,
     weekDays: [],
     duration: { hours: 1, minutes: 0 },
   };
@@ -23,6 +23,7 @@ export const Home = () => {
     console.log(updatedRecurrence);
     setRecurrence(updatedRecurrence);
   };
+
   return (
     <>
       <Recurrence
@@ -33,3 +34,14 @@ export const Home = () => {
     </>
   );
 };
+// import { SearchRideForm } from './components/SearchRideForm';
+// import { Wrapper } from './Home.style';
+
+// export const Home = () => {
+//   return (
+//     <Wrapper>
+//       <SearchRideForm />
+//       <Carousel />
+//     </Wrapper>
+//   );
+// };

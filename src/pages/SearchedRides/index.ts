@@ -1,0 +1,1 @@
+export { SearchedRides } from './SearchedRides';

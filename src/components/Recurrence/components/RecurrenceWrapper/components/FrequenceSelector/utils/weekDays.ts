@@ -1,5 +1,5 @@
-import { DropdownOption } from '../models/DropdownOption';
 import { WeekDays } from '~/enums/WeekDays';
+import { DropdownOption } from '../models/DropdownOption';
 
 export const weekDays: DropdownOption[] = [
   {

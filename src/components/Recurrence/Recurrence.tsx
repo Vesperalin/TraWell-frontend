@@ -1,6 +1,6 @@
+import { RecurrenceProvider } from '~/context/RecurrenceProvider';
+import { RecurrenceType } from '~/models/RecurrenceType';
 import { RecurrenceWrapper } from './components/RecurrenceWrapper';
-import RecurrenceProvider from './context/RecurrenceProvider';
-import { RecurrenceType } from '~/enums/RecurrenceType';
 
 interface Props {
   recurrence: RecurrenceType;

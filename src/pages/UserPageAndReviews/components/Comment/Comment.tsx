@@ -20,6 +20,9 @@ import {
 } from './Comment.style';
 
 interface Props {
+  userName: string;
+  imageSource: string;
+  reviewMean: number;
   isOwnComment: boolean;
   asWho: UserFunctionType;
   description: string;
@@ -27,7 +30,16 @@ interface Props {
   date: Dayjs;
 }
 
-export const Comment = ({ isOwnComment, asWho, description, givenStars, date }: Props) => {
+export const Comment = ({
+  userName,
+  imageSource,
+  reviewMean,
+  isOwnComment,
+  asWho,
+  description,
+  givenStars,
+  date,
+}: Props) => {
   const year = date.year();
   const monthName = transformMonthNumberToName(date.month());
 
@@ -35,14 +47,20 @@ export const Comment = ({ isOwnComment, asWho, description, givenStars, date }: 
     <CommentWrapper>
       <UpperWrapper>
         <User
-          name='Zygmunt'
-          imageSource='https://minimaltoolkit.com/images/randomdata/male/3.jpg'
-          reviewMean={4.7}
+          name={userName}
+          imageSource={imageSource}
+          reviewMean={reviewMean}
         />
         {isOwnComment && (
           <>
-            <MediumTrashIcon fontSize='large' />
-            <SmallTrashIcon fontSize='medium' />
+            <MediumTrashIcon
+              fontSize='large'
+              onClick={() => console.log('usun')}
+            />
+            <SmallTrashIcon
+              fontSize='medium'
+              onClick={() => console.log('usun')}
+            />
           </>
         )}
       </UpperWrapper>

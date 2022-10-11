@@ -1,6 +1,5 @@
-import { ToggleButton } from '@mui/material';
 import { weekDays } from '../../../../utils/weekDays';
-import { StyledToggleButtonGroup } from './WeekDaysButtons.style';
+import { StyledToggleButtonGroup, StyledToggleButton } from './WeekDaysButtons.style';
 
 interface Props {
   value: Array<string>;
@@ -15,13 +14,13 @@ const WeekDaysButtons = ({ value, onChange }: Props) => {
       aria-label='week-days-occurrences'
     >
       {weekDays.map((day) => (
-        <ToggleButton
+        <StyledToggleButton
           key={day.key}
           value={day.value}
           aria-label={day.value}
         >
           {day.value}
-        </ToggleButton>
+        </StyledToggleButton>
       ))}
     </StyledToggleButtonGroup>
   );

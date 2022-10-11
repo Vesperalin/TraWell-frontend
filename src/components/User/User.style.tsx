@@ -1,4 +1,5 @@
 import StarIcon from '@mui/icons-material/Star';
+import { Avatar as MUIAvatar } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/system';
 import { Props } from './User';
@@ -29,7 +30,7 @@ export const ReviewWrapper = styled(Box, {
   },
 }));
 
-export const Avatar = styled('img')(({ theme }) => ({
+export const Avatar = styled(MUIAvatar)(({ theme }) => ({
   height: '50px',
   width: '50px',
   borderRadius: '25px',

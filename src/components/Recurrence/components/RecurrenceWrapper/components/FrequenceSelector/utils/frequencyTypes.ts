@@ -1,5 +1,5 @@
-import { DropdownOption } from '../models/DropdownOption';
 import { FrequencyType } from '~/enums/FrequencyType';
+import { DropdownOption } from '../models/DropdownOption';
 
 export const frequencyTypes: DropdownOption[] = [
   {

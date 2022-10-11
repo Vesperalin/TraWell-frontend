@@ -1,5 +1,3 @@
-import DirectionsBusFilledTwoToneIcon from '@mui/icons-material/DirectionsBusFilledTwoTone';
-import DirectionsCarFilledTwoToneIcon from '@mui/icons-material/DirectionsCarFilledTwoTone';
 import { Dayjs } from 'dayjs';
 import arrow from '~/assets/images/arrow.webp';
 import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
@@ -16,7 +14,6 @@ import {
 
 interface Props {
   startDate: Dayjs;
-  isCar: boolean;
   placeFrom: string;
   exactPlaceFrom?: string;
   lengthInMinutes: number;
@@ -26,7 +23,6 @@ interface Props {
 
 export const TimeLocationOfRide = ({
   startDate,
-  isCar,
   placeFrom,
   exactPlaceFrom,
   lengthInMinutes,
@@ -48,7 +44,6 @@ export const TimeLocationOfRide = ({
     <div>
       <Wrapper>
         <Date variant='h4'>{`${transformedDay}.${transformedMonth}.${startDate.year()}`}</Date>
-        {isCar ? <DirectionsCarFilledTwoToneIcon /> : <DirectionsBusFilledTwoToneIcon />}
       </Wrapper>
       <Wrapper>
         <Time variant='h4'>{`${transformedStartHour}:${transformedStartMinutes}`}</Time>

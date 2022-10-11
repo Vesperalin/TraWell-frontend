@@ -18,4 +18,5 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.common.dimmedWhite,
     borderRadius: '8px',
   },
+  minWidth: '300px',
 }));

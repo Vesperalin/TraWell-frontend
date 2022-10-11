@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import { Dayjs } from 'dayjs';
 import { useContext } from 'react';
+import { RecurrenceContext } from '~/context/RecurrenceContext';
 import { DateSelector } from '../../../DateSelector';
 import { TimeSelector } from '../../../TimeSelector';
-import RecurrenceContext from '../../context/RecurrenceContext';
 import { DurationSelector } from './components/DurationSelector';
 import { FrequenceSelector } from './components/FrequenceSelector';
 import { Duration } from './components/FrequenceSelector/models/Duration';
@@ -31,13 +31,13 @@ const RecurrenceWrapper = () => {
   return (
     <ReccurenceGrid
       container
-      spacing={6}
+      spacing={2}
       direction='column'
     >
       <Grid
         item
         container
-        spacing={2}
+        spacing={15}
       >
         <Grid item>
           <DateSelector
@@ -60,7 +60,7 @@ const RecurrenceWrapper = () => {
       <Grid
         item
         container
-        spacing={2}
+        spacing={15}
       >
         <Grid item>
           <TimeSelector

@@ -1,11 +1,11 @@
 import { InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useContext, useEffect } from 'react';
+import { RecurrenceContext } from '~/context/RecurrenceContext';
+import { FrequencyType } from '~/enums/FrequencyType';
 import { getOccurrenceLabel } from '../../utils/occurrenceLabel';
 import { WeekDaysButtons } from './components/WeekDaysButtons';
 import { StyledInputLabel, StyledTextField } from './FrequenceInput.style';
-import RecurrenceContext from '~/components/Recurrence/context/RecurrenceContext';
-import { FrequencyType } from '~/enums/FrequencyType';
 
 const FrequenceInput = () => {
   const { recurrence, onFieldChange } = useContext(RecurrenceContext);
@@ -18,7 +18,7 @@ const FrequenceInput = () => {
   }, [recurrence.frequencyType]);
 
   const onChange = (value: number) => {
-    onFieldChange('frequenceOcurrences', value);
+    onFieldChange('frequenceOccurrences', value);
   };
 
   const handleWeekDays = (newWeekDays: string[]) => {
@@ -42,7 +42,7 @@ const FrequenceInput = () => {
                 {getOccurrenceLabel(recurrence.frequencyType)}
               </InputAdornment>
             ),
-            value: recurrence.frequenceOcurrences,
+            value: recurrence.frequenceOccurrences,
             onChange: (event) => {
               onChange(Number(event.target.value));
             },

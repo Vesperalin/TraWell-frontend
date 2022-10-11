@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useContext } from 'react';
+import { RecurrenceContext } from '~/context/RecurrenceContext';
 import { Dropdown } from '../../../../../Dropdown';
-import RecurrenceContext from '../../../../context/RecurrenceContext';
 import { FrequenceInput } from './components/FrequenceInput';
 import { frequencyTypes } from './utils/frequencyTypes';
 
