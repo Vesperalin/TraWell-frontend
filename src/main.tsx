@@ -7,12 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { theme } from '~/themes/theme';
 import { App } from './App';
 import './assets/styles/index.css';
-import keycloak from './providers/keycloak';
+import keycloak from './keycloak';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <React.StrictMode>
   <ReactKeycloakProvider
     authClient={keycloak}
     initOptions={{ onLoad: 'check-sso', checkLoginIframe: false }}
@@ -25,5 +24,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </BrowserRouter>
     </QueryClientProvider>
   </ReactKeycloakProvider>,
-  // </React.StrictMode>,
 );

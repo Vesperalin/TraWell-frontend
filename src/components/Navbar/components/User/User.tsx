@@ -8,19 +8,26 @@ import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
+import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
 import { StyledMenu, StyledMenuItem, StyledTypography } from './User.style';
 
 // TODO change data about user
 // TODO change paths in the future
 const settings = [
-  { name: 'Account settings', path: Paths.Home, icon: <SettingsOutlinedIcon /> },
-  { name: 'My profile', path: Paths.Home, icon: <AccountCircleOutlinedIcon /> },
-  { name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
-  { name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
+  {
+    key: 'account_settings',
+    name: 'Account settings',
+    path: Paths.Home,
+    icon: <SettingsOutlinedIcon />,
+  },
+  { key: 'my_profile', name: 'My profile', path: Paths.Home, icon: <AccountCircleOutlinedIcon /> },
+  { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
+  { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
 ];
 
 export const User = () => {
+  const { logout } = useAuth();
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -59,8 +66,9 @@ export const User = () => {
         {settings.map((setting) => (
           <Link
             style={{ textDecoration: 'none' }}
-            key={setting.name}
+            key={setting.key}
             to={setting.path}
+            {...(setting.key === settings[3].key ? { onClick: () => logout() } : {})}
           >
             <StyledMenuItem onClick={handleCloseUserMenu}>
               {setting.icon}

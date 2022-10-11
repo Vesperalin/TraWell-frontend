@@ -17,7 +17,7 @@ export const Error = () => {
   const text =
     location.state !== null && location.state
       ? (location.state as { text: string }).text
-      : 'Here will be text that describes the error in greater details';
+      : 'Something went wrong!';
 
   const goToHomePage = () => {
     navigate(Paths.Home);
