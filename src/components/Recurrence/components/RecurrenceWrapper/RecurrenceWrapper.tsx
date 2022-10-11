@@ -1,4 +1,6 @@
 import { Grid } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Dayjs } from 'dayjs';
 import { useContext } from 'react';
 import { RecurrenceContext } from '~/context/RecurrenceContext';
@@ -10,6 +12,7 @@ import { Duration } from './components/FrequenceSelector/models/Duration';
 import { ReccurenceGrid } from './RecurrenceWrapper.style';
 
 const RecurrenceWrapper = () => {
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { recurrence, onFieldChange } = useContext(RecurrenceContext);
 
   const handleStartDateChange = (newStartDate: Dayjs | null) => {
@@ -31,13 +34,13 @@ const RecurrenceWrapper = () => {
   return (
     <ReccurenceGrid
       container
-      spacing={2}
+      spacing={3}
       direction='column'
     >
       <Grid
         item
         container
-        spacing={15}
+        spacing={isSmallScreen ? 2 : 15}
       >
         <Grid item>
           <DateSelector
@@ -60,7 +63,7 @@ const RecurrenceWrapper = () => {
       <Grid
         item
         container
-        spacing={15}
+        spacing={isSmallScreen ? 2 : 15}
       >
         <Grid item>
           <TimeSelector
