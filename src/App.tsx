@@ -1,32 +1,42 @@
-import dayjs from 'dayjs';
-import { useState } from 'react';
-import { Recurrence } from './components/Recurrence';
-import { FrequencyType } from './enums/FrequencyType';
-import { RecurrenceType } from './enums/RecurrenceType';
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Footer } from '~/components/Footer';
+import { Navbar } from '~/components/Navbar';
+import { Paths } from '~/enums/Paths';
+import { Wrapper, Container, Content, StyledCircularProgress } from './App.style';
+
+const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: module.Home })));
+const NotFound = lazy(() =>
+  import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
+);
+const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
 
 const App = () => {
-  const today = dayjs();
-  const defaultRecurrence = {
-    startDate: today,
-    endDate: today,
-    frequencyType: FrequencyType.Weekly,
-    startTime: today,
-    frequenceOcurrences: 1,
-    weekDays: [],
-    duration: { hours: 1, minutes: 0 },
-  };
-
-  const [recurrence, setRecurrence] = useState<RecurrenceType>(defaultRecurrence);
-
-  const handleRecurrenceChange = (updatedRecurrence: RecurrenceType) => {
-    console.log(updatedRecurrence);
-    setRecurrence(updatedRecurrence);
-  };
   return (
-    <Recurrence
-      recurrence={recurrence}
-      onChange={handleRecurrenceChange}
-    />
+    <Wrapper>
+      <Container>
+        <Navbar />
+        <Content>
+          <Suspense fallback={<StyledCircularProgress />}>
+            <Routes>
+              <Route
+                path={Paths.Home}
+                element={<Home />}
+              />
+              <Route
+                path={Paths.Error}
+                element={<Error />}
+              />
+              <Route
+                path={Paths.NotFound}
+                element={<NotFound />}
+              />
+            </Routes>
+          </Suspense>
+        </Content>
+      </Container>
+      <Footer />
+    </Wrapper>
   );
 };
 

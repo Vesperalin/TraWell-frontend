@@ -1,0 +1,1 @@
+export { RideData } from './RideData';

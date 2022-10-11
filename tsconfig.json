@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots" : ["node_modules/@types", "src/types"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -15,40 +16,40 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
       "~/api/*": [
-        "./api/*"
+        "./src/api/*"
       ],
       "~/assets/*": [
-        "./assets/*"
+        "./src/assets/*"
       ],
       "~/components/*": [
-        "./components/*"
+        "./src/components/*"
       ],
       "~/context/*": [
-        "./context/*"
+        "./src/context/*"
       ],
       "~/enums/*": [
-        "./enums/*"
+        "./src/enums/*"
       ],
       "~/features/*": [
-        "./features/*"
+        "./src/features/*"
       ],
       "~/hooks/*": [
-        "./hooks/*"
+        "./src/hooks/*"
       ],
       "~/models/*": [
-        "./models/*"
+        "./src/models/*"
       ],
       "~/pages/*": [
-        "./pages/*"
+        "./src/pages/*"
       ],
       "~/themes/*": [
-        "./themes/*"
+        "./src/themes/*"
       ],
       "~/utils/*": [
-        "./utils/*"
+        "./src/utils/*"
       ],
     },
   },
