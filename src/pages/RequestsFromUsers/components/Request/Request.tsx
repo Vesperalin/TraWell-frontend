@@ -17,7 +17,6 @@ import {
 
 interface Props {
   startDate: Dayjs;
-  isCar: boolean;
   placeFrom: string;
   exactPlaceFrom?: string;
   lengthInMinutes: number;
@@ -30,7 +29,6 @@ interface Props {
 
 export const Request = ({
   startDate,
-  isCar,
   placeFrom,
   exactPlaceFrom,
   lengthInMinutes,
@@ -53,7 +51,6 @@ export const Request = ({
       <FirstInnerWrapper>
         <TimeLocationOfRide
           startDate={startDate}
-          isCar={isCar}
           placeFrom={placeFrom}
           exactPlaceFrom={exactPlaceFrom}
           lengthInMinutes={lengthInMinutes}

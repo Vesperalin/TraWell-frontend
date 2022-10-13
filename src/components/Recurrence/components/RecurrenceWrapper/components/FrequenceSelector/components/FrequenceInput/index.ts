@@ -1,0 +1,1 @@
+export { FrequenceInput } from './FrequenceInput';

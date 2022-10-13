@@ -22,22 +22,15 @@ export const Container = styled('div')({
   alignItems: 'center',
 });
 
-export const Content = styled('div')(({ theme }) => ({
-  padding: 0,
+export const Content = styled('div')({
   margin: 0,
   maxWidth: '1200px',
   width: '100%',
-  paddingLeft: '15px',
-  paddingRight: '15px',
+  padding: '30px 15px 20px 15px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-
-  [theme.breakpoints.up('sm')]: {
-    paddingLeft: '24px',
-    paddingRight: '24px',
-  },
-}));
+});
 
 export const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
   color: theme.palette.common.blue,

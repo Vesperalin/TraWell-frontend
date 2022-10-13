@@ -13,15 +13,11 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  width: '850px',
   padding: '30px',
   backgroundColor: theme.palette.common.dimmedWhite,
   boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)',
   borderRadius: '15px',
-
-  [theme.breakpoints.down('md')]: {
-    width: '90%',
-  },
+  width: '100%',
 
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',

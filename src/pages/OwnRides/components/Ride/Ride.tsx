@@ -14,7 +14,6 @@ import {
 
 interface Props {
   startDate: Dayjs;
-  isCar: boolean;
   placeFrom: string;
   exactPlaceFrom?: string;
   lengthInMinutes: number;
@@ -25,7 +24,6 @@ interface Props {
 
 export const Ride = ({
   startDate,
-  isCar,
   placeFrom,
   exactPlaceFrom,
   lengthInMinutes,
@@ -39,7 +37,6 @@ export const Ride = ({
         <StyledText variant='h4'>{rideType}</StyledText>
         <TimeLocationOfRide
           startDate={startDate}
-          isCar={isCar}
           placeFrom={placeFrom}
           exactPlaceFrom={exactPlaceFrom}
           lengthInMinutes={lengthInMinutes}
