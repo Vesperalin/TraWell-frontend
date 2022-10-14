@@ -1,8 +1,9 @@
 import { Fragment, PropsWithChildren } from 'react';
+import { Role } from '~/enums/Role';
 import { useAuth } from '~/hooks/useAuth';
 
 interface Props {
-  role?: string;
+  role?: Role;
   elementToPutInstead?: JSX.Element;
 }
 
@@ -16,7 +17,7 @@ export const AuthorizedElement = ({
   if (authenticated && (!role || hasRole(role))) {
     return children as JSX.Element;
   } else if (elementToPutInstead) {
-    return elementToPutInstead;
+    return elementToPutInstead as JSX.Element;
   } else {
     return <></>;
   }
