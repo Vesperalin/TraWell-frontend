@@ -1,5 +1,4 @@
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { ChangeEvent } from 'react';
 import {
   StyledBox,
