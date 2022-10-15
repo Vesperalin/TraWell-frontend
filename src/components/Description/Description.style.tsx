@@ -6,7 +6,6 @@ import { styled } from '@mui/system';
 
 export const StyledBox = styled(Box)({
   width: '100%',
-  backgroundColor: '#06283D',
 });
 
 export const TopSectionWrapper = styled(Box)({
