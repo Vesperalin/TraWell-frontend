@@ -15,11 +15,59 @@ export const PriceFilter = ({ filter }: Props) => {
   const { from, setFrom, to, setTo } = filter;
 
   const handleFromChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFrom(event.target.value.trim());
+    const newValue = parseFloat(event.target.value.trim());
+
+    if (!isNaN(newValue)) {
+      if (
+        event.target.value.trim()[event.target.value.trim().length - 1] === '.' &&
+        event.target.value.trim().split('.').length > 2
+      ) {
+        //
+      } else if (
+        event.target.value.trim().split('.')[1] &&
+        event.target.value.trim().split('.')[1].length > 2
+      ) {
+        //
+      } else if (newValue.toString().length === event.target.value.trim().length) {
+        setFrom(event.target.value.trim());
+      } else if (newValue.toString().length + 1 === event.target.value.trim().length) {
+        if (event.target.value.trim()[event.target.value.trim().length - 1] === '.') {
+          setFrom(event.target.value.trim());
+        }
+      }
+    } else if (event.target.value.trim() === '') {
+      setFrom(event.target.value.trim());
+    } else if (event.target.value.trim() === '.') {
+      setFrom('0' + event.target.value.trim());
+    }
   };
 
   const handleToChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTo(event.target.value.trim());
+    const newValue = parseFloat(event.target.value.trim());
+
+    if (!isNaN(newValue)) {
+      if (
+        event.target.value.trim()[event.target.value.trim().length - 1] === '.' &&
+        event.target.value.trim().split('.').length > 2
+      ) {
+        //
+      } else if (
+        event.target.value.trim().split('.')[1] &&
+        event.target.value.trim().split('.')[1].length > 2
+      ) {
+        //
+      } else if (newValue.toString().length === event.target.value.trim().length) {
+        setTo(event.target.value.trim());
+      } else if (newValue.toString().length + 1 === event.target.value.trim().length) {
+        if (event.target.value.trim()[event.target.value.trim().length - 1] === '.') {
+          setTo(event.target.value.trim());
+        }
+      }
+    } else if (event.target.value.trim() === '') {
+      setTo(event.target.value.trim());
+    } else if (event.target.value.trim() === '.') {
+      setTo('0' + event.target.value.trim());
+    }
   };
 
   return (
@@ -30,24 +78,14 @@ export const PriceFilter = ({ filter }: Props) => {
           <StyledTextField
             label='From'
             value={from}
-            type='number'
             onChange={handleFromChange}
             size='small'
-            inputProps={{
-              step: 0.01,
-              min: 0.0,
-            }}
           />
           <StyledTextField
             label='To'
             value={to}
-            type='number'
             onChange={handleToChange}
             size='small'
-            inputProps={{
-              step: 0.01,
-              min: 0.0,
-            }}
           />
         </StyleTextFieldsBox>
       </FormControl>

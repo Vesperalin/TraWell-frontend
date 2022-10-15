@@ -1,24 +1,27 @@
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Theme, useMediaQuery, useTheme } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Theme, useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { ChangeEvent, useEffect } from 'react';
-import { useStyles } from './AmountOfPeopleInput.style';
+import { useStyles } from './IntegerInput.style';
 
 interface Props {
-  amountOfPeople: string | null;
-  setAmountOfPeople: (amount: string | null) => void;
+  id: string;
+  value: string | null;
+  setValue: (amount: string | null) => void;
+  adornment?: JSX.Element | string;
 }
 
-export const AmountOfPeopleInput = ({ amountOfPeople, setAmountOfPeople }: Props) => {
+export const IntegerInput = ({ id, value, setValue, adornment }: Props) => {
   const theme = useTheme();
-  const { input } = useStyles(theme);
+  const { integerInput } = useStyles(theme);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value.trim());
+  };
+
   useEffect(() => {
-    // eslint-disable-next-line prettier/prettier
-    const element = document.querySelector('input[type=\'number\']');
+    const element = document.getElementById(id);
 
     if (element !== null) {
       element.addEventListener('keydown', (evt) => {
@@ -31,25 +34,22 @@ export const AmountOfPeopleInput = ({ amountOfPeople, setAmountOfPeople }: Props
         }
       });
     }
-  }, []);
-
-  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAmountOfPeople(event.target.value.trim());
-  };
+  }, [id]);
 
   return (
     <TextField
+      id={id}
       type='number'
-      value={amountOfPeople}
-      onChange={handleAmountChange}
-      className={input}
+      value={value}
+      onChange={handleChange}
+      className={integerInput}
       size={isSmallScreen ? 'small' : 'medium'}
       InputProps={{
         inputMode: 'numeric',
-        startAdornment: (
-          <InputAdornment position='start'>
-            <AccountCircle />
-          </InputAdornment>
+        endAdornment: adornment ? (
+          <InputAdornment position='end'>{adornment}</InputAdornment>
+        ) : (
+          <></>
         ),
         inputProps: { min: 0, max: 100000 },
       }}

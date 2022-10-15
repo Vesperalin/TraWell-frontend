@@ -1,10 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
+import { Role } from '~/enums/Role';
 import { useAuth } from '~/hooks/useAuth';
 
 interface Props {
   element: JSX.Element;
-  role?: string;
+  role?: Role;
 }
 
 export const PrivateRoute = ({ element, role }: Props) => {

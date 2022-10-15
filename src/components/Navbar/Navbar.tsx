@@ -32,12 +32,14 @@ export const Navbar = () => {
             <Logo />
             <AuthorizedElement
               elementToPutInstead={
-                <PrimaryButton
-                  label='Login'
-                  onClick={() => login()}
-                  desktopSize={Sizes.Medium}
-                  mobileSize={Sizes.Small}
-                />
+                <div>
+                  <PrimaryButton
+                    label='Login'
+                    onClick={() => login()}
+                    desktopSize={Sizes.Medium}
+                    mobileSize={Sizes.Small}
+                  />
+                </div>
               }
             >
               <User />
@@ -47,12 +49,14 @@ export const Navbar = () => {
             <Logo />
             <AuthorizedElement
               elementToPutInstead={
-                <PrimaryButton
-                  label='Login'
-                  onClick={() => login()}
-                  desktopSize={Sizes.Medium}
-                  mobileSize={Sizes.Small}
-                />
+                <div>
+                  <PrimaryButton
+                    label='Login'
+                    onClick={() => login()}
+                    desktopSize={Sizes.Medium}
+                    mobileSize={Sizes.Small}
+                  />
+                </div>
               }
             >
               <>
