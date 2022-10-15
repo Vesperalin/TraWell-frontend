@@ -1,26 +1,10 @@
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
-import { MapContainer } from 'react-leaflet';
 
-export const StyledMapContainer = styled(MapContainer, {
-  shouldForwardProp: (prop) => prop !== 'heightOfMap',
-})<{ heightOfMap: number }>(({ heightOfMap }) => ({
-  width: '100%',
-  height: heightOfMap + 'px',
-
-  'div.leaflet-bottom:nth-child(4), .leaflet-routing-container': {
-    display: 'none',
-  },
-}));
-
-export const StyledLabels = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.dimmedWhite,
-  fontWeight: '400',
-}));
-
-export const Container = styled(Box)({
+export const StyledBox = styled(Box)({
   width: '100%',
 });
 
@@ -29,8 +13,18 @@ export const TopSectionWrapper = styled(Box)({
   gap: '20px',
 });
 
+export const StyledLabels = styled(Typography)(({ theme }) => ({
+  color: theme.palette.common.dimmedWhite,
+  fontWeight: '400',
+}));
+
 export const Label = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.dimmedWhite,
+}));
+
+export const TextArea = styled(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.common.dimmedWhite,
+  borderRadius: '10px',
 }));
 
 export const AntSwitch = styled(Switch)(({ theme }) => ({
