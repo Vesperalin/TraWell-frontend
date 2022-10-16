@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
 import { DatePicker } from '~/components/DatePicker';
 import { PlaceAutocompleteInput } from '~/components/PlaceAutocompleteInput';
@@ -10,6 +11,7 @@ import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { Wrapper, Title, RowWrapper, Error, ButtonWrapper } from './SearchRideForm.style';
 
 export const SearchRideForm = () => {
+  const navigate = useNavigate();
   const [placeFrom, setPlaceFrom] = useState<AutocompletePlace | null>(null);
   const [placeTo, setPlaceTo] = useState<AutocompletePlace | null>(null);
   const [date, setDate] = useState<Dayjs | null>(null);
@@ -19,19 +21,22 @@ export const SearchRideForm = () => {
 
   const handleButtonClick = () => {
     if (
+      placeFrom &&
       placeFrom !== null &&
       placeTo !== null &&
       date?.isValid() &&
       date != null &&
       time?.isValid() &&
       time !== null &&
+      amountOfPeople !== null &&
       Number(amountOfPeople) > 0
     ) {
-      // TODO - action to change view
       setError('');
-      console.log(placeFrom, placeTo, amountOfPeople, date, time);
+      navigate(
+        // eslint-disable-next-line max-len
+        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeFrom.country}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${placeTo.country}/${date}/${time}/${amountOfPeople}`,
+      );
     } else {
-      console.log(date?.isValid());
       if (!date?.isValid()) {
         setError('Date is in incorrect format. Please, use correct one.');
       } else if (!time?.isValid()) {
