@@ -3,7 +3,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import { Theme, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { debounce } from 'lodash';
+import { useState, useEffect, SyntheticEvent, useCallback } from 'react';
 import AutocompletePlaceService from '~/api/services/AutocompletePlaceService';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { useStyles, StyledTextField, InputWrapper, InnerBox } from './PlaceAutocompleteInput.style';
@@ -24,11 +25,20 @@ export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Prop
     AutocompletePlaceService.useAutocompletePlaces(inputValue);
   const options: readonly AutocompletePlace[] = data ? data : [];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const delayRefetch = useCallback(debounce(refetch, 200), []);
+
   useEffect(() => {
     if (inputValue.trim() !== '') {
-      refetch();
+      delayRefetch();
     }
-  }, [inputValue, refetch]);
+  }, [delayRefetch, inputValue, refetch]);
+
+  useEffect(() => {
+    return () => {
+      delayRefetch.cancel();
+    };
+  }, [delayRefetch]);
 
   const transformToText = (name: string, state: string, country: string, county?: string) => {
     return `${name + (name === '' ? '' : ', ')}${
