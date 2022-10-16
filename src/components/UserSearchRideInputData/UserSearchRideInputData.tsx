@@ -21,6 +21,7 @@ interface Props {
   placeTo: string;
   exactPlaceTo: string;
   date: Dayjs;
+  time: Dayjs;
 }
 
 export const UserSearchRideInputData = ({
@@ -29,11 +30,12 @@ export const UserSearchRideInputData = ({
   placeTo,
   exactPlaceTo,
   date,
+  time,
 }: Props) => {
   const transformedDay = transformToDoubleDigit(date.date());
   const transformedMonth = transformToDoubleDigit(date.month());
-  const transformedHour = transformToDoubleDigit(date.hour());
-  const transformedMinutes = transformToDoubleDigit(date.minute());
+  const transformedHour = transformToDoubleDigit(time.hour());
+  const transformedMinutes = transformToDoubleDigit(time.minute());
 
   return (
     <StyledBox>
