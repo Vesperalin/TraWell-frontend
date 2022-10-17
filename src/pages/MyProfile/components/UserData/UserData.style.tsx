@@ -6,8 +6,6 @@ import { styled } from '@mui/system';
 
 export const StyledUserDataWrapper = styled(Box)({
   width: '100%',
-  padding: '20px',
-  borderBottom: '1px solid rgba(6, 40, 61, 0.2)',
 });
 
 export const StyledUserWrapper = styled(Box)({
