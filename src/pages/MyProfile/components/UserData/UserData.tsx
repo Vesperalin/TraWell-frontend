@@ -1,6 +1,6 @@
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {
-  StyledUserDataWrapper,
   StyledUserWrapper,
   AvatarAndReviewWrapper,
   AvatarWrapper,
@@ -16,7 +16,7 @@ import {
 
 export const UserData = () => {
   return (
-    <StyledUserDataWrapper>
+    <Box>
       <StyledUserWrapper>
         <AvatarAndReviewWrapper>
           <AvatarWrapper>
@@ -34,6 +34,6 @@ export const UserData = () => {
       </StyledUserWrapper>
       <NameAndSurnameTypography variant='h3'>Andrzej Andrzejewski</NameAndSurnameTypography>
       <AgeTypography variant='h5'>Age: 39</AgeTypography>
-    </StyledUserDataWrapper>
+    </Box>
   );
 };

@@ -4,10 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 
-export const StyledUserDataWrapper = styled(Box)({
-  width: '100%',
-});
-
 export const StyledUserWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
