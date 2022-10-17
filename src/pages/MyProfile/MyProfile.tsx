@@ -4,7 +4,7 @@ import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
 import { SocialMedia } from './components/SocialMedia';
 import { UserData } from './components/UserData';
-import { StyledProfileWrapper } from './MyProfile.style';
+import { StyledProfileWrapper, StyledUserWrapper } from './MyProfile.style';
 
 export const MyProfile = () => {
   const navigate = useNavigate();
@@ -14,8 +14,10 @@ export const MyProfile = () => {
 
   return (
     <StyledProfileWrapper>
-      <UserData />
-      <SocialMedia />
+      <StyledUserWrapper>
+        <UserData />
+        <SocialMedia />
+      </StyledUserWrapper>
       <PrimaryButton
         label='Add review'
         onClick={onClickHandler}

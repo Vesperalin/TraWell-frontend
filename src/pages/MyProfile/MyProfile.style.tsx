@@ -19,3 +19,9 @@ export const StyledProfileWrapper = styled(Box)(({ theme }) => ({
     padding: '0 10px 20px 10px',
   },
 }));
+
+export const StyledUserWrapper = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+});
