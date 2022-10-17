@@ -13,8 +13,18 @@ export const StyledSocialMediaWrapper = styled(Box)({
   alignItems: 'center',
 });
 
-export const StyledSocialMediaImage = styled('img')({
+export const StyledSocialMediaImage = styled('img')(({ theme }) => ({
   display: 'inline-block',
-  height: '40px',
-  width: '40px',
-});
+  height: '35px',
+  width: '35px',
+  transition: 'all .2s ease-in-out',
+
+  [theme.breakpoints.down('md')]: {
+    height: '30px',
+    width: '30px',
+  },
+
+  '&:hover': {
+    transform: 'scale(1.04)',
+  },
+}));
