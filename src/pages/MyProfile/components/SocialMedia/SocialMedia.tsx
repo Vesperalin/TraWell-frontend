@@ -8,32 +8,32 @@ import {
 } from './SocialMedia.style';
 
 export const SocialMedia = () => {
-  const facebookLink: string | undefined = undefined;
-  const instagramLink: string | undefined = undefined;
+  const facebookLink: string | undefined = 'https://www.facebook.com/';
+  const instagramLink: string | undefined = 'https://www.instagram.com/';
 
   return (
     <StyledWrapper>
-      {!facebookLink && !instagramLink && (
+      {(facebookLink || instagramLink) && (
         <>
           <Typography variant='h6'>Find me on: </Typography>
           <StyledSocialMediaWrapper>
-              {facebookLink && (
-                <a href={facebookLink}>
-                  <StyledSocialMediaImage
-                    alt='facebook link'
-                    src={facebookImage}
-                  />
+            {facebookLink && (
+              <a href={facebookLink}>
+                <StyledSocialMediaImage
+                  alt='facebook link'
+                  src={facebookImage}
+                />
               </a>
-              )}
-            {instagramLink && (
-                <a href={instagramLink}>
-                  <StyledSocialMediaImage
-                    alt='instagram link'
-                    src={instagramImage}
-                  />
-                </a>
             )}
-          </StyledSocialMediaWrapper></>
+            {instagramLink && (
+              <a href={instagramLink}>
+                <StyledSocialMediaImage
+                  alt='instagram link'
+                  src={instagramImage}
+                />
+              </a>
+            )}
+          </StyledSocialMediaWrapper>
         </>
       )}
     </StyledWrapper>
