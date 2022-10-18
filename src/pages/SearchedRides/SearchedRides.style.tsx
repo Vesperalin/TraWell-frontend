@@ -9,6 +9,7 @@ export const SortAndFiltersComponent = styled(Box)(({ theme }) => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+  marginTop: '40px',
 
   [theme.breakpoints.up('md')]: {
     justifyContent: 'flex-end',

@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
 import {
@@ -13,65 +14,79 @@ import {
 import { RideData } from '~/components/RideData';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
+import { UserSearchRideInputData } from '~/components/UserSearchRideInputData';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { Wrapper, Rides, SortAndFiltersComponent, Content } from './SearchedRides.style';
 
-export const SearchedRides = () => {
-  const [date, setDate] = useState<Dayjs | null>(null);
-  const [time, setTime] = useState<Dayjs | null>(null);
-  const [amountOfStars, setAmountOfStars] = useState<number | null>(null);
-  const [placeFrom, setPlaceFrom] = useState<AutocompletePlace | null>(null);
-  const [placeTo, setPlaceTo] = useState<AutocompletePlace | null>(null);
-  const [priceFrom, setPriceFrom] = useState<string>('');
-  const [priceTo, setPriceTo] = useState<string>('');
-  const initialSortValue = '+date';
-  const [sortKey, setSortKey] = useState<string>(initialSortValue);
+const sortElements: SortElement[] = [
+  { label: 'Price: highest first', value: 'price' },
+  { label: 'Price: lowest first', value: '-price' },
+  { label: 'Duration: highest first', value: 'duration' },
+  { label: 'Duration: lowest first', value: '-duration' },
+  { label: 'Date: highest first', value: 'start_date' },
+  { label: 'Date: lowest first', value: '-start_date' },
+  { label: 'Available seats: highest first', value: 'available_seats' },
+  { label: 'Available seats: lowest first', value: '-available_seats' },
+];
 
-  const sortElements: SortElement[] = [
-    { label: 'Price: highest first', value: '+price' },
-    { label: 'Price: lowest first', value: '-price' },
-    { label: 'Duration: highest first', value: '+duration' },
-    { label: 'Duration: lowest first', value: '-duration' },
-    { label: 'Date: highest first', value: '+date' },
-    { label: 'Date: lowest first', value: '-date' },
-    { label: 'Available seats: highest first', value: '+available_seats' },
-    { label: 'Available seats: lowest first', value: '-available_seats' },
-  ];
+export const SearchedRides = () => {
+  const { cityFrom, countyFrom, stateFrom, cityTo, countyTo, stateTo, date, time, seatsAmount } =
+    useParams();
+
+  const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
+  const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
+  const [filterAmountOfStars, setFilterAmountOfStars] = useState<number | null>(null);
+  const [filterPlaceFrom, setFilterPlaceFrom] = useState<AutocompletePlace | null>(null);
+  const [filterPlaceTo, setFilterPlaceTo] = useState<AutocompletePlace | null>(null);
+  const [filterPriceFrom, setFilterPriceFrom] = useState<string>('');
+  const [filterPriceTo, setFilterPriceTo] = useState<string>('');
+
+  const initialSortValue = 'start_date';
+  const [sortKey, setSortKey] = useState<string>(initialSortValue);
 
   const filters: FilterType[] = [
     {
       type: TypeOfFilter.DateFilter,
-      value: date,
-      setValue: setDate,
+      value: filterDate,
+      setValue: setFilterDate,
     } as DateFilterType,
     {
       type: TypeOfFilter.TimeFilter,
-      value: time,
-      setValue: setTime,
+      value: filterTime,
+      setValue: setFilterTime,
     } as TimeFilterType,
     {
       type: TypeOfFilter.RatingFilter,
-      value: amountOfStars,
-      setValue: setAmountOfStars,
+      value: filterAmountOfStars,
+      setValue: setFilterAmountOfStars,
     } as RatingFilterType,
     {
       type: TypeOfFilter.InputFilter,
-      from: placeFrom,
-      setFrom: setPlaceFrom,
-      to: placeTo,
-      setTo: setPlaceTo,
+      from: filterPlaceFrom,
+      setFrom: setFilterPlaceFrom,
+      to: filterPlaceTo,
+      setTo: setFilterPlaceTo,
     } as InputFilterType,
     {
       type: TypeOfFilter.PriceFilter,
-      from: priceFrom,
-      setFrom: setPriceFrom,
-      to: priceTo,
-      setTo: setPriceTo,
+      from: filterPriceFrom,
+      setFrom: setFilterPriceFrom,
+      to: filterPriceTo,
+      setTo: setFilterPriceTo,
     } as PriceFilterType,
   ];
 
   return (
     <Wrapper>
+      <UserSearchRideInputData
+        placeFrom={cityFrom ? cityFrom : ''}
+        exactPlaceFrom={`${countyFrom}, ${stateFrom}`}
+        placeTo={cityTo ? cityTo : ''}
+        exactPlaceTo={`${countyTo}, ${stateTo}`}
+        date={date ? dayjs(date) : dayjs()}
+        time={time ? dayjs(time) : dayjs()}
+        seats={seatsAmount ? seatsAmount : ''}
+      />
       <SortAndFiltersComponent>
         <MobileFilter filters={filters} />
         <Sort
