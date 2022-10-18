@@ -27,6 +27,7 @@ export const TimePicker = ({ time, setTime }: Props) => {
         className={timePicker}
         value={time}
         onChange={handleTimeChange}
+        ampm={false}
         renderInput={(params) => (
           <TextField
             {...params}

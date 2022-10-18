@@ -1,7 +1,7 @@
 export enum Paths {
   Home = '/',
   // eslint-disable-next-line max-len
-  SearchedRides = '/searched-rides/:cityFrom/:countyFrom/:stateFrom/:cityTo/:countyTo/:stateTo/:date/:time/:seatsAmount',
+  SearchedRides = '/searched-rides/:cityFrom/:countyFrom/:stateFrom/:latFrom/:lonFrom/:cityTo/:countyTo/:stateTo/:latTo/:lonTo/:date/:seatsAmount',
   Error = '/error',
   NotFound = '*',
 }
