@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import RidesService from '~/api/services/RidesService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
 import {
@@ -10,6 +11,7 @@ import {
   RatingFilterType,
   InputFilterType,
   PriceFilterType,
+  RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
 import { RideData } from '~/components/RideData';
 import { Sort } from '~/components/Sort';
@@ -30,21 +32,69 @@ const sortElements: SortElement[] = [
 ];
 
 export const SearchedRides = () => {
-  const { cityFrom, countyFrom, stateFrom, cityTo, countyTo, stateTo, date, time, seatsAmount } =
-    useParams();
-
+  const {
+    cityFrom,
+    countyFrom,
+    stateFrom,
+    latFrom,
+    lonFrom,
+    cityTo,
+    countyTo,
+    stateTo,
+    latTo,
+    lonTo,
+    date,
+    seatsAmount,
+  } = useParams();
   const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
   const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
   const [filterAmountOfStars, setFilterAmountOfStars] = useState<number | null>(null);
   const [filterPlaceFrom, setFilterPlaceFrom] = useState<AutocompletePlace | null>(null);
   const [filterPlaceTo, setFilterPlaceTo] = useState<AutocompletePlace | null>(null);
   const [filterPriceFrom, setFilterPriceFrom] = useState<string>('');
+  const [filterRideType, setFilterRideType] = useState<string>('all');
   const [filterPriceTo, setFilterPriceTo] = useState<string>('');
 
   const initialSortValue = 'start_date';
   const [sortKey, setSortKey] = useState<string>(initialSortValue);
 
+  const seats = seatsAmount ? Number(seatsAmount) : 0;
+
+  const { data } = RidesService.useRides(
+    1,
+    filterRideType,
+    2,
+    1,
+    200,
+    sortKey,
+    cityFrom as string,
+    stateFrom as string,
+    countyFrom as string,
+    latFrom as string,
+    lonFrom as string,
+    cityTo as string,
+    stateTo as string,
+    countyTo as string,
+    latTo as string,
+    lonTo as string,
+    seats,
+    date as string,
+  );
+
+  console.log(data);
+
   const filters: FilterType[] = [
+    {
+      label: 'Driver type',
+      type: TypeOfFilter.RadioButtonsFilter,
+      options: [
+        { value: 'all', label: 'All' },
+        { value: 'private', label: 'Private' },
+        { value: 'company', label: 'Company' },
+      ],
+      defaultValue: '',
+      setValue: setFilterRideType,
+    } as RadioButtonsFilterType,
     {
       type: TypeOfFilter.DateFilter,
       value: filterDate,
@@ -84,7 +134,6 @@ export const SearchedRides = () => {
         placeTo={cityTo ? cityTo : ''}
         exactPlaceTo={`${countyTo}, ${stateTo}`}
         date={date ? dayjs(date) : dayjs()}
-        time={time ? dayjs(time) : dayjs()}
         seats={seatsAmount ? seatsAmount : ''}
       />
       <SortAndFiltersComponent>
