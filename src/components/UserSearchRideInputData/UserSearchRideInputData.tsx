@@ -13,6 +13,7 @@ import {
   Place,
   ExactPlace,
   PlaceBox,
+  Seats,
 } from './UserSearchRideInputData.style';
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
   exactPlaceTo: string;
   date: Dayjs;
   time: Dayjs;
+  seats: string;
 }
 
 export const UserSearchRideInputData = ({
@@ -31,6 +33,7 @@ export const UserSearchRideInputData = ({
   exactPlaceTo,
   date,
   time,
+  seats,
 }: Props) => {
   const transformedDay = transformToDoubleDigit(date.date());
   const transformedMonth = transformToDoubleDigit(date.month());
@@ -53,13 +56,18 @@ export const UserSearchRideInputData = ({
           <ExactPlace variant='h5'>{exactPlaceTo}</ExactPlace>
         </PlaceBox>
       </PlacesBox>
-      <DateBox>
-        <Date variant='h5'>{`${transformedDay}.${transformedMonth}.${date.year()}`}</Date>
-        <TimeBox>
-          <Typography variant='h5'>after: </Typography>
-          <Time variant='h5'>{`${transformedHour}:${transformedMinutes}`}</Time>
-        </TimeBox>
-      </DateBox>
+      <div>
+        <DateBox>
+          <Date variant='h5'>{`${transformedDay}.${transformedMonth}.${date.year()}`}</Date>
+          <TimeBox>
+            <Typography variant='h5'>after: </Typography>
+            <Time variant='h5'>{`${transformedHour}:${transformedMinutes}`}</Time>
+          </TimeBox>
+        </DateBox>
+        <Seats variant='h5'>
+          Seats: <span>{seats}</span>
+        </Seats>
+      </div>
     </StyledBox>
   );
 };

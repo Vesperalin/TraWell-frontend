@@ -57,6 +57,14 @@ export const Time = styled(Typography)({
   paddingLeft: '5px',
 });
 
+export const Seats = styled(Typography)({
+  marginTop: '5px',
+
+  span: {
+    fontWeight: '500',
+  },
+});
+
 export const PlacesBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
