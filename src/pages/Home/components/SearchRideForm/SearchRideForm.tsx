@@ -8,6 +8,7 @@ import { PrimaryButton } from '~/components/PrimaryButton';
 import { TimePicker } from '~/components/TimePicker';
 import { Sizes } from '~/enums/StyleSettings';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { transformToFullDate } from '~/utils/TransformToFullDate';
 import { Wrapper, Title, RowWrapper, Error, ButtonWrapper } from './SearchRideForm.style';
 
 export const SearchRideForm = () => {
@@ -32,9 +33,10 @@ export const SearchRideForm = () => {
       Number(amountOfPeople) > 0
     ) {
       setError('');
+      const dateAndTime = transformToFullDate(date, time);
       navigate(
         // eslint-disable-next-line max-len
-        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${date}/${time}/${amountOfPeople}`,
+        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeFrom.lat}/${placeFrom.lon}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${placeTo.lat}/${placeTo.lon}/${dateAndTime}/${amountOfPeople}`,
       );
     } else {
       if (!date?.isValid()) {
