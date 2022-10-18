@@ -34,7 +34,7 @@ export const SearchRideForm = () => {
       setError('');
       navigate(
         // eslint-disable-next-line max-len
-        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeFrom.country}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${placeTo.country}/${date}/${time}/${amountOfPeople}`,
+        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${date}/${time}/${amountOfPeople}`,
       );
     } else {
       if (!date?.isValid()) {
