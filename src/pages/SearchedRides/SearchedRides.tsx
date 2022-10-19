@@ -33,14 +33,14 @@ import {
 } from './SearchedRides.style';
 
 const sortElements: SortElement[] = [
-  { label: 'Price: highest first', value: 'price' },
-  { label: 'Price: lowest first', value: '-price' },
-  { label: 'Duration: highest first', value: 'duration' },
-  { label: 'Duration: lowest first', value: '-duration' },
-  { label: 'Date: highest first', value: 'start_date' },
-  { label: 'Date: lowest first', value: '-start_date' },
-  { label: 'Available seats: highest first', value: 'available_seats' },
-  { label: 'Available seats: lowest first', value: '-available_seats' },
+  { label: 'Price: highest first', value: '-price' },
+  { label: 'Price: lowest first', value: 'price' },
+  { label: 'Duration: highest first', value: '-duration' },
+  { label: 'Duration: lowest first', value: 'duration' },
+  { label: 'Date: highest first', value: '-start_date' },
+  { label: 'Date: lowest first', value: 'start_date' },
+  { label: 'Available seats: highest first', value: '-available_seats' },
+  { label: 'Available seats: lowest first', value: 'available_seats' },
 ];
 
 export const SearchedRides = () => {
