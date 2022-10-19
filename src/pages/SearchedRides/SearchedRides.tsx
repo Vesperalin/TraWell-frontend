@@ -1,4 +1,6 @@
 import Pagination from '@mui/material/Pagination';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -56,6 +58,7 @@ export const SearchedRides = () => {
     date,
     seatsAmount,
   } = useParams();
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
   const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
   const [filterAmountOfStars, setFilterAmountOfStars] = useState<number | null>(null);
@@ -200,7 +203,7 @@ export const SearchedRides = () => {
           shape='rounded'
           page={currentPage}
           onChange={handleChange}
-          size='medium'
+          size={isSmallScreen ? 'small' : 'medium'}
         />
       </PaginationWrapper>
     </Wrapper>

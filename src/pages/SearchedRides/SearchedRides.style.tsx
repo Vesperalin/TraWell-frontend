@@ -34,10 +34,14 @@ export const NoRidesWrapper = styled(Box)({
   marginTop: '40px',
 });
 
-export const PaginationWrapper = styled(Box)({
+export const PaginationWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
   marginTop: '50px',
-});
+
+  [theme.breakpoints.down('md')]: {
+    marginTop: '30px',
+  },
+}));
