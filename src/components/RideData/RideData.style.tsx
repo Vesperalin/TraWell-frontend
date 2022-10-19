@@ -16,6 +16,7 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 
   '&:hover': {
     transform: 'scale(1.03)',
+    cursor: 'pointer',
   },
 
   [theme.breakpoints.down('md')]: {
