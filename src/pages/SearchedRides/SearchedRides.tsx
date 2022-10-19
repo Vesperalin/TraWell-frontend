@@ -3,7 +3,7 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
@@ -22,6 +22,7 @@ import { RideData } from '~/components/RideData';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { UserSearchRideInputData } from '~/components/UserSearchRideInputData';
+import { Paths } from '~/enums/Paths';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import {
   Wrapper,
@@ -72,7 +73,7 @@ export const SearchedRides = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const seats = seatsAmount ? Number(seatsAmount) : 1;
 
-  const { isLoading, data } = RidesService.useRides(
+  const { isLoading, data, isError } = RidesService.useRides(
     currentPage,
     filterRideType,
     filterAmountOfStars !== null ? filterAmountOfStars : undefined,
@@ -92,6 +93,19 @@ export const SearchedRides = () => {
     seats,
     date as string,
   );
+
+  if (isError) {
+    return (
+      <Navigate
+        to={Paths.Error}
+        replace={true}
+        state={{
+          // eslint-disable-next-line max-len
+          text: 'Error appeared during retrieving data. Check if you gave correct data and try again',
+        }}
+      />
+    );
+  }
 
   const DATA_ON_PAGE = 3;
   const pagesAmount = Math.ceil((data ? data.count : 0) / DATA_ON_PAGE);
