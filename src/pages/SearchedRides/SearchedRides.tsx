@@ -13,12 +13,20 @@ import {
   PriceFilterType,
   RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
+import { Loader } from '~/components/Loader';
+import { NoRideDataFound } from '~/components/NoRideDataFound';
 import { RideData } from '~/components/RideData';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { UserSearchRideInputData } from '~/components/UserSearchRideInputData';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
-import { Wrapper, Rides, SortAndFiltersComponent, Content } from './SearchedRides.style';
+import {
+  Wrapper,
+  Rides,
+  SortAndFiltersComponent,
+  Content,
+  NoRidesWrapper,
+} from './SearchedRides.style';
 
 const sortElements: SortElement[] = [
   { label: 'Price: highest first', value: 'price' },
@@ -54,18 +62,17 @@ export const SearchedRides = () => {
   const [filterPriceFrom, setFilterPriceFrom] = useState<string>('');
   const [filterRideType, setFilterRideType] = useState<string>('all');
   const [filterPriceTo, setFilterPriceTo] = useState<string>('');
-
   const initialSortValue = 'start_date';
   const [sortKey, setSortKey] = useState<string>(initialSortValue);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const seats = seatsAmount ? Number(seatsAmount) : 1;
 
-  const seats = seatsAmount ? Number(seatsAmount) : 0;
-
-  const { data } = RidesService.useRides(
-    1,
+  const { isLoading, data } = RidesService.useRides(
+    currentPage,
     filterRideType,
-    2,
-    1,
-    200,
+    filterAmountOfStars !== null ? filterAmountOfStars : undefined,
+    filterPriceFrom === '' ? undefined : Number(filterPriceFrom),
+    filterPriceTo === '' ? undefined : Number(filterPriceTo),
     sortKey,
     cityFrom as string,
     stateFrom as string,
@@ -80,8 +87,6 @@ export const SearchedRides = () => {
     seats,
     date as string,
   );
-
-  console.log(data);
 
   const filters: FilterType[] = [
     {
@@ -147,76 +152,35 @@ export const SearchedRides = () => {
       <Content>
         <DesktopFilter filters={filters} />
         <Rides>
-          <RideData
-            startDate={dayjs()}
-            placeFrom='Leszno'
-            exactPlaceFrom='skateplaza Zatorze'
-            lengthInMinutes={90}
-            placeTo='Wrocław'
-            exactPlaceTo='Nasyp'
-            seats={4}
-            takenSeats={2}
-            cost={22}
-            name='Antoni'
-            imageSource='a'
-            reviewMean={4.5}
-          />
-          <RideData
-            startDate={dayjs()}
-            placeFrom='Leszno'
-            exactPlaceFrom='skateplaza Zatorze'
-            lengthInMinutes={90}
-            placeTo='Wrocław'
-            exactPlaceTo='Nasyp'
-            seats={4}
-            takenSeats={2}
-            cost={22}
-            name='Marek'
-            imageSource='a'
-            reviewMean={4.5}
-          />
-          <RideData
-            startDate={dayjs()}
-            placeFrom='Leszno'
-            exactPlaceFrom='skateplaza Zatorze'
-            lengthInMinutes={90}
-            placeTo='Wrocław'
-            exactPlaceTo='Nasyp'
-            seats={4}
-            takenSeats={2}
-            cost={22}
-            name='Katarzyna'
-            imageSource='a'
-            reviewMean={4.5}
-          />
-          <RideData
-            startDate={dayjs()}
-            placeFrom='Leszno'
-            exactPlaceFrom='skateplaza Zatorze'
-            lengthInMinutes={90}
-            placeTo='Wrocław'
-            exactPlaceTo='Nasyp'
-            seats={4}
-            takenSeats={2}
-            cost={22}
-            name='Andrzej'
-            imageSource='a'
-            reviewMean={4.5}
-          />
-          <RideData
-            startDate={dayjs()}
-            placeFrom='Leszno'
-            exactPlaceFrom='skateplaza Zatorze'
-            lengthInMinutes={90}
-            placeTo='Wrocław'
-            exactPlaceTo='Nasyp'
-            seats={4}
-            takenSeats={2}
-            cost={22}
-            name='John'
-            imageSource='a'
-            reviewMean={4.5}
-          />
+          {isLoading && <Loader />}
+          {!isLoading &&
+            data &&
+            data.results.length > 0 &&
+            data.results.map((result) => (
+              <RideData
+                key={result.ride_id}
+                startDate={dayjs(result.start_date)}
+                placeFrom={result.city_from.name}
+                exactPlaceFrom={result.area_from}
+                lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
+                placeTo={result.city_to.name}
+                exactPlaceTo={result.area_to}
+                seats={result.seats}
+                takenSeats={result.available_seats}
+                cost={Number(result.price)}
+                name={result.driver.first_name}
+                imageSource={result.driver.avatar}
+                reviewMean={Number(result.driver.avg_rate)}
+              />
+            ))}
+          {!isLoading && data && data.results.length == 0 && (
+            <NoRidesWrapper>
+              <NoRideDataFound
+                placeFrom={cityFrom ? cityFrom : ''}
+                placeTo={cityTo ? cityTo : ''}
+              />
+            </NoRidesWrapper>
+          )}
         </Rides>
       </Content>
     </Wrapper>

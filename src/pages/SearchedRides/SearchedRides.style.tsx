@@ -29,3 +29,7 @@ export const Rides = styled(Box)({
   flexDirection: 'column',
   gap: '30px',
 });
+
+export const NoRidesWrapper = styled(Box)({
+  marginTop: '40px',
+});

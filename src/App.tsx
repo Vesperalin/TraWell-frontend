@@ -2,9 +2,10 @@ import { useKeycloak } from '@react-keycloak/web';
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Footer } from '~/components/Footer';
+import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
 import { Paths } from '~/enums/Paths';
-import { Wrapper, Container, Content, StyledCircularProgress, LoadingWrapper } from './App.style';
+import { Wrapper, Container, Content, LoadingWrapper } from './App.style';
 
 const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: module.Home })));
 const SearchedRides = lazy(() =>
@@ -21,7 +22,7 @@ const App = () => {
   if (!initialized) {
     return (
       <LoadingWrapper>
-        <StyledCircularProgress />
+        <Loader />
       </LoadingWrapper>
     );
   }
@@ -31,7 +32,7 @@ const App = () => {
       <Container>
         <Navbar />
         <Content>
-          <Suspense fallback={<StyledCircularProgress />}>
+          <Suspense fallback={<Loader />}>
             <Routes>
               <Route
                 path={Paths.Home}
