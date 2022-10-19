@@ -33,3 +33,11 @@ export const Rides = styled(Box)({
 export const NoRidesWrapper = styled(Box)({
   marginTop: '40px',
 });
+
+export const PaginationWrapper = styled(Box)({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  marginTop: '50px',
+});

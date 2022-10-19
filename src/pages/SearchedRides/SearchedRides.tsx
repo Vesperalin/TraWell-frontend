@@ -1,3 +1,4 @@
+import Pagination from '@mui/material/Pagination';
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,6 +27,7 @@ import {
   SortAndFiltersComponent,
   Content,
   NoRidesWrapper,
+  PaginationWrapper,
 } from './SearchedRides.style';
 
 const sortElements: SortElement[] = [
@@ -88,6 +90,9 @@ export const SearchedRides = () => {
     date as string,
   );
 
+  const DATA_ON_PAGE = 3;
+  const pagesAmount = Math.ceil((data ? data.count : 0) / DATA_ON_PAGE);
+
   const filters: FilterType[] = [
     {
       label: 'Driver type',
@@ -130,6 +135,11 @@ export const SearchedRides = () => {
       setTo: setFilterPriceTo,
     } as PriceFilterType,
   ];
+
+  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentPage(value);
+  };
 
   return (
     <Wrapper>
@@ -183,6 +193,16 @@ export const SearchedRides = () => {
           )}
         </Rides>
       </Content>
+      <PaginationWrapper>
+        <Pagination
+          count={pagesAmount}
+          variant='outlined'
+          shape='rounded'
+          page={currentPage}
+          onChange={handleChange}
+          size='medium'
+        />
+      </PaginationWrapper>
     </Wrapper>
   );
 };
