@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
+import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
 export default {
@@ -58,5 +59,11 @@ export default {
         return response.data;
       },
     );
+  },
+  useRideForPassenger: (rideId: number) => {
+    return useQuery<RideForPassengerResponse, Error>(['rideForPassenger', rideId], async () => {
+      const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
+      return response.data;
+    });
   },
 };
