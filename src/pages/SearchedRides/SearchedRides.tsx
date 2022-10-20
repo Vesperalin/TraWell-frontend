@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
@@ -58,7 +58,9 @@ export const SearchedRides = () => {
     lonTo,
     date,
     seatsAmount,
+    page,
   } = useParams();
+  const navigate = useNavigate();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [filterDate, setFilterDate] = useState<Dayjs | null>(dayjs(date));
   const [filterTime, setFilterTime] = useState<Dayjs | null>(dayjs(date));
@@ -68,7 +70,7 @@ export const SearchedRides = () => {
   const [filterPriceTo, setFilterPriceTo] = useState<string>('');
   const initialSortValue = 'start_date';
   const [sortKey, setSortKey] = useState<string>(initialSortValue);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
   const seats = seatsAmount ? Number(seatsAmount) : 1;
   let dateAndTime: string;
   dayjs.extend(utc);
@@ -159,6 +161,15 @@ export const SearchedRides = () => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
+
+    navigate(
+      // eslint-disable-next-line max-len
+      `/searched-rides/${cityFrom as string}/${countyFrom as string}/${stateFrom as string}/${
+        latFrom as string
+      }/${lonFrom as string}/${cityTo as string}/${countyTo as string}/${stateTo as string}/${
+        latTo as string
+      }/${lonTo as string}/${dateAndTime}/${seats}/${value}`,
+    );
   };
 
   return (
@@ -188,6 +199,7 @@ export const SearchedRides = () => {
             data.results.length > 0 &&
             data.results.map((result) => (
               <RideData
+                rideId={result.ride_id}
                 key={result.ride_id}
                 startDate={dayjs(result.start_date)}
                 placeFrom={result.city_from.name}
