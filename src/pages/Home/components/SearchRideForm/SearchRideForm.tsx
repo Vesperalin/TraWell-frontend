@@ -17,7 +17,7 @@ export const SearchRideForm = () => {
   const [placeTo, setPlaceTo] = useState<AutocompletePlace | null>(null);
   const [date, setDate] = useState<Dayjs | null>(null);
   const [time, setTime] = useState<Dayjs | null>(null);
-  const [amountOfPeople, setAmountOfPeople] = useState<string | null>('');
+  const [amountOfPeople, setAmountOfPeople] = useState<string | null>('1');
   const [error, setError] = useState<string>('');
 
   const handleButtonClick = () => {

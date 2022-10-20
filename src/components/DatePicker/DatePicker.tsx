@@ -27,6 +27,7 @@ export const DatePicker = ({ date, setDate }: Props) => {
       {isSmallScreen ? (
         <MobileDatePicker
           className={datePicker}
+          disablePast
           inputFormat='DD/MM/YYYY'
           value={date}
           onChange={handleDateChange}
@@ -43,6 +44,7 @@ export const DatePicker = ({ date, setDate }: Props) => {
         <DesktopDatePicker
           inputFormat='DD/MM/YYYY'
           className={datePicker}
+          disablePast
           value={date}
           onChange={handleDateChange}
           renderInput={(params) => (
