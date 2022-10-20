@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
@@ -15,8 +15,14 @@ export const SearchRideForm = () => {
   const navigate = useNavigate();
   const [placeFrom, setPlaceFrom] = useState<AutocompletePlace | null>(null);
   const [placeTo, setPlaceTo] = useState<AutocompletePlace | null>(null);
-  const [date, setDate] = useState<Dayjs | null>(null);
-  const [time, setTime] = useState<Dayjs | null>(null);
+  const [date, setDate] = useState<Dayjs | null>(dayjs());
+  const [time, setTime] = useState<Dayjs | null>(
+    dayjs()
+      .hour(dayjs().hour() + 1)
+      .minute(0)
+      .second(0)
+      .millisecond(0),
+  );
   const [amountOfPeople, setAmountOfPeople] = useState<string | null>('1');
   const [error, setError] = useState<string>('');
 
