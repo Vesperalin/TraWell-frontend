@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
 import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
@@ -68,7 +68,9 @@ export const User = () => {
             style={{ textDecoration: 'none' }}
             key={setting.key}
             to={setting.path}
-            {...(setting.key === settings[3].key ? { onClick: () => logout() } : {})}
+            {...(setting.key === settings[3].key
+              ? { onClick: () => logout({ redirectUri: Paths.Home }) }
+              : {})}
           >
             <StyledMenuItem onClick={handleCloseUserMenu}>
               {setting.icon}
