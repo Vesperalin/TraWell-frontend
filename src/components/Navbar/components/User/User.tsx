@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
 import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
