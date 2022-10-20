@@ -55,8 +55,6 @@ export default {
           `rides/get_filtered/?page=${page}&seats=${seats}&start_date=${startDate}&city_from_state=${cityFromState}&city_to_state=${cityToState}&city_from_county=${cityFromCounty}&city_to_county=${cityToCounty}&city_from_lat=${cityFromLat}&city_from_lng=${cityFromLon}&city_to_lat=${cityToLat}&city_to_lng=${cityToLon}&city_to=${cityTo}&city_from=${cityFrom}${driverRateChecked}${priceFromChecked}${priceToChecked}&ordering=${ordering}&ride_type=${rideType}`,
         );
 
-        console.log(response.data);
-
         return response.data;
       },
     );
