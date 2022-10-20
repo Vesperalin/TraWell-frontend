@@ -34,7 +34,7 @@ export const UserSearchRideInputData = ({
   seats,
 }: Props) => {
   const transformedDay = transformToDoubleDigit(date.date());
-  const transformedMonth = transformToDoubleDigit(date.month());
+  const transformedMonth = transformToDoubleDigit(date.month(), true);
   const transformedHour = transformToDoubleDigit(date.hour());
   const transformedMinutes = transformToDoubleDigit(date.minute());
 

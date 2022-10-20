@@ -60,8 +60,8 @@ export const SearchedRides = () => {
     seatsAmount,
   } = useParams();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
-  const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
+  const [filterDate, setFilterDate] = useState<Dayjs | null>(dayjs(date));
+  const [filterTime, setFilterTime] = useState<Dayjs | null>(dayjs(date));
   const [filterAmountOfStars, setFilterAmountOfStars] = useState<number | null>(null);
   const [filterPriceFrom, setFilterPriceFrom] = useState<string>('');
   const [filterRideType, setFilterRideType] = useState<string>('all');
