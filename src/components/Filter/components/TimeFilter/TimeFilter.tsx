@@ -26,6 +26,7 @@ export const TimeFilter = ({ filter }: Props) => {
         label='Start Time'
         className={timePicker}
         value={value}
+        ampm={false}
         onChange={handleTimeChange}
         renderInput={(params) => (
           <TextField

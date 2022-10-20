@@ -2,6 +2,7 @@ import Pagination from '@mui/material/Pagination';
 import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
@@ -12,7 +13,6 @@ import {
   DateFilterType,
   TimeFilterType,
   RatingFilterType,
-  InputFilterType,
   PriceFilterType,
   RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
@@ -23,7 +23,7 @@ import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { UserSearchRideInputData } from '~/components/UserSearchRideInputData';
 import { Paths } from '~/enums/Paths';
-import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { transformToFullDate } from '~/utils/TransformToFullDate';
 import {
   Wrapper,
   Rides,
@@ -63,8 +63,6 @@ export const SearchedRides = () => {
   const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
   const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
   const [filterAmountOfStars, setFilterAmountOfStars] = useState<number | null>(null);
-  const [filterPlaceFrom, setFilterPlaceFrom] = useState<AutocompletePlace | null>(null);
-  const [filterPlaceTo, setFilterPlaceTo] = useState<AutocompletePlace | null>(null);
   const [filterPriceFrom, setFilterPriceFrom] = useState<string>('');
   const [filterRideType, setFilterRideType] = useState<string>('all');
   const [filterPriceTo, setFilterPriceTo] = useState<string>('');
@@ -72,6 +70,19 @@ export const SearchedRides = () => {
   const [sortKey, setSortKey] = useState<string>(initialSortValue);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const seats = seatsAmount ? Number(seatsAmount) : 1;
+  let dateAndTime: string;
+  dayjs.extend(utc);
+
+  if (filterDate && filterTime) {
+    dateAndTime = transformToFullDate(filterDate, filterTime);
+  } else if (filterDate) {
+    dateAndTime = filterDate.utc().format();
+  } else if (filterTime) {
+    const tempDate = dayjs(date as string);
+    dateAndTime = transformToFullDate(tempDate, filterTime);
+  } else {
+    dateAndTime = date as string;
+  }
 
   const { isLoading, data, isError } = RidesService.useRides(
     currentPage,
@@ -91,7 +102,7 @@ export const SearchedRides = () => {
     latTo as string,
     lonTo as string,
     seats,
-    date as string,
+    dateAndTime,
   );
 
   if (isError) {
@@ -107,8 +118,7 @@ export const SearchedRides = () => {
     );
   }
 
-  const DATA_ON_PAGE = 3;
-  const pagesAmount = Math.ceil((data ? data.count : 0) / DATA_ON_PAGE);
+  const pagesAmount = Math.ceil((data ? data.count : 0) / (data ? data.page_size : 1));
 
   const filters: FilterType[] = [
     {
@@ -137,13 +147,6 @@ export const SearchedRides = () => {
       value: filterAmountOfStars,
       setValue: setFilterAmountOfStars,
     } as RatingFilterType,
-    {
-      type: TypeOfFilter.InputFilter,
-      from: filterPlaceFrom,
-      setFrom: setFilterPlaceFrom,
-      to: filterPlaceTo,
-      setTo: setFilterPlaceTo,
-    } as InputFilterType,
     {
       type: TypeOfFilter.PriceFilter,
       from: filterPriceFrom,
