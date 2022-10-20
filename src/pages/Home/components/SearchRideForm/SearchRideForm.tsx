@@ -36,7 +36,7 @@ export const SearchRideForm = () => {
       const dateAndTime = transformToFullDate(date, time);
       navigate(
         // eslint-disable-next-line max-len
-        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeFrom.lat}/${placeFrom.lon}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${placeTo.lat}/${placeTo.lon}/${dateAndTime}/${amountOfPeople}`,
+        `/searched-rides/${placeFrom.name}/${placeFrom.county}/${placeFrom.state}/${placeFrom.lat}/${placeFrom.lon}/${placeTo.name}/${placeTo.county}/${placeTo.state}/${placeTo.lat}/${placeTo.lon}/${dateAndTime}/${amountOfPeople}/1`,
       );
     } else {
       if (!date?.isValid()) {
