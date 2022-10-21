@@ -30,7 +30,7 @@ export const TimeLocationOfRide = ({
   exactPlaceTo,
 }: Props) => {
   const transformedDay = transformToDoubleDigit(startDate.date());
-  const transformedMonth = transformToDoubleDigit(startDate.month());
+  const transformedMonth = transformToDoubleDigit(startDate.month(), true);
   const transformedStartHour = transformToDoubleDigit(startDate.hour());
   const transformedStartMinutes = transformToDoubleDigit(startDate.minute());
   const [hours, minutes] = transformToTime(lengthInMinutes);
