@@ -1,0 +1,1 @@
+export { SearchedRideForPassenger } from './SearchedRideForPassenger';
