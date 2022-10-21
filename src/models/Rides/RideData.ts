@@ -21,10 +21,7 @@ export interface RideData {
   start_date: string;
   price: string;
   seats: number;
-  recurrent: boolean;
-  automatic_confirm: boolean;
   available_seats: number;
-  description: string;
   driver: {
     user_id: number;
     first_name: string;
@@ -36,11 +33,5 @@ export interface RideData {
   duration: {
     hours: number;
     minutes: number;
-  };
-  vehicle: {
-    vehicle_id: number;
-    make: string;
-    model: string;
-    color: string;
   };
 }

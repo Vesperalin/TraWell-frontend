@@ -1,3 +1,9 @@
+interface Coordinate {
+  lat: string;
+  lng: string;
+  sequence_no: string;
+}
+
 export interface RideForPassengerResponse {
   ride_id: number;
   city_from: {
@@ -43,4 +49,5 @@ export interface RideForPassengerResponse {
     model: string;
     color: string;
   };
+  coordinates: Coordinate[];
 }
