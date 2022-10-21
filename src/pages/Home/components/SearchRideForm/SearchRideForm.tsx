@@ -27,7 +27,9 @@ export const SearchRideForm = () => {
   const [error, setError] = useState<string>('');
 
   const handleButtonClick = () => {
-    if (
+    if (Number(amountOfPeople) <= 0) {
+      setError('Amount of people must be positive');
+    } else if (
       placeFrom &&
       placeFrom !== null &&
       placeTo !== null &&
@@ -35,8 +37,7 @@ export const SearchRideForm = () => {
       date != null &&
       time?.isValid() &&
       time !== null &&
-      amountOfPeople !== null &&
-      Number(amountOfPeople) > 0
+      amountOfPeople !== null
     ) {
       setError('');
       const dateAndTime = transformToFullDate(date, time);
