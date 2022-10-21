@@ -131,7 +131,7 @@ export const SearchedRides = () => {
         { value: 'private', label: 'Private' },
         { value: 'company', label: 'Company' },
       ],
-      defaultValue: '',
+      defaultValue: 'all',
       setValue: setFilterRideType,
     } as RadioButtonsFilterType,
     {
@@ -179,7 +179,7 @@ export const SearchedRides = () => {
         exactPlaceFrom={`${countyFrom}, ${stateFrom}`}
         placeTo={cityTo ? cityTo : ''}
         exactPlaceTo={`${countyTo}, ${stateTo}`}
-        date={date ? dayjs(date) : dayjs()}
+        date={dayjs(dateAndTime)}
         seats={seatsAmount ? seatsAmount : ''}
       />
       <SortAndFiltersComponent>
