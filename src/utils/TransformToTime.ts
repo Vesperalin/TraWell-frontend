@@ -10,7 +10,7 @@ export const transformToTime = (
   let hours = Math.floor(totalMinutes / 60);
 
   if (hours > 24) {
-    hours = hours - 24;
+    hours = hours % 24;
   }
 
   return [transformToDoubleDigit(hours), transformToDoubleDigit(minutes)];
