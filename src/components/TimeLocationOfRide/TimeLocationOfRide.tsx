@@ -33,7 +33,7 @@ export const TimeLocationOfRide = ({
   const transformedMonth = transformToDoubleDigit(startDate.month(), true);
   const transformedStartHour = transformToDoubleDigit(startDate.hour());
   const transformedStartMinutes = transformToDoubleDigit(startDate.minute());
-  const [_hours, minutes, correctHours] = transformToTime(lengthInMinutes);
+  const [, minutes, correctHours] = transformToTime(lengthInMinutes);
   const [finishHour, finishMinute] = transformToTime(
     lengthInMinutes,
     startDate.hour(),
