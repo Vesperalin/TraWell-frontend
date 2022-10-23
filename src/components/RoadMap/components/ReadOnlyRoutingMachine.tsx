@@ -5,12 +5,10 @@ import 'leaflet-routing-machine';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createRoutineMachineLayer = (props: any) => {
-  const { startingPoint, endingPoint } = props;
+  const { coordinates } = props;
 
-  const waypoints = [
-    L.latLng(startingPoint[0], startingPoint[1]),
-    L.latLng(endingPoint[0], endingPoint[1]),
-  ];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const waypoints = coordinates.map((coord: any) => L.latLng(coord[0], coord[1]));
 
   const instance = L.Routing.control({
     waypoints: waypoints,
@@ -24,7 +22,7 @@ const createRoutineMachineLayer = (props: any) => {
           return L.marker(waypoint.latLng, {
             draggable: false,
             icon: L.icon({
-              iconUrl: 'src/assets/images/start.png',
+              iconUrl: '/src/assets/images/start.png',
               iconSize: [35, 35],
             }),
           });
@@ -32,7 +30,7 @@ const createRoutineMachineLayer = (props: any) => {
           return L.marker(waypoint.latLng, {
             draggable: false,
             icon: L.icon({
-              iconUrl: 'src/assets/images/finish.png',
+              iconUrl: '/src/assets/images/finish.png',
               iconSize: [35, 35],
             }),
           });
