@@ -8,10 +8,10 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'flex-end',
   gap: '10x',
-  marginTop: '15px',
 
   [theme.breakpoints.down('md')]: {
     width: '100%',
+    marginTop: '20px',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
