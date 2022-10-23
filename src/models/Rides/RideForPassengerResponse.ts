@@ -1,4 +1,4 @@
-interface Coordinate {
+export interface Coordinate {
   lat: string;
   lng: string;
   sequence_no: string;
