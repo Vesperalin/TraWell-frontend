@@ -46,7 +46,7 @@ export const MobileSkeleton = styled(Skeleton)(({ theme }) => ({
 }));
 
 export const AvatarWrapper = styled(Box)({
-  marginTop: '5px',
+  marginTop: '15px',
 });
 
 export const Text = styled(Typography)(
