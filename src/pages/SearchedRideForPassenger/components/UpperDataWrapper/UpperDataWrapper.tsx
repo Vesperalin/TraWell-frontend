@@ -18,12 +18,12 @@ export const UpperDataWrapper = ({ isLoading, date, isPrivate }: Props) => {
 
   if (isLoading || !date || !isPrivate) {
     return (
-      <div>
+      <Wrapper>
         <Skeleton
           variant='rectangular'
           height={isSmallScreen ? 25 : 30}
         />
-      </div>
+      </Wrapper>
     );
   } else {
     const transformedDay = transformToDoubleDigit(dayjs(date).date());
