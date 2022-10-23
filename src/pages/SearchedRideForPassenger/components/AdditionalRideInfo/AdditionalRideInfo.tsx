@@ -1,6 +1,12 @@
-import Skeleton from '@mui/material/Skeleton';
 import { User } from '~/components/User';
-import { Text, Wrapper, AvatarWrapper, TextWrapper } from './AdditionalRideInfo.style';
+import {
+  Text,
+  Wrapper,
+  AvatarWrapper,
+  TextWrapper,
+  DesktopSkeleton,
+  MobileSkeleton,
+} from './AdditionalRideInfo.style';
 
 interface Props {
   isLoading: boolean;
@@ -21,19 +27,18 @@ export const AdditionalRideInfo = ({
   imageSource,
   reviewMean,
 }: Props) => {
-  if (isLoading || !seats || !takenSeats || !cost || !name || !imageSource || !reviewMean) {
+  if (isLoading || !seats || !takenSeats || !cost || !name || !reviewMean) {
+    console.log(!imageSource);
     return (
       <Wrapper>
-        <Skeleton
+        <DesktopSkeleton
           variant='rectangular'
           height={110}
           width={150}
-          sx={{ display: { xs: 'none', md: 'block' } }}
         />
-        <Skeleton
+        <MobileSkeleton
           variant='rectangular'
           height={60}
-          sx={{ display: { xs: 'block', md: 'none' }, width: '100%' }}
         />
       </Wrapper>
     );
@@ -57,7 +62,7 @@ export const AdditionalRideInfo = ({
             isAvatarFirstDesktop={false}
             isAvatarFirstMobile={false}
             name={name}
-            imageSource={imageSource}
+            imageSource={imageSource as string}
             reviewMean={reviewMean}
           />
         </AvatarWrapper>

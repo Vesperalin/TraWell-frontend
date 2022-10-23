@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/system';
 
 export const Wrapper = styled(Box)(({ theme }) => ({
@@ -25,6 +26,22 @@ export const TextWrapper = styled(Box)(({ theme }) => ({
 
   [theme.breakpoints.down('md')]: {
     alignItems: 'flex-start',
+  },
+}));
+
+export const DesktopSkeleton = styled(Skeleton)(({ theme }) => ({
+  display: 'block',
+
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
+
+export const MobileSkeleton = styled(Skeleton)(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.down('md')]: {
+    display: 'block',
   },
 }));
 
