@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 
@@ -34,6 +35,14 @@ export const City = styled(Typography)({
 export const Place = styled(Typography)({
   fontWeight: '400',
 });
+
+export const StyledSkeleton = styled(Skeleton)(({ theme }) => ({
+  width: '70%',
+
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
+}));
 
 export const TimeLength = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.navy,

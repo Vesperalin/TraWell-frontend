@@ -1,4 +1,6 @@
+import { Theme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 import arrow from '~/assets/images/arrow.webp';
 import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
@@ -12,6 +14,7 @@ import {
   TimeLength,
   StyledArrow,
   TimeAndArrowWrapper,
+  StyledSkeleton,
 } from './TimeLocationOfRide.style';
 
 interface Props {
@@ -37,6 +40,8 @@ export const TimeLocationOfRide = ({
   placeTo,
   exactPlaceTo,
 }: Props) => {
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   if (
     isLoading ||
     !startDate ||
@@ -46,7 +51,12 @@ export const TimeLocationOfRide = ({
     !placeTo ||
     !lengthInMinutes
   ) {
-    return <div>loading ...</div>;
+    return (
+      <StyledSkeleton
+        variant='rectangular'
+        height={isSmallScreen ? 210 : 120}
+      />
+    );
   } else {
     const transformedStartHour = transformToDoubleDigit(dayjs(startDate).hour());
     const transformedStartMinutes = transformToDoubleDigit(dayjs(startDate).minute());
