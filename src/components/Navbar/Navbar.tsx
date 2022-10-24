@@ -15,7 +15,7 @@ import { StyledAppBar, MobileWrapper, DesktopWrapper } from './Navbar.style';
 const pages = [
   { name: 'Pending requests', path: Paths.Home },
   { name: 'My requests', path: Paths.Home },
-  { name: 'My rides', path: Paths.Home },
+  { name: 'My rides', path: Paths.OwnRides },
   { name: 'Post a ride', path: Paths.Home },
 ];
 
