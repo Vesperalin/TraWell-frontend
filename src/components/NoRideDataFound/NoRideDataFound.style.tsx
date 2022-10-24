@@ -17,12 +17,12 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 
 export const StyledImage = styled('img')(({ theme }) => ({
   display: 'inline-block',
-  height: '500px',
-  width: '500px',
+  height: '400px',
+  width: '400px',
 
   [theme.breakpoints.down('md')]: {
-    height: '400px',
-    width: '400px',
+    height: '350px',
+    width: '350px',
   },
 
   [theme.breakpoints.down('sm')]: {

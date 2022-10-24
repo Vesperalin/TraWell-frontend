@@ -1,10 +1,12 @@
 import { Dayjs } from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { User } from '~/components/User';
 import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Wrapper, InnerWrapper } from './RideData.style';
 
 interface Props {
+  rideId: number;
   startDate: Dayjs;
   placeFrom: string;
   exactPlaceFrom: string;
@@ -23,6 +25,7 @@ interface Props {
 }
 
 export const RideData = ({
+  rideId,
   startDate,
   placeFrom,
   exactPlaceFrom,
@@ -39,8 +42,10 @@ export const RideData = ({
   reviewMean,
   isHistoryRideAsPassenger = false,
 }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <Wrapper onClick={() => console.log('to będzie przenosić do info o przejeździe')}>
+    <Wrapper onClick={() => navigate(`/searched-ride/${rideId}`)}>
       <TimeLocationOfRide
         startDate={startDate}
         placeFrom={placeFrom}

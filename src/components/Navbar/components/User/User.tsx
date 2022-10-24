@@ -68,7 +68,9 @@ export const User = () => {
             style={{ textDecoration: 'none' }}
             key={setting.key}
             to={setting.path}
-            {...(setting.key === settings[3].key ? { onClick: () => logout() } : {})}
+            {...(setting.key === settings[3].key
+              ? { onClick: () => logout({ redirectUri: Paths.Home }) }
+              : {})}
           >
             <StyledMenuItem onClick={handleCloseUserMenu}>
               {setting.icon}

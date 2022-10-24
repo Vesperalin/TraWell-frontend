@@ -14,19 +14,19 @@ import {
 } from './RoadMap.style';
 
 interface Props {
+  coordinates: number[][];
   startingPoint: [number, number];
-  endingPoint: [number, number];
   heightOfMap: number;
   isEditable: boolean;
-  setPoints: (points: [number, number][]) => void;
+  setPoints?: (points: [number, number][]) => void;
   label?: string;
   checked?: boolean;
   setChecked?: (newValue: boolean) => void;
 }
 
 export const RoadMap = ({
+  coordinates,
   startingPoint,
-  endingPoint,
   heightOfMap,
   isEditable,
   setPoints,
@@ -70,13 +70,13 @@ export const RoadMap = ({
           {isEditable ? (
             <EditableRoutingMachine
               startingPoint={startingPoint}
-              endingPoint={endingPoint}
               setPoints={setPoints}
+              coordinates={coordinates}
             />
           ) : (
             <ReadOnlyRoutingMachine
               startingPoint={startingPoint}
-              endingPoint={endingPoint}
+              coordinates={coordinates}
             />
           )}
         </StyledMapContainer>

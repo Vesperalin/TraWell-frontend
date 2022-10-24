@@ -3,9 +3,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import { Theme, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { debounce } from 'lodash';
+import { useState, useEffect, SyntheticEvent, useCallback } from 'react';
 import AutocompletePlaceService from '~/api/services/AutocompletePlaceService';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { transformPlaceToText } from '~/utils/TransformPlaceToText';
 import { useStyles, StyledTextField, InputWrapper, InnerBox } from './PlaceAutocompleteInput.style';
 
 interface Props {
@@ -24,17 +26,20 @@ export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Prop
     AutocompletePlaceService.useAutocompletePlaces(inputValue);
   const options: readonly AutocompletePlace[] = data ? data : [];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const delayRefetch = useCallback(debounce(refetch, 200), []);
+
   useEffect(() => {
     if (inputValue.trim() !== '') {
-      refetch();
+      delayRefetch();
     }
-  }, [inputValue, refetch]);
+  }, [delayRefetch, inputValue, refetch]);
 
-  const transformToText = (name: string, state: string, country: string, county?: string) => {
-    return `${name + (name === '' ? '' : ', ')}${
-      county ? county + (county === '' ? '' : ', ') : ''
-    }${state + (state === '' ? '' : ', ')}${country}`;
-  };
+  useEffect(() => {
+    return () => {
+      delayRefetch.cancel();
+    };
+  }, [delayRefetch]);
 
   return (
     <Autocomplete
@@ -42,7 +47,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Prop
       getOptionLabel={(option) =>
         typeof option === 'string'
           ? option
-          : transformToText(option.name, option.state, option.country, option.county)
+          : transformPlaceToText(option.name, option.state, option.country, option.county)
       }
       size={isSmallScreen || isSmall ? 'small' : 'medium'}
       options={options}
@@ -70,7 +75,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Prop
       )}
       renderOption={(props, option) => {
         const { name, state, country, county, id } = option;
-        const place = transformToText(name, state, country, county);
+        const place = transformPlaceToText(name, state, country, county);
 
         return (
           <li

@@ -17,7 +17,9 @@ export const TimeFilter = ({ filter }: Props) => {
   const { timePicker } = useStyles(theme);
 
   const handleTimeChange = (newTime: Dayjs | null) => {
-    setValue(newTime);
+    if (newTime?.isValid()) {
+      setValue(newTime);
+    }
   };
 
   return (
@@ -26,6 +28,7 @@ export const TimeFilter = ({ filter }: Props) => {
         label='Start Time'
         className={timePicker}
         value={value}
+        ampm={false}
         onChange={handleTimeChange}
         renderInput={(params) => (
           <TextField
