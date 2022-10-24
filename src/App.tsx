@@ -6,18 +6,22 @@ import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
 import { Paths } from '~/enums/Paths';
 import { Wrapper, Container, Content, LoadingWrapper } from './App.style';
+import { PrivateRoute } from './PrivateRoute';
 
 const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: module.Home })));
 const SearchedRides = lazy(() =>
   import('~/pages/SearchedRides').then((module) => ({ default: module.SearchedRides })),
 );
+const UserProfile = lazy(() =>
+  import('~/pages/UserProfile').then((module) => ({ default: module.UserProfile })),
+);
+const OwnRides = lazy(() =>
+  import('~/pages/OwnRides').then((module) => ({ default: module.OwnRides })),
+);
 const SearchedRideForPassenger = lazy(() =>
   import('~/pages/SearchedRideForPassenger').then((module) => ({
     default: module.SearchedRideForPassenger,
   })),
-);
-const MyProfile = lazy(() =>
-  import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
 );
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
@@ -51,12 +55,16 @@ const App = () => {
                 element={<SearchedRides />}
               />
               <Route
+                path={Paths.OwnRides}
+                element={<PrivateRoute element={<OwnRides />} />}
+              />
+              <Route
                 path={Paths.SearchedRideForPassenger}
                 element={<SearchedRideForPassenger />}
               />
               <Route
-                path={Paths.MyProfile}
-                element={<MyProfile />}
+                path={Paths.UserProfile}
+                element={<UserProfile />}
               />
               <Route
                 path={Paths.Error}

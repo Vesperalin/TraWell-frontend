@@ -13,6 +13,7 @@ import { Avatar } from './components/Avatar';
 import { StyledMenu, StyledMenuItem, StyledTypography } from './User.style';
 
 // TODO change data about user
+// TODO change path to profile
 // TODO change paths in the future
 const settings = [
   {
@@ -21,7 +22,12 @@ const settings = [
     path: Paths.Home,
     icon: <SettingsOutlinedIcon />,
   },
-  { key: 'my_profile', name: 'My profile', path: Paths.Home, icon: <AccountCircleOutlinedIcon /> },
+  {
+    key: 'my_profile',
+    name: 'My profile',
+    path: `/profile/${1}`,
+    icon: <AccountCircleOutlinedIcon />,
+  },
   { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
   { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
 ];

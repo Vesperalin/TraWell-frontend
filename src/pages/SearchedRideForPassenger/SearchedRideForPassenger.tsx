@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useParams, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sizes } from '~/enums/StyleSettings';
@@ -8,14 +9,23 @@ import { Description } from './components/Description';
 import { RoadMap } from './components/RoadMap';
 import { TimeLocationOfRide } from './components/TimeLocationOfRide';
 import { UpperDataWrapper } from './components/UpperDataWrapper';
-import { Wrapper, DataWrapper, ButtonWrapper } from './SearchedRideForPassenger.style';
+import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideForPassenger.style';
 
 export const SearchedRideForPassenger = () => {
+  const navigate = useNavigate();
   const { rideId } = useParams();
   const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
 
   return (
     <Wrapper>
+      <BackButton
+        variant='text'
+        size='small'
+        onClick={() => navigate(-1)}
+      >
+        <ArrowBackIosIcon fontSize='small' />
+        Back to rides
+      </BackButton>
       <UpperDataWrapper
         isLoading={isLoading}
         date={data?.start_date}
@@ -63,6 +73,10 @@ export const SearchedRideForPassenger = () => {
       />
       <RoadMap
         isLoading={isLoading}
+        startingLat={data?.city_from.lat}
+        startingLon={data?.city_from.lng}
+        endingLat={data?.city_to.lat}
+        endingLon={data?.city_to.lng}
         coordinates={data?.coordinates}
       />
     </Wrapper>

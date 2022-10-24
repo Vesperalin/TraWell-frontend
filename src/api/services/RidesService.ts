@@ -1,5 +1,7 @@
 import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
+import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
@@ -63,6 +65,35 @@ export default {
   useRideForPassenger: (rideId: number) => {
     return useQuery<RideForPassengerResponse, Error>(['rideForPassenger', rideId], async () => {
       const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
+      return response.data;
+    });
+  },
+  useOwnRides: (
+    page: number,
+    userId: number,
+    ordering: string,
+    startDate: string | undefined,
+    from: AutocompletePlace | null,
+    to: AutocompletePlace | null,
+  ) => {
+    return useQuery<OwnRideResponse, Error>([`ownRides-${userId}`, userId, page], async () => {
+      const date = startDate !== '' ? `&start_date=${startDate}` : '';
+      const cityFromState = from ? `&city_from_state=${from.state}` : '';
+      const cityToState = to ? `&city_to_state=${to.state}` : '';
+      const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
+      const cityToCounty = to ? `&city_to_county=${to.county}` : '';
+      const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
+      const cityFromLng = from ? `&city_from_lng=${from.lon}` : '';
+      const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
+      const cityToLng = to ? `&city_to_lng=${to.lon}` : '';
+      const cityTo = to ? `&city_to=${to.name}` : '';
+      const cityFrom = from ? `&city_from=${from.name}` : '';
+
+      const response = await ridesClient.get<OwnRideResponse>(
+        // eslint-disable-next-line max-len
+        `rides/user_rides/${userId}/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+      );
+
       return response.data;
     });
   },

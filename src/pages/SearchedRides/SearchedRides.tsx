@@ -225,16 +225,18 @@ export const SearchedRides = () => {
           )}
         </Rides>
       </Content>
-      <PaginationWrapper>
-        <Pagination
-          count={pagesAmount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage}
-          onChange={handleChange}
-          size={isSmallScreen ? 'small' : 'medium'}
-        />
-      </PaginationWrapper>
+      {!(!isLoading && data && data.results.length == 0) && (
+        <PaginationWrapper>
+          <Pagination
+            count={pagesAmount}
+            variant='outlined'
+            shape='rounded'
+            page={currentPage}
+            onChange={handleChange}
+            size={isSmallScreen ? 'small' : 'medium'}
+          />
+        </PaginationWrapper>
+      )}
     </Wrapper>
   );
 };
