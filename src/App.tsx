@@ -11,8 +11,8 @@ const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: modu
 const SearchedRides = lazy(() =>
   import('~/pages/SearchedRides').then((module) => ({ default: module.SearchedRides })),
 );
-const MyProfile = lazy(() =>
-  import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
+const UserProfile = lazy(() =>
+  import('~/pages/UserProfile').then((module) => ({ default: module.UserProfile })),
 );
 const OwnRides = lazy(() =>
   import('~/pages/OwnRides').then((module) => ({ default: module.OwnRides })),
@@ -53,8 +53,8 @@ const App = () => {
                 element={<PrivateRoute element={<OwnRides />} />}
               />
               <Route
-                path={Paths.MyProfile}
-                element={<MyProfile />}
+                path={Paths.UserProfile}
+                element={<UserProfile />}
               />
               <Route
                 path={Paths.Error}

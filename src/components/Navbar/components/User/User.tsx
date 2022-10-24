@@ -21,7 +21,12 @@ const settings = [
     path: Paths.Home,
     icon: <SettingsOutlinedIcon />,
   },
-  { key: 'my_profile', name: 'My profile', path: Paths.Home, icon: <AccountCircleOutlinedIcon /> },
+  {
+    key: 'my_profile',
+    name: 'My profile',
+    path: `/profile/${1}`,
+    icon: <AccountCircleOutlinedIcon />,
+  },
   { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
   { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
 ];
