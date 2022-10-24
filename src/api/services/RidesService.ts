@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
+import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
@@ -63,6 +64,14 @@ export default {
   useRideForPassenger: (rideId: number) => {
     return useQuery<RideForPassengerResponse, Error>(['rideForPassenger', rideId], async () => {
       const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
+      return response.data;
+    });
+  },
+  useOwnRides: (page: number, userId: number) => {
+    return useQuery<OwnRideResponse, Error>([`ownRides-${userId}`, userId, page], async () => {
+      const response = await ridesClient.get<OwnRideResponse>(
+        `rides/user_rides/${userId}/?page=${page}`,
+      );
       return response.data;
     });
   },
