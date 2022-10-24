@@ -20,7 +20,9 @@ export const DateFilter = ({ filter }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const handleDateChange = (newDate: Dayjs | null) => {
-    setValue(newDate);
+    if (newDate?.isValid()) {
+      setValue(newDate);
+    }
   };
 
   return (

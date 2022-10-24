@@ -2,9 +2,10 @@ import { useKeycloak } from '@react-keycloak/web';
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Footer } from '~/components/Footer';
+import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
 import { Paths } from '~/enums/Paths';
-import { Wrapper, Container, Content, StyledCircularProgress, LoadingWrapper } from './App.style';
+import { Wrapper, Container, Content, LoadingWrapper } from './App.style';
 import { PrivateRoute } from './PrivateRoute';
 
 const Home = lazy(() => import('~/pages/Home').then((module) => ({ default: module.Home })));
@@ -17,6 +18,11 @@ const UserProfile = lazy(() =>
 const OwnRides = lazy(() =>
   import('~/pages/OwnRides').then((module) => ({ default: module.OwnRides })),
 );
+const SearchedRideForPassenger = lazy(() =>
+  import('~/pages/SearchedRideForPassenger').then((module) => ({
+    default: module.SearchedRideForPassenger,
+  })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -28,7 +34,7 @@ const App = () => {
   if (!initialized) {
     return (
       <LoadingWrapper>
-        <StyledCircularProgress />
+        <Loader />
       </LoadingWrapper>
     );
   }
@@ -38,7 +44,7 @@ const App = () => {
       <Container>
         <Navbar />
         <Content>
-          <Suspense fallback={<StyledCircularProgress />}>
+          <Suspense fallback={<Loader />}>
             <Routes>
               <Route
                 path={Paths.Home}
@@ -51,6 +57,10 @@ const App = () => {
               <Route
                 path={Paths.OwnRides}
                 element={<PrivateRoute element={<OwnRides />} />}
+              />
+              <Route
+                path={Paths.SearchedRideForPassenger}
+                element={<SearchedRideForPassenger />}
               />
               <Route
                 path={Paths.UserProfile}

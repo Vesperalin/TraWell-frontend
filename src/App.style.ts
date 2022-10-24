@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/system';
 
 export const Wrapper = styled('div')({
@@ -31,11 +30,6 @@ export const Content = styled('div')({
   flexDirection: 'column',
   alignItems: 'center',
 });
-
-export const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
-  color: theme.palette.common.blue,
-  marginTop: '60px',
-}));
 
 export const LoadingWrapper = styled(Box)({
   width: '100vw',

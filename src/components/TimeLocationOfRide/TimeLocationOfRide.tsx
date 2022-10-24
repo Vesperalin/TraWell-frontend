@@ -30,10 +30,10 @@ export const TimeLocationOfRide = ({
   exactPlaceTo,
 }: Props) => {
   const transformedDay = transformToDoubleDigit(startDate.date());
-  const transformedMonth = transformToDoubleDigit(startDate.month());
+  const transformedMonth = transformToDoubleDigit(startDate.month(), true);
   const transformedStartHour = transformToDoubleDigit(startDate.hour());
   const transformedStartMinutes = transformToDoubleDigit(startDate.minute());
-  const [hours, minutes] = transformToTime(lengthInMinutes);
+  const [, minutes, correctHours] = transformToTime(lengthInMinutes);
   const [finishHour, finishMinute] = transformToTime(
     lengthInMinutes,
     startDate.hour(),
@@ -52,7 +52,7 @@ export const TimeLocationOfRide = ({
       </Wrapper>
       <Wrapper>
         <TimeLength variant='caption'>
-          {hours}h {minutes} min
+          {correctHours}h {minutes} min
         </TimeLength>
         <StyledArrow
           alt='arrow'

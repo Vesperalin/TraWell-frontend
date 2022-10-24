@@ -23,27 +23,27 @@ export const StyledBox = styled(Box)(({ theme }) => ({
 
 export const StyledArrow = styled('img')(({ theme }) => ({
   display: 'inline-block',
+  transform: 'rotate(90deg)',
   height: '25px',
   width: '40px',
-  margin: '0 20px',
+  margin: '15px 0',
 
   [theme.breakpoints.down('md')]: {
-    transform: 'rotate(90deg)',
     height: '15px',
     width: '25px',
-    margin: '7px 0',
+    margin: '8px 0',
   },
 }));
 
 export const Place = styled(Typography)({
   lineHeight: '26px',
   marginRight: '7px',
-  overflowWrap: 'anywhere',
+  alignSelf: 'flex-start',
 });
 
 export const ExactPlace = styled(Typography)({
   lineHeight: '24px',
-  overflowWrap: 'anywhere',
+  alignSelf: 'flex-start',
 });
 
 export const Date = styled(Typography)(({ theme }) => ({
@@ -57,17 +57,20 @@ export const Time = styled(Typography)({
   paddingLeft: '5px',
 });
 
-export const PlacesBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'flex-end',
-  margin: '7px 0',
+export const Seats = styled(Typography)({
+  marginTop: '5px',
 
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    margin: '0',
+  span: {
+    fontWeight: '500',
   },
-}));
+});
+
+export const PlacesBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+});
 
 export const PlaceBox = styled(Box)({
   display: 'flex',
@@ -76,10 +79,9 @@ export const PlaceBox = styled(Box)({
 
 export const DateBox = styled(Box)(({ theme }) => ({
   display: 'flex',
-  margin: '7px 0',
 
   [theme.breakpoints.down('md')]: {
-    margin: '2px 0 0 0 ',
+    margin: '15px 0 0 0 ',
   },
 }));
 
