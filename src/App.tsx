@@ -16,6 +16,9 @@ const SearchedRideForPassenger = lazy(() =>
     default: module.SearchedRideForPassenger,
   })),
 );
+const MyProfile = lazy(() =>
+  import('~/pages/MyProfile').then((module) => ({ default: module.MyProfile })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -50,6 +53,10 @@ const App = () => {
               <Route
                 path={Paths.SearchedRideForPassenger}
                 element={<SearchedRideForPassenger />}
+              />
+              <Route
+                path={Paths.MyProfile}
+                element={<MyProfile />}
               />
               <Route
                 path={Paths.Error}
