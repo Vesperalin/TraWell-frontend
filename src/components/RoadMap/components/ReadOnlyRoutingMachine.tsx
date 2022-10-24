@@ -5,11 +5,14 @@ import 'leaflet-routing-machine';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createRoutineMachineLayer = (props: any) => {
-  const { coordinates } = props;
+  const { coordinates, startingPoint, endingPoint } = props;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const waypoints = coordinates.map((coord: any) => L.latLng(coord[0], coord[1]));
+  waypoints.splice(0, 0, L.latLng(startingPoint[0], startingPoint[1]));
+  waypoints.push(L.latLng(endingPoint[0], endingPoint[1]));
 
+  console.log(waypoints);
   const instance = L.Routing.control({
     waypoints: waypoints,
     show: false,
