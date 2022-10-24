@@ -63,6 +63,8 @@ export const RoadMap = ({
         <StyledMapContainer
           center={startingPoint}
           zoom={9}
+          minZoom={5}
+          maxZoom={18}
           heightOfMap={heightOfMap}
         >
           <TileLayer
