@@ -75,6 +75,7 @@ export default {
     startDate: string | undefined,
     from: AutocompletePlace | null,
     to: AutocompletePlace | null,
+    userType: 'driver' | 'passenger',
   ) => {
     return useQuery<OwnRideResponse, Error>([`ownRides-${userId}`, userId, page], async () => {
       const date = startDate !== '' ? `&start_date=${startDate}` : '';
@@ -91,7 +92,7 @@ export default {
 
       const response = await ridesClient.get<OwnRideResponse>(
         // eslint-disable-next-line max-len
-        `rides/user_rides/${userId}/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        `rides/user_rides/${userId}/?page=${page}&ordering=${ordering}&user_type=${userType}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
       );
 
       return response.data;

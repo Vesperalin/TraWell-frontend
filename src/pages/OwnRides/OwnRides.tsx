@@ -73,11 +73,12 @@ export const OwnRides = () => {
     dateAndTime,
     from,
     to,
+    value === 0 ? 'driver' : 'passenger',
   );
 
   useEffect(() => {
     refetch();
-  }, [dateAndTime, from, to, refetch, sortKey]);
+  }, [dateAndTime, from, to, refetch, sortKey, value]);
 
   if (isError) {
     return (
