@@ -16,7 +16,7 @@ const pages = [
   { name: 'Pending requests', path: Paths.Home },
   { name: 'My requests', path: Paths.Home },
   { name: 'My rides', path: '/own-rides/1' },
-  { name: 'Post a ride', path: Paths.Home },
+  { name: 'Post a ride', path: Paths.ChooseRideType },
 ];
 
 export const Navbar = () => {
