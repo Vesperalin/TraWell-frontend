@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 
@@ -28,6 +27,10 @@ export const ButtonWrapper = styled(Box)(({ theme }) => ({
 
   [theme.breakpoints.down('sm')]: {
     display: 'none',
+  },
+
+  '& button': {
+    alignSelf: 'center',
   },
 }));
 

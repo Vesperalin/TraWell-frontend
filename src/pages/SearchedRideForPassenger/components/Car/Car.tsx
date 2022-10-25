@@ -12,8 +12,8 @@ export const Car = ({ isLoading, carDescription }: Props) => {
     return (
       <Skeleton
         variant='rectangular'
-        height={110}
-        width={50}
+        height={30}
+        width={200}
       />
     );
   } else {
