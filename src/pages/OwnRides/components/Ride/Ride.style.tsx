@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
@@ -62,7 +63,7 @@ export const StyledEditRideLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-export const StyledDeleteRideLink = styled(Link)(({ theme }) => ({
+export const StyledDeleteRideButton = styled(Button)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.dimmedWhite,
   backgroundColor: theme.palette.common.blue,

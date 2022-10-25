@@ -97,4 +97,18 @@ export default {
       return response.data;
     });
   },
+  useDeleteRide: (rideId: number) => {
+    return useQuery<unknown, Error>(
+      [`ownRides-delete-${rideId}`, rideId],
+      async () => {
+        const response = await ridesClient.delete<unknown>(`rides/${rideId}/`);
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
+    );
+  },
 };

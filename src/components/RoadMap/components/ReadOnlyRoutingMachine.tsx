@@ -12,7 +12,6 @@ const createRoutineMachineLayer = (props: any) => {
   waypoints.splice(0, 0, L.latLng(startingPoint[0], startingPoint[1]));
   waypoints.push(L.latLng(endingPoint[0], endingPoint[1]));
 
-  console.log(waypoints);
   const instance = L.Routing.control({
     waypoints: waypoints,
     show: false,

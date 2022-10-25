@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
 import { styled } from '@mui/system';
 
 export const Wrapper = styled(Box)({
@@ -7,7 +8,7 @@ export const Wrapper = styled(Box)({
   flexDirection: 'column',
   width: '100%',
   paddingBottom: '20px',
-  gap: '20px',
+  gap: '30px',
 });
 
 export const BackButton = styled(Button)(({ theme }) => ({
