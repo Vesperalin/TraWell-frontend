@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
 
@@ -21,6 +22,10 @@ export const DataWrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const ButtonWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+
   [theme.breakpoints.down('sm')]: {
     display: 'none',
   },

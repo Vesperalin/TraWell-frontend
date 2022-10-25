@@ -11,7 +11,7 @@ import {
 interface Props {
   isLoading: boolean;
   seats: number | undefined;
-  takenSeats: number | undefined;
+  availableSeats: number | undefined;
   cost: number | undefined;
   name: string | undefined;
   imageSource: string | undefined;
@@ -21,13 +21,13 @@ interface Props {
 export const AdditionalRideInfo = ({
   isLoading,
   seats,
-  takenSeats,
+  availableSeats,
   cost,
   name,
   imageSource,
   reviewMean,
 }: Props) => {
-  if (isLoading || !seats || !takenSeats || !cost || !name || !reviewMean) {
+  if (isLoading || !seats || !availableSeats || !cost || !name || !reviewMean) {
     return (
       <Wrapper>
         <DesktopSkeleton
@@ -48,7 +48,7 @@ export const AdditionalRideInfo = ({
           <Text variant='h4'>
             Available seats:&nbsp;
             <span>
-              {takenSeats}/{seats}
+              {availableSeats}/{seats}
             </span>
           </Text>
           <Text variant='h4'>

@@ -1,4 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { SelectChangeEvent } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
@@ -7,6 +9,7 @@ import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Car } from './components/Car';
 import { Description } from './components/Description';
 import { RoadMap } from './components/RoadMap';
+import { SelectSeats } from './components/SelectSeats';
 import { TimeLocationOfRide } from './components/TimeLocationOfRide';
 import { UpperDataWrapper } from './components/UpperDataWrapper';
 import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideForPassenger.style';
@@ -14,7 +17,18 @@ import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideF
 export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
   const { rideId } = useParams();
+  const [seatsToBook, setSeatsToBook] = useState<string | null>(null);
   const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
+
+  console.log(seatsToBook);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSeatsToBook(event.target.value);
+  };
 
   return (
     <Wrapper>
@@ -27,6 +41,7 @@ export const SearchedRideForPassenger = () => {
         Back to rides
       </BackButton>
       <UpperDataWrapper
+        availableSeats={data?.available_seats}
         isLoading={isLoading}
         date={data?.start_date}
         isPrivate={data?.driver.private}
@@ -46,13 +61,18 @@ export const SearchedRideForPassenger = () => {
         <AdditionalRideInfo
           isLoading={isLoading}
           seats={data?.seats}
-          takenSeats={data?.available_seats}
+          availableSeats={data?.available_seats}
           cost={data ? Number(data.price) : undefined}
           name={data?.driver.first_name}
           imageSource={data?.driver.avatar}
           reviewMean={data ? Number(data.driver.avg_rate) : undefined}
         />
         <ButtonWrapper>
+          <SelectSeats
+            isLoading={isLoading}
+            availableSeats={data?.available_seats}
+            handleChange={handleChange}
+          />
           <PrimaryButton
             label='Book ride'
             onClick={() => console.log('tu będzie bookowanie przejazdu')}
