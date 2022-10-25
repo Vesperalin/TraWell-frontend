@@ -146,6 +146,10 @@ export const OwnRides = () => {
             data.results.length > 0 &&
             data.results.map((result) => (
               <Ride
+                rideId={result.ride_id}
+                refetchRides={refetch}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
                 key={result.ride_id}
                 startDate={dayjs(result.start_date)}
                 placeFrom={result.city_from.name}

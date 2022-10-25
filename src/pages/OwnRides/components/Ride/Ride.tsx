@@ -1,36 +1,61 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Dayjs } from 'dayjs';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
+import RidesService from '~/api/services/RidesService';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { Paths } from '~/enums/Paths';
 import { RideType } from '~/enums/RideType';
+import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import {
   Wrapper,
   InnerWrapper,
   StyledEditRideLink,
-  StyledDeleteRideLink,
+  StyledDeleteRideButton,
   StyledDetailsRideLink,
   StyledText,
 } from './Ride.style';
 
 interface Props {
+  rideId: number;
   startDate: Dayjs;
   placeFrom: string;
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
   exactPlaceFrom?: string;
   lengthInMinutes: number;
   placeTo: string;
   exactPlaceTo?: string;
   rideType: RideType;
+  refetchRides: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined,
+  ) => Promise<QueryObserverResult<OwnRideResponse, Error>>;
 }
 
 export const Ride = ({
+  rideId,
   startDate,
   placeFrom,
   exactPlaceFrom,
+  currentPage,
+  setCurrentPage,
   lengthInMinutes,
   placeTo,
   exactPlaceTo,
   rideType,
+  refetchRides,
 }: Props) => {
+  const { refetch } = RidesService.useDeleteRide(rideId);
+
+  const handleDelete = () => {
+    refetch().then(() => {
+      if (currentPage === 1) {
+        refetchRides();
+      } else {
+        setCurrentPage(1);
+      }
+    });
+  };
+
   return (
     <Wrapper>
       <div>
@@ -52,13 +77,10 @@ export const Ride = ({
           <span>edit</span>
           <ArrowForwardIcon fontSize='small' />
         </StyledEditRideLink>
-        <StyledDeleteRideLink
-          style={{ textDecoration: 'none' }}
-          to={Paths.Home}
-        >
+        <StyledDeleteRideButton onClick={handleDelete}>
           <span>delete</span>
           <ArrowForwardIcon fontSize='small' />
-        </StyledDeleteRideLink>
+        </StyledDeleteRideButton>
         <StyledDetailsRideLink
           style={{ textDecoration: 'none' }}
           to={Paths.Home}
