@@ -16,6 +16,7 @@ import {
 } from './Ride.style';
 
 interface Props {
+  editable: boolean;
   rideId: number;
   startDate: Dayjs;
   placeFrom: string;
@@ -32,6 +33,7 @@ interface Props {
 }
 
 export const Ride = ({
+  editable,
   rideId,
   startDate,
   placeFrom,
@@ -69,18 +71,22 @@ export const Ride = ({
           exactPlaceTo={exactPlaceTo}
         />
       </div>
-      <InnerWrapper>
-        <StyledEditRideLink
-          style={{ textDecoration: 'none' }}
-          to={Paths.Home}
-        >
-          <span>edit</span>
-          <ArrowForwardIcon fontSize='small' />
-        </StyledEditRideLink>
-        <StyledDeleteRideButton onClick={handleDelete}>
-          <span>delete</span>
-          <ArrowForwardIcon fontSize='small' />
-        </StyledDeleteRideButton>
+      <InnerWrapper editable={editable}>
+        {editable && (
+          <StyledEditRideLink
+            style={{ textDecoration: 'none' }}
+            to={Paths.Home}
+          >
+            <span>edit</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledEditRideLink>
+        )}
+        {editable && (
+          <StyledDeleteRideButton onClick={handleDelete}>
+            <span>delete</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledDeleteRideButton>
+        )}
         <StyledDetailsRideLink
           style={{ textDecoration: 'none' }}
           to={Paths.Home}
