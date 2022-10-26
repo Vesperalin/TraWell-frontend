@@ -24,9 +24,3 @@ export const StyledRadio = styled(Radio)(({ theme }) => ({
     color: theme.palette.common.dimmedWhite,
   },
 }));
-
-export const Temp = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.common.darkNavy,
-  width: '100%',
-  height: '300px',
-}));

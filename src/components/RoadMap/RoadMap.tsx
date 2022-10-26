@@ -15,8 +15,6 @@ import {
 
 interface Props {
   coordinates: number[][];
-  startingPoint: [number, number];
-  endingPoint: [number, number];
   heightOfMap: number;
   isEditable: boolean;
   setPoints?: (points: [number, number][]) => void;
@@ -27,8 +25,6 @@ interface Props {
 
 export const RoadMap = ({
   coordinates,
-  startingPoint,
-  endingPoint,
   heightOfMap,
   isEditable,
   setPoints,
@@ -61,7 +57,9 @@ export const RoadMap = ({
       )}
       {(checked === undefined || checked === true) && (
         <StyledMapContainer
-          center={startingPoint}
+          center={
+            coordinates.length > 0 ? [coordinates[0][0], coordinates[0][1]] : [51.107883, 17.038538]
+          }
           zoom={9}
           minZoom={5}
           maxZoom={18}
@@ -73,17 +71,11 @@ export const RoadMap = ({
           />
           {isEditable ? (
             <EditableRoutingMachine
-              startingPoint={startingPoint}
-              endingPoint={endingPoint}
               setPoints={setPoints}
               coordinates={coordinates}
             />
           ) : (
-            <ReadOnlyRoutingMachine
-              startingPoint={startingPoint}
-              endingPoint={endingPoint}
-              coordinates={coordinates}
-            />
+            <ReadOnlyRoutingMachine coordinates={coordinates} />
           )}
         </StyledMapContainer>
       )}
