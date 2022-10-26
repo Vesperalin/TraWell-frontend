@@ -30,11 +30,11 @@ export const RoadMap = ({
     );
   } else {
     const mapPoints = coordinates.map((coord) => [Number(coord.lat), Number(coord.lng)]);
+    mapPoints.unshift([Number(startingLat), Number(startingLon)]);
+    mapPoints.push([Number(endingLat), Number(endingLon)]);
 
     return (
       <Map
-        startingPoint={[Number(startingLat), Number(startingLon)]}
-        endingPoint={[Number(endingLat), Number(endingLon)]}
         coordinates={mapPoints}
         heightOfMap={500}
         isEditable={false}

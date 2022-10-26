@@ -20,8 +20,6 @@ export const SearchedRideForPassenger = () => {
   const [seatsToBook, setSeatsToBook] = useState<string | null>(null);
   const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
 
-  console.log(seatsToBook);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
