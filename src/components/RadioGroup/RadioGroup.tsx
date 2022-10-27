@@ -1,22 +1,20 @@
 import { RadioGroup as MUIRadioGroup } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import { StyledFormLabel, StyledRadio, StyledFormControlLabel } from './RadioGroup.style';
+import { StyledRadio, StyledFormControlLabel } from './RadioGroup.style';
 
 interface Props {
-  label: string;
   options: { value: string; label: string }[];
   defaultValue: string;
   setValue(value: string): void;
 }
 
-export const RadioGroup = ({ label, options, defaultValue, setValue }: Props) => {
+export const RadioGroup = ({ options, defaultValue, setValue }: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
 
   return (
     <FormControl>
-      <StyledFormLabel>{label}</StyledFormLabel>
       <MUIRadioGroup
         aria-labelledby='radio-buttons-group-label'
         defaultValue={defaultValue}

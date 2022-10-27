@@ -46,12 +46,12 @@ export const RoadMap = ({
             spacing={1}
             alignItems='center'
           >
-            <Label variant='h5'>Off</Label>
+            <Label variant='h5'>Don&apos;t add</Label>
             <AntSwitch
               checked={checked}
               onChange={handleChecked}
             />
-            <Label variant='h5'>On</Label>
+            <Label variant='h5'>Add</Label>
           </Stack>
         </TopSectionWrapper>
       )}
