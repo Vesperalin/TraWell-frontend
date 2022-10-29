@@ -1,4 +1,4 @@
-import { useTheme, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useStyles } from './TextInput.style';
@@ -10,9 +10,8 @@ interface Props {
 }
 
 export const TextInput = ({ label, value, setValue }: Props) => {
-  const theme = useTheme();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const { extraPlaceTextField, focused } = useStyles(theme);
+  const { extraPlaceTextField, focused } = useStyles({ hide: value !== '' });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);

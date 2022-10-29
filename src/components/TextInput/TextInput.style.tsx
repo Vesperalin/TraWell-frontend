@@ -1,7 +1,11 @@
 import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
-export const useStyles = makeStyles<Theme>((theme: Theme) => ({
+type Props = {
+  hide: boolean;
+};
+
+export const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
   extraPlaceTextField: {
     backgroundColor: theme.palette.common.dimmedWhite,
     borderRadius: '10px',
@@ -11,6 +15,10 @@ export const useStyles = makeStyles<Theme>((theme: Theme) => ({
       display: 'none !important',
       opacity: '0 !important',
       visibility: 'hidden',
+    },
+
+    '& > label': {
+      display: ({ hide }) => (hide ? 'none' : 'inline-block'),
     },
   },
 
