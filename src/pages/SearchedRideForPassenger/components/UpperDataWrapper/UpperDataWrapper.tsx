@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sizes } from '~/enums/StyleSettings';
+import { useAuth } from '~/hooks/useAuth';
 import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
 import { SelectSeats } from '../SelectSeats';
 import { Wrapper, Date, DataWrapper, RideType, ButtonWrapper } from './UpperDataWrapper.style';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }: Props) => {
+  const { authenticated } = useAuth();
   const [seatsToBook, setSeatsToBook] = useState<string | null>(null);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -47,19 +49,21 @@ export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }:
           </Date>
           <RideType variant='h3'>{isPrivate ? 'Private ride' : 'Company ride'}</RideType>
         </DataWrapper>
-        <ButtonWrapper>
-          <SelectSeats
-            isLoading={isLoading}
-            availableSeats={availableSeats}
-            handleChange={handleChange}
-          />
-          <PrimaryButton
-            label='Book ride'
-            onClick={() => console.log('tu będzie bookowanie przejazdu')}
-            desktopSize={Sizes.Medium}
-            mobileSize={Sizes.Small}
-          />
-        </ButtonWrapper>
+        {authenticated && (
+          <ButtonWrapper>
+            <SelectSeats
+              isLoading={isLoading}
+              availableSeats={availableSeats}
+              handleChange={handleChange}
+            />
+            <PrimaryButton
+              label='Book ride'
+              onClick={() => console.log('tu będzie bookowanie przejazdu')}
+              desktopSize={Sizes.Medium}
+              mobileSize={Sizes.Small}
+            />
+          </ButtonWrapper>
+        )}
       </Wrapper>
     );
   }
