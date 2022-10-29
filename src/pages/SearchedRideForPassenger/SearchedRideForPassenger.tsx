@@ -1,5 +1,5 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { SelectChangeEvent } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
@@ -18,16 +18,12 @@ import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideF
 export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
   const { rideId } = useParams();
-  const [seatsToBook, setSeatsToBook] = useState<string | null>(null);
+  const [seatsToBook, setSeatsToBook] = useState<string>('');
   const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setSeatsToBook(event.target.value);
-  };
 
   return (
     <Wrapper>
@@ -68,16 +64,24 @@ export const SearchedRideForPassenger = () => {
         />
         <ButtonWrapper>
           <SelectSeats
+            seatsToBook={seatsToBook}
+            setSeatsToBook={setSeatsToBook}
             isLoading={isLoading}
             availableSeats={data?.available_seats}
-            handleChange={handleChange}
           />
-          <PrimaryButton
-            label='Book ride'
-            onClick={() => console.log('tu będzie bookowanie przejazdu')}
-            desktopSize={Sizes.Medium}
-            mobileSize={Sizes.Small}
-          />
+          {isLoading ? (
+            <Skeleton
+              width={100}
+              height={40}
+            />
+          ) : (
+            <PrimaryButton
+              label='Book ride'
+              onClick={() => console.log('tu będzie bookowanie przejazdu')}
+              desktopSize={Sizes.Medium}
+              mobileSize={Sizes.Small}
+            />
+          )}
         </ButtonWrapper>
       </DataWrapper>
       <Car

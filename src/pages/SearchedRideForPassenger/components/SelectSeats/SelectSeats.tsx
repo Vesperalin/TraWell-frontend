@@ -1,4 +1,4 @@
-import { Select, SelectChangeEvent } from '@mui/material';
+import { Select, SelectChangeEvent, Skeleton } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,22 +7,33 @@ import { useStyles } from './SelectSeats.style';
 
 interface Props {
   isLoading: boolean;
+  seatsToBook: string;
+  setSeatsToBook: (value: string) => void;
   availableSeats: number | undefined;
-  handleChange: (event: SelectChangeEvent) => void;
 }
 
-export const SelectSeats = ({ isLoading, availableSeats, handleChange }: Props) => {
+export const SelectSeats = ({ isLoading, seatsToBook, availableSeats, setSeatsToBook }: Props) => {
   const [possibleSeatsToBook, setPossibleSeatsToBook] = useState<number[]>([]);
   const { select } = useStyles();
 
   useEffect(() => {
+    setSeatsToBook('1');
     if (!isLoading && availableSeats) {
       setPossibleSeatsToBook(Array.from({ length: availableSeats }, (_, i) => i + 1));
     }
-  }, [availableSeats, isLoading]);
+  }, [availableSeats, isLoading, setSeatsToBook]);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSeatsToBook(event.target.value);
+  };
 
   if (isLoading || !availableSeats) {
-    return <></>;
+    return (
+      <Skeleton
+        width={100}
+        height={40}
+      />
+    );
   } else {
     return (
       <FormControl>
@@ -30,17 +41,17 @@ export const SelectSeats = ({ isLoading, availableSeats, handleChange }: Props) 
         <Select
           labelId='seats-to-book-label'
           label='Seats to book'
+          value={seatsToBook}
           onChange={handleChange}
           size='small'
           className={select}
-          defaultValue='1'
         >
           {possibleSeatsToBook.map((elem) => (
             <MenuItem
-              key={elem}
-              value={elem}
+              key={elem.toString()}
+              value={elem.toString()}
             >
-              {elem}
+              {elem.toString()}
             </MenuItem>
           ))}
         </Select>

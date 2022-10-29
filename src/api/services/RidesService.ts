@@ -73,13 +73,14 @@ export default {
   },
   useOwnRides: (
     page: number,
-    userId: number,
+    token: string,
     ordering: string,
     startDate: string | undefined,
     from: AutocompletePlace | null,
     to: AutocompletePlace | null,
+    userType: 'driver' | 'passenger',
   ) => {
-    return useQuery<OwnRideResponse, Error>([`ownRides-${userId}`, userId, page], async () => {
+    return useQuery<OwnRideResponse, Error>([`ownRides-${token}`, token, page], async () => {
       const date = startDate !== '' ? `&start_date=${startDate}` : '';
       const cityFromState = from ? `&city_from_state=${from.state}` : '';
       const cityToState = to ? `&city_to_state=${to.state}` : '';
@@ -94,7 +95,8 @@ export default {
 
       const response = await ridesClient.get<OwnRideResponse>(
         // eslint-disable-next-line max-len
-        `rides/user_rides/${userId}/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        `rides/user_rides/?page=${page}&ordering=${ordering}&user_type=${userType}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        { headers: { Authorization: 'Bearer ' + token } },
       );
 
       return response.data;

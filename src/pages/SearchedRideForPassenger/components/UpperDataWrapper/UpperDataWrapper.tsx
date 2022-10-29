@@ -1,4 +1,3 @@
-import { SelectChangeEvent } from '@mui/material/Select';
 import Skeleton from '@mui/material/Skeleton';
 import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -20,7 +19,7 @@ interface Props {
 
 export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }: Props) => {
   const { authenticated } = useAuth();
-  const [seatsToBook, setSeatsToBook] = useState<string | null>(null);
+  const [seatsToBook, setSeatsToBook] = useState<string>('');
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   if (isLoading || !date || !isPrivate || !availableSeats) {
@@ -37,10 +36,6 @@ export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }:
     const transformedMonth = transformToDoubleDigit(dayjs(date).month(), true);
     const year = dayjs(date).year();
 
-    const handleChange = (event: SelectChangeEvent) => {
-      setSeatsToBook(event.target.value);
-    };
-
     return (
       <Wrapper>
         <DataWrapper>
@@ -52,9 +47,10 @@ export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }:
         {authenticated && (
           <ButtonWrapper>
             <SelectSeats
+              seatsToBook={seatsToBook}
               isLoading={isLoading}
               availableSeats={availableSeats}
-              handleChange={handleChange}
+              setSeatsToBook={setSeatsToBook}
             />
             <PrimaryButton
               label='Book ride'

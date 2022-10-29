@@ -1,5 +1,8 @@
+import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import { Theme } from '@mui/material/styles';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
@@ -20,6 +23,7 @@ import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { Paths } from '~/enums/Paths';
 import { RideType } from '~/enums/RideType';
+import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
 import { Ride } from './components/Ride';
@@ -41,6 +45,7 @@ const sortElements: SortElement[] = [
 
 // TODO: add user data, not random data
 export const OwnRides = () => {
+  const { token } = useAuth();
   const { page } = useParams();
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
@@ -51,6 +56,7 @@ export const OwnRides = () => {
   const [from, setFrom] = useState<AutocompletePlace | null>(null);
   const [to, setTo] = useState<AutocompletePlace | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
+  const [value, setValue] = useState<number>(0);
   let dateAndTime: string;
   dayjs.extend(utc);
 
@@ -64,16 +70,17 @@ export const OwnRides = () => {
 
   const { isLoading, data, isError, refetch } = RidesService.useOwnRides(
     currentPage,
-    1,
+    token ? token : '',
     sortKey,
     dateAndTime,
     from,
     to,
+    value === 0 ? 'driver' : 'passenger',
   );
 
   useEffect(() => {
     refetch();
-  }, [dateAndTime, from, to, refetch]);
+  }, [dateAndTime, from, to, refetch, sortKey, value]);
 
   if (isError) {
     return (
@@ -115,8 +122,22 @@ export const OwnRides = () => {
     navigate(`/own-rides/${value}`);
   };
 
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <Wrapper>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs
+          value={value}
+          onChange={handleChangeTab}
+          variant='fullWidth'
+        >
+          <Tab label='As driver' />
+          <Tab label='As passenger' />
+        </Tabs>
+      </Box>
       <SortAndFiltersComponent>
         <MobileFilter
           filters={
@@ -147,6 +168,7 @@ export const OwnRides = () => {
             data.results.map((result) => (
               <Ride
                 rideId={result.ride_id}
+                editable={value === 0 ? true : false}
                 refetchRides={refetch}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
