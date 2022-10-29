@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
 import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
+import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
@@ -70,14 +73,14 @@ export default {
   },
   useOwnRides: (
     page: number,
-    userId: number,
+    token: string,
     ordering: string,
     startDate: string | undefined,
     from: AutocompletePlace | null,
     to: AutocompletePlace | null,
     userType: 'driver' | 'passenger',
   ) => {
-    return useQuery<OwnRideResponse, Error>([`ownRides-${userId}`, userId, page], async () => {
+    return useQuery<OwnRideResponse, Error>([`ownRides-${token}`, token, page], async () => {
       const date = startDate !== '' ? `&start_date=${startDate}` : '';
       const cityFromState = from ? `&city_from_state=${from.state}` : '';
       const cityToState = to ? `&city_to_state=${to.state}` : '';
@@ -92,7 +95,8 @@ export default {
 
       const response = await ridesClient.get<OwnRideResponse>(
         // eslint-disable-next-line max-len
-        `rides/user_rides/${userId}/?page=${page}&ordering=${ordering}&user_type=${userType}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        `rides/user_rides/?page=${page}&ordering=${ordering}&user_type=${userType}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        { headers: { Authorization: 'Bearer ' + token } },
       );
 
       return response.data;
@@ -109,6 +113,97 @@ export default {
         enabled: false,
         refetchOnWindowFocus: false,
         retry: 1,
+      },
+    );
+  },
+  useAddRide: (
+    token: string | undefined,
+    placeFrom: AutocompletePlace | null,
+    placeTo: AutocompletePlace | null,
+    areaFrom: string,
+    areaTo: string,
+    startDate: string | null,
+    price: string | null,
+    seats: string | null,
+    vehicle: number | null,
+    hours: string | null,
+    minutes: string | null,
+    description: string,
+    coordinates: [number, number][],
+    passengerAcceptance: string,
+    hasRole: (role: Role) => boolean,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        if (
+          token &&
+          placeFrom &&
+          placeTo &&
+          startDate &&
+          price &&
+          seats &&
+          vehicle &&
+          hours &&
+          minutes
+        ) {
+          const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
+          const points: { lat: number; lng: number; sequence_no: number }[] = [];
+
+          if (coordinates.length > 2) {
+            coordinates.pop();
+            coordinates.shift();
+
+            for (let i = 0; i < coordinates.length; i++) {
+              points.push({
+                lat: Number(coordinates[i][0].toFixed(6)),
+                lng: Number(coordinates[i][1].toFixed(6)),
+                sequence_no: i + 1,
+              });
+            }
+          }
+
+          const response = await ridesClient.post<unknown>(
+            'rides/',
+            {
+              city_from: {
+                name: placeFrom.name,
+                county: placeFrom.county,
+                state: placeFrom.state,
+                lat: placeFrom.lat,
+                lng: placeFrom.lon,
+              },
+              city_to: {
+                name: placeTo.name,
+                county: placeTo.county,
+                state: placeTo.state,
+                lat: placeTo.lat,
+                lng: placeTo.lon,
+              },
+              area_from: areaFrom,
+              area_to: areaTo,
+              start_date: startDate,
+              price: Number(price),
+              seats: Number(seats),
+              vehicle: hasRole(Role.Private) ? vehicle : -1,
+              duration: {
+                hours: Number(hours),
+                minutes: Number(minutes),
+              },
+              description: description,
+              coordinates: points.length > 0 ? points : [],
+              automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
+            },
+            { headers: { Authorization: 'Bearer ' + token } },
+          );
+          return response.data;
+        }
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
       },
     );
   },

@@ -23,6 +23,7 @@ import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { Paths } from '~/enums/Paths';
 import { RideType } from '~/enums/RideType';
+import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
 import { Ride } from './components/Ride';
@@ -44,6 +45,7 @@ const sortElements: SortElement[] = [
 
 // TODO: add user data, not random data
 export const OwnRides = () => {
+  const { token } = useAuth();
   const { page } = useParams();
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
@@ -68,7 +70,7 @@ export const OwnRides = () => {
 
   const { isLoading, data, isError, refetch } = RidesService.useOwnRides(
     currentPage,
-    1,
+    token ? token : '',
     sortKey,
     dateAndTime,
     from,

@@ -10,7 +10,9 @@ export const StyledBox = styled(Box)({
 
 export const TopSectionWrapper = styled(Box)({
   display: 'flex',
-  gap: '20px',
+  columnGap: '20px',
+  rowGap: '5px',
+  flexWrap: 'wrap',
 });
 
 export const StyledLabels = styled(Typography)(({ theme }) => ({

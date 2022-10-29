@@ -23,6 +23,17 @@ const SearchedRideForPassenger = lazy(() =>
     default: module.SearchedRideForPassenger,
   })),
 );
+const ChooseCreateRideType = lazy(() =>
+  import('~/pages/AddRide').then((module) => ({
+    default: module.ChooseCreateRideType,
+  })),
+);
+
+const AddSingularRide = lazy(() =>
+  import('~/pages/AddRide').then((module) => ({
+    default: module.AddSingularRide,
+  })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -57,6 +68,14 @@ const App = () => {
               <Route
                 path={Paths.OwnRides}
                 element={<PrivateRoute element={<OwnRides />} />}
+              />
+              <Route
+                path={Paths.ChooseRideType}
+                element={<PrivateRoute element={<ChooseCreateRideType />} />}
+              />
+              <Route
+                path={Paths.AddSingularRide}
+                element={<PrivateRoute element={<AddSingularRide />} />}
               />
               <Route
                 path={Paths.SearchedRideForPassenger}

@@ -35,19 +35,19 @@ export const Description = ({ value, setValue, label, checked, setChecked }: Pro
           spacing={1}
           alignItems='center'
         >
-          <Label variant='h5'>Off</Label>
+          <Label variant='h5'>Don&apos;t add</Label>
           <AntSwitch
             checked={checked}
             onChange={handleChecked}
           />
-          <Label variant='h5'>On</Label>
+          <Label variant='h5'>Add</Label>
         </Stack>
       </TopSectionWrapper>
       {checked && (
         <TextArea
           placeholder='Add description'
           multiline={true}
-          rows={4}
+          rows={6}
           fullWidth
           value={value}
           onChange={handleChange}

@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sizes } from '~/enums/StyleSettings';
+
 import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Car } from './components/Car';
 import { Description } from './components/Description';

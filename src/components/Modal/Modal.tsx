@@ -19,6 +19,7 @@ interface Props {
   handleClose: () => void;
   primaryButtonText: string;
   primaryButtonAction: () => void;
+  showButtonForOpeningModal: boolean;
   secondaryButtonText?: string;
   secondaryButtonAction?: () => void;
 }
@@ -31,12 +32,13 @@ const CustomModal = ({
   handleClose,
   primaryButtonText,
   primaryButtonAction,
+  showButtonForOpeningModal,
   secondaryButtonText,
   secondaryButtonAction,
 }: Props) => {
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      {showButtonForOpeningModal && <Button onClick={handleOpen}>Open modal</Button>}
       <StyledModal
         open={open}
         onClose={handleClose}
