@@ -1,6 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { usersClient } from '~/api/clients';
 import { Footer } from '~/components/Footer';
 import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
@@ -40,7 +41,22 @@ const NotFound = lazy(() =>
 const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
 
 const App = () => {
-  const { initialized } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
+
+  useEffect(() => {
+    if (keycloak && initialized) {
+      if (keycloak.authenticated && keycloak.token) {
+        // console.log(keycloak.authenticated);
+        const sendRequest = async () => {
+          return await usersClient.get<unknown>('users/check_user', {
+            headers: { Authorization: keycloak.token ? keycloak.token : '' },
+          });
+        };
+
+        sendRequest().then((data) => console.log(data));
+      }
+    }
+  }, [keycloak, initialized]);
 
   if (!initialized) {
     return (
