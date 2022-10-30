@@ -29,7 +29,6 @@ const ChooseCreateRideType = lazy(() =>
     default: module.ChooseCreateRideType,
   })),
 );
-
 const AddSingularRide = lazy(() =>
   import('~/pages/AddRide').then((module) => ({
     default: module.AddSingularRide,
@@ -46,14 +45,14 @@ const App = () => {
   useEffect(() => {
     if (keycloak && initialized) {
       if (keycloak.authenticated && keycloak.token) {
-        // console.log(keycloak.authenticated);
         const sendRequest = async () => {
-          return await usersClient.get<unknown>('users/check_user', {
+          const response = await usersClient.get<unknown>('users/check_user', {
             headers: { Authorization: keycloak.token ? keycloak.token : '' },
           });
+          return response.data;
         };
 
-        sendRequest().then((data) => console.log(data));
+        sendRequest();
       }
     }
   }, [keycloak, initialized]);
