@@ -21,6 +21,7 @@ const pages = [
 
 export const Navbar = () => {
   const { login } = useAuth();
+
   return (
     <StyledAppBar position='sticky'>
       <Container maxWidth='xl'>
