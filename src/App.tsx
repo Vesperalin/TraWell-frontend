@@ -1,6 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { usersClient } from '~/api/clients';
 import { Footer } from '~/components/Footer';
 import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
@@ -28,7 +29,6 @@ const ChooseCreateRideType = lazy(() =>
     default: module.ChooseCreateRideType,
   })),
 );
-
 const AddSingularRide = lazy(() =>
   import('~/pages/AddRide').then((module) => ({
     default: module.AddSingularRide,
@@ -40,7 +40,22 @@ const NotFound = lazy(() =>
 const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
 
 const App = () => {
-  const { initialized } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
+
+  useEffect(() => {
+    if (keycloak && initialized) {
+      if (keycloak.authenticated && keycloak.token) {
+        const sendRequest = async () => {
+          const response = await usersClient.get<unknown>('users/check_user', {
+            headers: { Authorization: keycloak.token ? keycloak.token : '' },
+          });
+          return response.data;
+        };
+
+        sendRequest();
+      }
+    }
+  }, [keycloak, initialized]);
 
   if (!initialized) {
     return (
