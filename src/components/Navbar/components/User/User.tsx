@@ -5,6 +5,8 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
@@ -33,8 +35,10 @@ const settings = [
 ];
 
 export const User = () => {
-  const { logout } = useAuth();
+  const { logout, token } = useAuth();
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const decodedToken = jwt_decode<any>(token ? token : '');
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElementUser(event.currentTarget);
@@ -49,8 +53,8 @@ export const User = () => {
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu}>
           <Avatar
-            alternativeText='Ondrej Siemianowski'
-            src='https://minimaltoolkit.com/images/randomdata/male/1.jpg'
+            alternativeText={decodedToken.name}
+            src={decodedToken.picture ? decodedToken.picture.toString() : ''}
           />
         </IconButton>
       </Tooltip>
