@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import { useParams } from 'react-router-dom';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
@@ -9,12 +8,10 @@ import { StyledProfileWrapper, StyledUserWrapper } from './UserProfile.style';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  const { userId } = useParams();
+
   const onClickHandler = () => {
     navigate(Paths.Home);
   };
-
-  console.log(userId);
 
   return (
     <StyledProfileWrapper>
