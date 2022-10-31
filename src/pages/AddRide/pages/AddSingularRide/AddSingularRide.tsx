@@ -59,8 +59,8 @@ export const AddSingularRide = () => {
   useEffect(() => {
     if (placeFrom !== null && placeTo !== null) {
       const tempPoints: [number, number][] = [];
-      tempPoints.push([Number(placeFrom.lat), Number(placeFrom.lon)]);
       tempPoints.push([Number(placeTo.lat), Number(placeTo.lon)]);
+      tempPoints.push([Number(placeFrom.lat), Number(placeFrom.lon)]);
       setAllPoints(tempPoints);
     } else {
       setAllPoints([]);
