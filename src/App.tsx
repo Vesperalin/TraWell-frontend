@@ -43,6 +43,9 @@ const EditSingularRide = lazy(() =>
 const EditFullSingularRide = lazy(() =>
   import('~/pages/EditRide').then((module) => ({ default: module.FullRideEdit })),
 );
+const EditFullPartialRide = lazy(() =>
+  import('~/pages/EditRide').then((module) => ({ default: module.PartialRideEdit })),
+);
 const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
 
 const App = () => {
@@ -105,6 +108,10 @@ const App = () => {
               <Route
                 path={Paths.EditFullSingularRide}
                 element={<PrivateRoute element={<EditFullSingularRide />} />}
+              />
+              <Route
+                path={Paths.EditPartialSingularRide}
+                element={<PrivateRoute element={<EditFullPartialRide />} />}
               />
               <Route
                 path={Paths.SearchedRideForPassenger}

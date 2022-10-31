@@ -48,7 +48,15 @@ export const EditSingularRide = () => {
       />
     );
   } else if (data) {
-    return <div>EditSingleRide partially {rideId}</div>;
+    return (
+      <Navigate
+        to={`/edit-partial-singular-ride/${rideId}`}
+        replace={true}
+        state={{
+          rideId: rideId ? Number(rideId) : -1,
+        }}
+      />
+    );
   } else {
     return <Loader />;
   }

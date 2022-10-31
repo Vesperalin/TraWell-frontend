@@ -1,2 +1,1 @@
-export { EditSingularRide } from './pages/EditSingularRide';
-export { FullRideEdit } from './pages/EditSingularRide';
+export { EditSingularRide, FullRideEdit, PartialRideEdit } from './pages/EditSingularRide';
