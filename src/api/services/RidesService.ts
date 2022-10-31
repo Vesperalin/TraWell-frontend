@@ -102,11 +102,13 @@ export default {
       return response.data;
     });
   },
-  useDeleteRide: (rideId: number) => {
+  useDeleteRide: (rideId: number, token: string) => {
     return useQuery<unknown, Error>(
       [`ownRides-delete-${rideId}`, rideId],
       async () => {
-        const response = await ridesClient.delete<unknown>(`rides/${rideId}/`);
+        const response = await ridesClient.delete<unknown>(`rides/${rideId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
         return response.data;
       },
       {
@@ -203,6 +205,25 @@ export default {
         enabled: false,
         refetchOnWindowFocus: false,
         retry: false,
+        cacheTime: 0,
+      },
+    );
+  },
+  useCheckEditionPermissionForSingularRide: (rideId: number, token: string) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await ridesClient.get<unknown>(
+          `rides/${rideId}/check_edition_permissions/`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+      {
+        refetchOnWindowFocus: false,
+        retry: 1,
         cacheTime: 0,
       },
     );

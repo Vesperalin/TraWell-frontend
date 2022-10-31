@@ -1,15 +1,17 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Dayjs } from 'dayjs';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
+import { useNavigate } from 'react-router';
 import RidesService from '~/api/services/RidesService';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { Paths } from '~/enums/Paths';
 import { RideType } from '~/enums/RideType';
+import { useAuth } from '~/hooks/useAuth';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import {
   Wrapper,
   InnerWrapper,
-  StyledEditRideLink,
+  StyledEditRideButton,
   StyledDeleteRideButton,
   StyledDetailsRideLink,
   StyledText,
@@ -46,7 +48,9 @@ export const Ride = ({
   rideType,
   refetchRides,
 }: Props) => {
-  const { refetch } = RidesService.useDeleteRide(rideId);
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const { refetch } = RidesService.useDeleteRide(rideId, token ? token : '');
 
   const handleDelete = () => {
     refetch().then(() => {
@@ -56,6 +60,14 @@ export const Ride = ({
         setCurrentPage(1);
       }
     });
+  };
+
+  const handleEdit = () => {
+    if (rideType === RideType.Singular) {
+      navigate(`/edit-singular-ride/${rideId}`);
+    } else {
+      // TODO - recurrent ride redirection
+    }
   };
 
   return (
@@ -73,13 +85,10 @@ export const Ride = ({
       </div>
       <InnerWrapper editable={editable}>
         {editable && (
-          <StyledEditRideLink
-            style={{ textDecoration: 'none' }}
-            to={Paths.Home}
-          >
+          <StyledEditRideButton onClick={handleEdit}>
             <span>edit</span>
             <ArrowForwardIcon fontSize='small' />
-          </StyledEditRideLink>
+          </StyledEditRideButton>
         )}
         {editable && (
           <StyledDeleteRideButton onClick={handleDelete}>
