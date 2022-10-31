@@ -6,7 +6,7 @@ export interface Coordinate {
   sequence_no: string;
 }
 
-interface OwnRideDataBase {
+export interface DetailedRideData {
   ride_id: number;
   city_from: {
     city_id: number;
@@ -55,6 +55,6 @@ interface OwnRideDataBase {
   passengers: Passenger[];
 }
 
-export type RideForPassengerResponse = Omit<OwnRideDataBase, 'passengers'>;
+export type RideForPassengerResponse = Omit<DetailedRideData, 'passengers'>;
 
-export type RideForDriverResponse = OwnRideDataBase;
+export type RideForDriverResponse = DetailedRideData;
