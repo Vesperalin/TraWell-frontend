@@ -4,8 +4,9 @@ import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
 import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { EditionPermissions } from '~/models/Rides/EditionPermissions';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
-import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
+import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/RideForResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
 export default {
@@ -70,6 +71,21 @@ export default {
       const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
       return response.data;
     });
+  },
+  useRideForDriver: (rideId: number, token: string) => {
+    return useQuery<RideForDriverResponse, Error>(
+      ['rideForDriver', rideId],
+      async () => {
+        const response = await ridesClient.get<RideForDriverResponse>(`rides/${rideId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
   },
   useOwnRides: (
     page: number,
@@ -210,10 +226,10 @@ export default {
     );
   },
   useCheckEditionPermissionForSingularRide: (rideId: number, token: string) => {
-    return useQuery<unknown, Error>(
+    return useQuery<EditionPermissions, Error>(
       [],
       async () => {
-        const response = await ridesClient.get<unknown>(
+        const response = await ridesClient.get<EditionPermissions>(
           `rides/${rideId}/check_edition_permissions/`,
           {
             headers: { Authorization: 'Bearer ' + token },
