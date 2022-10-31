@@ -3,7 +3,6 @@ import RidesService from '~/api/services/RidesService';
 import { Loader } from '~/components/Loader';
 import { Paths } from '~/enums/Paths';
 import { useAuth } from '~/hooks/useAuth';
-import { FullRideEdit } from './components/FullRideEdit';
 
 export const EditSingularRide = () => {
   const { rideId } = useParams();
@@ -37,10 +36,19 @@ export const EditSingularRide = () => {
       );
     }
   }
+
   if (data && data.full_permission) {
-    return <FullRideEdit rideId={rideId ? Number(rideId) : -1} />;
+    return (
+      <Navigate
+        to={`/edit-full-singular-ride/${rideId}`}
+        replace={true}
+        state={{
+          rideId: rideId ? Number(rideId) : -1,
+        }}
+      />
+    );
   } else if (data) {
-    return <div>EditSingularRide {rideId}</div>;
+    return <div>EditSingleRide partially {rideId}</div>;
   } else {
     return <Loader />;
   }
