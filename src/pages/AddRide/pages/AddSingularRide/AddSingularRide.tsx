@@ -64,6 +64,7 @@ export const AddSingularRide = () => {
       setAllPoints(tempPoints);
     } else {
       setAllPoints([]);
+      setMapChecked(false);
     }
   }, [placeFrom, placeTo]);
 
