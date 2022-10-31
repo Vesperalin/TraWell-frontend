@@ -4,9 +4,9 @@ import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
 import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/DetailedRideData';
 import { EditionPermissions } from '~/models/Rides/EditionPermissions';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
-import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/RideForResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
 export default {
