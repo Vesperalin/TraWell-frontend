@@ -1,10 +1,12 @@
+import { Passenger } from './Passenger';
+
 export interface Coordinate {
   lat: string;
   lng: string;
   sequence_no: string;
 }
 
-export interface RideForPassengerResponse {
+interface OwnRideDataBase {
   ride_id: number;
   city_from: {
     city_id: number;
@@ -50,4 +52,9 @@ export interface RideForPassengerResponse {
     color: string;
   };
   coordinates: Coordinate[];
+  passengers: Passenger[];
 }
+
+export type RideForPassengerResponse = Omit<OwnRideDataBase, 'passengers'>;
+
+export type RideForDriverResponse = OwnRideDataBase;
