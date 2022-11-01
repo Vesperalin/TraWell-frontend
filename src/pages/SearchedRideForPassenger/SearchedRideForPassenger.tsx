@@ -1,7 +1,7 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sizes } from '~/enums/StyleSettings';
@@ -18,8 +18,11 @@ import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideF
 export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
   const { rideId } = useParams();
+  const { state } = useLocation();
   const [seatsToBook, setSeatsToBook] = useState<string>('');
   const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
+  const showButton =
+    state == null || (state !== null && (state.showButton as boolean)) ? true : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,13 +36,14 @@ export const SearchedRideForPassenger = () => {
         onClick={() => navigate(-1)}
       >
         <ArrowBackIosIcon fontSize='small' />
-        Back to rides
+        Back
       </BackButton>
       <UpperDataWrapper
         availableSeats={data?.available_seats}
         isLoading={isLoading}
         date={data?.start_date}
         isPrivate={data?.driver.private}
+        showButton={showButton}
       />
       <DataWrapper>
         <TimeLocationOfRide
