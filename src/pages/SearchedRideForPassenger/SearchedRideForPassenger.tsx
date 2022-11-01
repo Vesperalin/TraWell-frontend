@@ -1,11 +1,11 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
+import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
-
 import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Car } from './components/Car';
 import { Description } from './components/Description';
@@ -20,13 +20,27 @@ export const SearchedRideForPassenger = () => {
   const { rideId } = useParams();
   const { state } = useLocation();
   const [seatsToBook, setSeatsToBook] = useState<string>('');
-  const { data, isLoading } = RidesService.useRideForPassenger(rideId ? Number(rideId) : -1);
+  const { data, isLoading, isError } = RidesService.useRideForPassenger(
+    rideId ? Number(rideId) : -1,
+  );
   const showButton =
     state == null || (state !== null && (state.showButton as boolean)) ? true : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (isError) {
+    return (
+      <Navigate
+        to={Paths.Error}
+        replace={true}
+        state={{
+          text: 'Unexpected error occurred.',
+        }}
+      />
+    );
+  }
 
   return (
     <Wrapper>
