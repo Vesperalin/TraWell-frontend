@@ -6,16 +6,15 @@ import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
 import { Wrapper, Date, DataWrapper, RideType } from './UpperDataWrapper.style';
 
 interface Props {
-  availableSeats: number | undefined;
   isLoading: boolean;
   date: string | undefined;
   isPrivate: boolean | undefined;
 }
 
-export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }: Props) => {
+export const UpperDataWrapper = ({ isLoading, date, isPrivate }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
-  if (isLoading || !date || isPrivate === undefined || !availableSeats) {
+  if (isLoading || !date || isPrivate === undefined) {
     return (
       <Wrapper>
         <Skeleton

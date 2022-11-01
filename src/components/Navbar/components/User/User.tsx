@@ -14,7 +14,6 @@ import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
 import { StyledMenu, StyledMenuItem, StyledTypography } from './User.style';
 
-// TODO change data about user
 // TODO change paths in the future
 const settings = [
   {
