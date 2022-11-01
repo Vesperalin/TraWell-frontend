@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
 
 export const Wrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -13,6 +12,7 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.15)',
   borderRadius: '15px',
   width: '100%',
+  columnGap: '5px',
 
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
@@ -92,7 +92,7 @@ export const StyledDeleteRideButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const StyledDetailsRideLink = styled(Link)(({ theme }) => ({
+export const StyledDetailsRideButton = styled(Button)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.blue,
   backgroundColor: theme.palette.common.dimmedWhite,

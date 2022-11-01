@@ -4,7 +4,6 @@ import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-
 import { useNavigate } from 'react-router';
 import RidesService from '~/api/services/RidesService';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
-import { Paths } from '~/enums/Paths';
 import { RideType } from '~/enums/RideType';
 import { useAuth } from '~/hooks/useAuth';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
@@ -13,7 +12,7 @@ import {
   InnerWrapper,
   StyledEditRideButton,
   StyledDeleteRideButton,
-  StyledDetailsRideLink,
+  StyledDetailsRideButton,
   StyledText,
 } from './Ride.style';
 
@@ -70,6 +69,18 @@ export const Ride = ({
     }
   };
 
+  const handleOwnRideDetails = () => {
+    navigate(`/my-ride/${rideId}`);
+  };
+
+  const handleOtherRideDetails = () => {
+    navigate(`/searched-ride/${rideId}`, {
+      state: {
+        showButton: false,
+      },
+    });
+  };
+
   return (
     <Wrapper>
       <div>
@@ -96,13 +107,17 @@ export const Ride = ({
             <ArrowForwardIcon fontSize='small' />
           </StyledDeleteRideButton>
         )}
-        <StyledDetailsRideLink
-          style={{ textDecoration: 'none' }}
-          to={Paths.Home}
-        >
-          <span>details</span>
-          <ArrowForwardIcon fontSize='small' />
-        </StyledDetailsRideLink>
+        {editable ? (
+          <StyledDetailsRideButton onClick={handleOwnRideDetails}>
+            <span>details</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledDetailsRideButton>
+        ) : (
+          <StyledDetailsRideButton onClick={handleOtherRideDetails}>
+            <span>details</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledDetailsRideButton>
+        )}
       </InnerWrapper>
     </Wrapper>
   );
