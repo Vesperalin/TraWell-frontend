@@ -15,14 +15,21 @@ interface Props {
   isLoading: boolean;
   date: string | undefined;
   isPrivate: boolean | undefined;
+  showButton: boolean;
 }
 
-export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }: Props) => {
+export const UpperDataWrapper = ({
+  availableSeats,
+  isLoading,
+  date,
+  isPrivate,
+  showButton,
+}: Props) => {
   const { authenticated } = useAuth();
   const [seatsToBook, setSeatsToBook] = useState<string>('');
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
-  if (isLoading || !date || !isPrivate || !availableSeats) {
+  if (isLoading || !date || isPrivate === undefined || !availableSeats) {
     return (
       <Wrapper>
         <Skeleton
@@ -44,7 +51,7 @@ export const UpperDataWrapper = ({ availableSeats, isLoading, date, isPrivate }:
           </Date>
           <RideType variant='h3'>{isPrivate ? 'Private ride' : 'Company ride'}</RideType>
         </DataWrapper>
-        {authenticated && (
+        {showButton && authenticated && (
           <ButtonWrapper>
             <SelectSeats
               seatsToBook={seatsToBook}

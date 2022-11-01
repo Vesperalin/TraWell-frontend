@@ -5,8 +5,6 @@ interface Props {
   src: string;
 }
 
-// TODO - change data to data about user
-
 export const Avatar = ({ alternativeText, src }: Props) => {
   return (
     <StyledAvatar
