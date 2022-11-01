@@ -206,6 +206,10 @@ export const FullRideEdit = () => {
       setError('You have to choose price per passenger');
     } else if (hasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
+    } else if (exactPlaceFrom.length > 0) {
+      setError('"Exact place from" is too long. Maximum is 100 signs.');
+    } else if (exactPlaceTo.length > 0) {
+      setError('"Exact place to" is too long. Maximum is 100 signs.');
     } else {
       refetchEditData().then(() => {
         setOpenModal(true);
