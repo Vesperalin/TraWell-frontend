@@ -244,7 +244,7 @@ export default {
       },
     );
   },
-  useEditSingularRide: (
+  useEditFullSingularRide: (
     rideId: number,
     token: string | undefined,
     placeFrom: AutocompletePlace | null,
@@ -321,6 +321,42 @@ export default {
               },
               description: description,
               coordinates: points.length > 0 ? points : [],
+              automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
+            },
+            { headers: { Authorization: 'Bearer ' + token } },
+          );
+          return response.data;
+        }
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
+      },
+    );
+  },
+  useEditPartialSingularRide: (
+    rideId: number,
+    token: string | undefined,
+    seats: string | null,
+    vehicle: number | null,
+    description: string,
+    passengerAcceptance: string,
+    hasRole: (role: Role) => boolean,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        if (token && seats && vehicle) {
+          const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
+
+          const response = await ridesClient.patch<unknown>(
+            `rides/${rideId}/`,
+            {
+              seats: Number(seats),
+              vehicle: hasRole(Role.Private) ? vehicle : -1,
+              description: description,
               automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
             },
             { headers: { Authorization: 'Bearer ' + token } },

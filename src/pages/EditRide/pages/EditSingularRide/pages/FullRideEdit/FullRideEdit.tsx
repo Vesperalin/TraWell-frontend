@@ -66,24 +66,25 @@ export const FullRideEdit = () => {
     isError: isErrorRideData,
   } = RidesService.useRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
 
-  const { refetch: refetchEditData, isError: isErrorEditData } = RidesService.useEditSingularRide(
-    rideId ? Number(rideId) : -1,
-    token,
-    placeFrom,
-    placeTo,
-    exactPlaceFrom,
-    exactPlaceTo,
-    startDate && startTime ? transformToFullDate(startDate, startTime) : null,
-    price,
-    amountOfPeople,
-    vehicle,
-    hours,
-    minutes,
-    description,
-    allPoints,
-    passengerAcceptance,
-    hasRole,
-  );
+  const { refetch: refetchEditData, isError: isErrorEditData } =
+    RidesService.useEditFullSingularRide(
+      rideId ? Number(rideId) : -1,
+      token,
+      placeFrom,
+      placeTo,
+      exactPlaceFrom,
+      exactPlaceTo,
+      startDate && startTime ? transformToFullDate(startDate, startTime) : null,
+      price,
+      amountOfPeople,
+      vehicle,
+      hours,
+      minutes,
+      description,
+      allPoints,
+      passengerAcceptance,
+      hasRole,
+    );
 
   useEffect(() => {
     if (token && rideId) {
