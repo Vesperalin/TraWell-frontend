@@ -7,6 +7,9 @@ export enum Paths {
   UserProfile = '/profile',
   ChooseRideType = '/choose-ride-type',
   AddSingularRide = '/add-singular-ride',
+  EditSingularRide = '/edit-singular-ride/:rideId',
+  EditFullSingularRide = '/edit-full-singular-ride/:rideId',
+  EditPartialSingularRide = '/edit-partial-singular-ride/:rideId',
   Error = '/error',
   NotFound = '*',
 }

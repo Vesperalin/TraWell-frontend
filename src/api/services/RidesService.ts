@@ -4,8 +4,9 @@ import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
 import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/DetailedRideData';
+import { EditionPermissions } from '~/models/Rides/EditionPermissions';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
-import { RideForPassengerResponse } from '~/models/Rides/RideForPassengerResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
 
 export default {
@@ -71,6 +72,21 @@ export default {
       return response.data;
     });
   },
+  useRideForDriver: (rideId: number, token: string) => {
+    return useQuery<RideForDriverResponse, Error>(
+      ['rideForDriver', rideId],
+      async () => {
+        const response = await ridesClient.get<RideForDriverResponse>(`rides/${rideId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
   useOwnRides: (
     page: number,
     token: string,
@@ -102,11 +118,13 @@ export default {
       return response.data;
     });
   },
-  useDeleteRide: (rideId: number) => {
+  useDeleteRide: (rideId: number, token: string) => {
     return useQuery<unknown, Error>(
       [`ownRides-delete-${rideId}`, rideId],
       async () => {
-        const response = await ridesClient.delete<unknown>(`rides/${rideId}/`);
+        const response = await ridesClient.delete<unknown>(`rides/${rideId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
         return response.data;
       },
       {
@@ -192,6 +210,153 @@ export default {
               },
               description: description,
               coordinates: points.length > 0 ? points : [],
+              automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
+            },
+            { headers: { Authorization: 'Bearer ' + token } },
+          );
+          return response.data;
+        }
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
+      },
+    );
+  },
+  useCheckEditionPermissionForSingularRide: (rideId: number, token: string) => {
+    return useQuery<EditionPermissions, Error>(
+      [],
+      async () => {
+        const response = await ridesClient.get<EditionPermissions>(
+          `rides/${rideId}/check_edition_permissions/`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+      {
+        refetchOnWindowFocus: false,
+        retry: 1,
+        cacheTime: 0,
+      },
+    );
+  },
+  useEditFullSingularRide: (
+    rideId: number,
+    token: string | undefined,
+    placeFrom: AutocompletePlace | null,
+    placeTo: AutocompletePlace | null,
+    areaFrom: string,
+    areaTo: string,
+    startDate: string | null,
+    price: string | null,
+    seats: string | null,
+    vehicle: number | null,
+    hours: string | null,
+    minutes: string | null,
+    description: string,
+    coordinates: [number, number][],
+    passengerAcceptance: string,
+    hasRole: (role: Role) => boolean,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        if (
+          token &&
+          placeFrom &&
+          placeTo &&
+          startDate &&
+          price &&
+          seats &&
+          vehicle &&
+          hours &&
+          minutes
+        ) {
+          const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
+          const points: { lat: number; lng: number; sequence_no: number }[] = [];
+
+          if (coordinates.length > 2) {
+            coordinates.pop();
+            coordinates.shift();
+
+            for (let i = 0; i < coordinates.length; i++) {
+              points.push({
+                lat: Number(coordinates[i][0].toFixed(6)),
+                lng: Number(coordinates[i][1].toFixed(6)),
+                sequence_no: i + 1,
+              });
+            }
+          }
+
+          const response = await ridesClient.patch<unknown>(
+            `rides/${rideId}/`,
+            {
+              city_from: {
+                name: placeFrom.name,
+                county: placeFrom.county,
+                state: placeFrom.state,
+                lat: placeFrom.lat,
+                lng: placeFrom.lon,
+              },
+              city_to: {
+                name: placeTo.name,
+                county: placeTo.county,
+                state: placeTo.state,
+                lat: placeTo.lat,
+                lng: placeTo.lon,
+              },
+              area_from: areaFrom,
+              area_to: areaTo,
+              start_date: startDate,
+              price: Number(price),
+              seats: Number(seats),
+              vehicle: hasRole(Role.Private) ? vehicle : -1,
+              duration: {
+                hours: Number(hours),
+                minutes: Number(minutes),
+              },
+              description: description,
+              coordinates: points.length > 0 ? points : [],
+              automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
+            },
+            { headers: { Authorization: 'Bearer ' + token } },
+          );
+          return response.data;
+        }
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
+      },
+    );
+  },
+  useEditPartialSingularRide: (
+    rideId: number,
+    token: string | undefined,
+    seats: string | null,
+    vehicle: number | null,
+    description: string,
+    passengerAcceptance: string,
+    hasRole: (role: Role) => boolean,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        if (token && seats && vehicle) {
+          const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
+
+          const response = await ridesClient.patch<unknown>(
+            `rides/${rideId}/`,
+            {
+              seats: Number(seats),
+              vehicle: hasRole(Role.Private) ? vehicle : -1,
+              description: description,
               automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
             },
             { headers: { Authorization: 'Bearer ' + token } },

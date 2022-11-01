@@ -38,7 +38,7 @@ export const InnerWrapper = styled(Box, {
   },
 }));
 
-export const StyledEditRideLink = styled(Link)(({ theme }) => ({
+export const StyledEditRideButton = styled(Button)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.dimmedWhite,
   backgroundColor: theme.palette.common.navy,

@@ -1,5 +1,5 @@
 import { RoadMap as Map } from '~/components/RoadMap';
-import { Coordinate } from '~/models/Rides/RideForPassengerResponse';
+import { Coordinate } from '~/models/Rides/DetailedRideData';
 import { Wrapper, StyledSkeleton } from './RoadMap.style';
 
 interface Props {

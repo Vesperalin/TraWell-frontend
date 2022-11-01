@@ -37,6 +37,15 @@ const AddSingularRide = lazy(() =>
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
+const EditSingularRide = lazy(() =>
+  import('~/pages/EditRide').then((module) => ({ default: module.EditSingularRide })),
+);
+const EditFullSingularRide = lazy(() =>
+  import('~/pages/EditRide').then((module) => ({ default: module.FullRideEdit })),
+);
+const EditFullPartialRide = lazy(() =>
+  import('~/pages/EditRide').then((module) => ({ default: module.PartialRideEdit })),
+);
 const Error = lazy(() => import('~/pages/Error').then((module) => ({ default: module.Error })));
 
 const App = () => {
@@ -91,6 +100,18 @@ const App = () => {
               <Route
                 path={Paths.AddSingularRide}
                 element={<PrivateRoute element={<AddSingularRide />} />}
+              />
+              <Route
+                path={Paths.EditSingularRide}
+                element={<PrivateRoute element={<EditSingularRide />} />}
+              />
+              <Route
+                path={Paths.EditFullSingularRide}
+                element={<PrivateRoute element={<EditFullSingularRide />} />}
+              />
+              <Route
+                path={Paths.EditPartialSingularRide}
+                element={<PrivateRoute element={<EditFullPartialRide />} />}
               />
               <Route
                 path={Paths.SearchedRideForPassenger}
