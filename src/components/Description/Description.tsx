@@ -19,7 +19,7 @@ interface Props {
 
 export const Description = ({ value, setValue, label, checked, setChecked }: Props) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value.trim());
+    setValue(event.target.value);
   };
 
   const handleChecked = (event: ChangeEvent<HTMLInputElement>) => {
