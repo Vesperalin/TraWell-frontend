@@ -6,6 +6,7 @@ import { Footer } from '~/components/Footer';
 import { Loader } from '~/components/Loader';
 import { Navbar } from '~/components/Navbar';
 import { Paths } from '~/enums/Paths';
+import { Role } from '~/enums/Role';
 import { Wrapper, Container, Content, LoadingWrapper } from './App.style';
 import { PrivateRoute } from './PrivateRoute';
 
@@ -45,6 +46,9 @@ const EditFullPartialRide = lazy(() =>
 );
 const OwnRideForDriver = lazy(() =>
   import('~/pages/OwnRideForDriver').then((module) => ({ default: module.OwnRideForDriver })),
+);
+const OwnRequests = lazy(() =>
+  import('~/pages/OwnRequests').then((module) => ({ default: module.OwnRequests })),
 );
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
@@ -119,6 +123,15 @@ const App = () => {
               <Route
                 path={Paths.OwnRideForDriver}
                 element={<PrivateRoute element={<OwnRideForDriver />} />}
+              />
+              <Route
+                path={Paths.MyRequests}
+                element={
+                  <PrivateRoute
+                    element={<OwnRequests />}
+                    role={Role.Private}
+                  />
+                }
               />
               <Route
                 path={Paths.SearchedRideForPassenger}

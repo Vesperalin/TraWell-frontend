@@ -14,7 +14,7 @@ import { StyledAppBar, MobileWrapper, DesktopWrapper } from './Navbar.style';
 // TODO change paths in the future
 const pages = [
   { name: 'Pending requests', path: Paths.Home },
-  { name: 'My requests', path: Paths.Home },
+  { name: 'My requests', path: Paths.MyRequests },
   { name: 'My rides', path: '/own-rides/1' },
   { name: 'Post a ride', path: Paths.ChooseRideType },
 ];
