@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 import { Wrapper, Avatar, ReviewWrapper, MediumIcon, SmallIcon, AvatarWrapper } from './User.style';
 
 export interface Props {
+  userId: number;
   isAvatarFirstDesktop?: boolean;
   isAvatarFirstMobile?: boolean;
   name: string;
@@ -11,17 +13,25 @@ export interface Props {
 }
 
 export const User = ({
+  userId,
   isAvatarFirstDesktop = true,
   isAvatarFirstMobile = true,
   name,
   imageSource,
   reviewMean,
 }: Props) => {
+  const navigate = useNavigate();
+
+  const handleUserClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    navigate(`/profile/${userId}`);
+  };
+
   return (
     <Wrapper
       isAvatarFirstDesktop={isAvatarFirstDesktop}
       isAvatarFirstMobile={isAvatarFirstMobile}
-      onClick={() => console.log('tu bedzie przeniesienie do strony o uytkowniku')}
+      onClick={handleUserClick}
     >
       <AvatarWrapper>
         <Avatar

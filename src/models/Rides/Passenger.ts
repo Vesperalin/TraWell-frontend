@@ -1,5 +1,5 @@
 export interface Passenger {
-  user_id: number;
+  id: number;
   user: {
     user_id: number;
     first_name: string;

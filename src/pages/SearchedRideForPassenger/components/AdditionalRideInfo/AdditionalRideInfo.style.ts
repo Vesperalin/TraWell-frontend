@@ -27,6 +27,9 @@ export const TextWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     alignItems: 'flex-start',
   },
+  [theme.breakpoints.up('md')]: {
+    minWidth: '170px',
+  },
 }));
 
 export const DesktopSkeleton = styled(Skeleton)(({ theme }) => ({

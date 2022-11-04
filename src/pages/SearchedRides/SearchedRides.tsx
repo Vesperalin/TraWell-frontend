@@ -199,6 +199,7 @@ export const SearchedRides = () => {
             data.results.length > 0 &&
             data.results.map((result) => (
               <RideData
+                userId={result.driver.user_id}
                 rideId={result.ride_id}
                 key={result.ride_id}
                 startDate={dayjs(result.start_date)}

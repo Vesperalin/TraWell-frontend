@@ -5,7 +5,7 @@ export enum Paths {
   SearchedRideForPassenger = '/searched-ride/:rideId',
   OwnRideForDriver = '/my-ride/:rideId',
   OwnRides = '/own-rides/:page',
-  UserProfile = '/profile',
+  UserProfile = '/profile/:userId',
   ChooseRideType = '/choose-ride-type',
   AddSingularRide = '/add-singular-ride',
   EditSingularRide = '/edit-singular-ride/:rideId',

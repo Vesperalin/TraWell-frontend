@@ -33,8 +33,9 @@ export const Passengers = ({ isLoading, passengers }: Props) => {
             {passengers &&
               passengers.map((passenger) => {
                 return (
-                  <AvatarWrapper key={passenger.user_id}>
+                  <AvatarWrapper key={passenger.id}>
                     <User
+                      userId={passenger.user.user_id}
                       isAvatarFirstDesktop={true}
                       isAvatarFirstMobile={true}
                       name={`${passenger.user.first_name}`}

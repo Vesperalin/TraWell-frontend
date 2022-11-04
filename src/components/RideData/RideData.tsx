@@ -6,6 +6,7 @@ import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Wrapper, InnerWrapper } from './RideData.style';
 
 interface Props {
+  userId: number;
   rideId: number;
   startDate: Dayjs;
   placeFrom: string;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export const RideData = ({
+  userId,
   rideId,
   startDate,
   placeFrom,
@@ -62,6 +64,7 @@ export const RideData = ({
         />
         {!isHistoryRideAsPassenger && (
           <User
+            userId={userId}
             isAvatarFirstDesktop={isAvatarFirstDesktop}
             isAvatarFirstMobile={isAvatarFirstMobile}
             name={name}
