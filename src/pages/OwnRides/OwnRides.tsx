@@ -43,7 +43,6 @@ const sortElements: SortElement[] = [
   { label: 'Date: lowest first', value: 'start_date' },
 ];
 
-// TODO: add user data, not random data
 export const OwnRides = () => {
   const { token } = useAuth();
   const { page } = useParams();
