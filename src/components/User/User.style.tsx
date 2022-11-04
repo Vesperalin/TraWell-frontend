@@ -6,12 +6,18 @@ import { Props } from './User';
 
 type StyleProps = Pick<Props, 'isAvatarFirstDesktop' | 'isAvatarFirstMobile'>;
 
-export const Wrapper = styled(Box, {
+export const Wrapper = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isAvatarFirstDesktop' && prop !== 'isAvatarFirstMobile',
 })<StyleProps>(({ theme, isAvatarFirstDesktop, isAvatarFirstMobile }) => ({
   display: 'flex',
   flexDirection: isAvatarFirstDesktop ? 'row' : 'row-reverse',
   gap: '7px',
+  transition: 'all .2s ease-in-out',
+
+  '&:hover': {
+    transform: 'scale(1.05)',
+    cursor: 'pointer',
+  },
 
   [theme.breakpoints.down('sm')]: {
     flexDirection: isAvatarFirstMobile ? 'row' : 'row-reverse',

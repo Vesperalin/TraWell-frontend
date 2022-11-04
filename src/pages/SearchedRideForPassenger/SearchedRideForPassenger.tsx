@@ -72,6 +72,7 @@ export const SearchedRideForPassenger = () => {
           exactPlaceTo={data?.area_to}
         />
         <AdditionalRideInfo
+          userId={data?.driver.user_id}
           isLoading={isLoading}
           seats={data?.seats}
           availableSeats={data?.available_seats}

@@ -59,7 +59,7 @@ const App = () => {
       if (keycloak.authenticated && keycloak.token) {
         const sendRequest = async () => {
           const response = await usersClient.get<unknown>('users/check_user', {
-            headers: { Authorization: keycloak.token ? keycloak.token : '' },
+            headers: { Authorization: keycloak.token ? 'Bearer ' + keycloak.token : '' },
           });
           return response.data;
         };

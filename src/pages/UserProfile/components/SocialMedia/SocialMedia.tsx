@@ -1,22 +1,18 @@
 import Typography from '@mui/material/Typography';
-// eslint-disable-next-line camelcase
-import jwt_decode from 'jwt-decode';
 import facebookImage from '~/assets/images/facebook.webp';
 import instagramImage from '~/assets/images/instagram.webp';
-import { useAuth } from '~/hooks/useAuth';
 import {
   StyledWrapper,
   StyledSocialMediaWrapper,
   StyledSocialMediaImage,
 } from './SocialMedia.style';
 
-export const SocialMedia = () => {
-  const { token } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const decodedToken = jwt_decode<any>(token ? token : '');
-  const facebookLink = decodedToken.facebook ? decodedToken.facebook : '';
-  const instagramLink = decodedToken.instagram ? decodedToken.instagram : '';
+interface Props {
+  facebookLink: string;
+  instagramLink: string;
+}
 
+export const SocialMedia = ({ facebookLink, instagramLink }: Props) => {
   return (
     <StyledWrapper>
       {(facebookLink !== '' || instagramLink !== '') && (

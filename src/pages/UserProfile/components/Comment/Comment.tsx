@@ -20,6 +20,7 @@ import {
 } from './Comment.style';
 
 interface Props {
+  userId: number;
   userName: string;
   imageSource: string;
   reviewMean: number;
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export const Comment = ({
+  userId,
   userName,
   imageSource,
   reviewMean,
@@ -47,6 +49,7 @@ export const Comment = ({
     <CommentWrapper>
       <UpperWrapper>
         <User
+          userId={userId}
           name={userName}
           imageSource={imageSource}
           reviewMean={reviewMean}

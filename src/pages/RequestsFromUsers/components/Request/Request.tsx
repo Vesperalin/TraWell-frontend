@@ -16,6 +16,7 @@ import {
 } from './Request.style';
 
 interface Props {
+  userId: number;
   startDate: Dayjs;
   placeFrom: string;
   exactPlaceFrom?: string;
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export const Request = ({
+  userId,
   startDate,
   placeFrom,
   exactPlaceFrom,
@@ -67,6 +69,7 @@ export const Request = ({
       </FirstInnerWrapper>
       <SecondInnerWrapper>
         <User
+          userId={userId}
           isAvatarFirstDesktop={false}
           name={userName}
           imageSource={imageSource}

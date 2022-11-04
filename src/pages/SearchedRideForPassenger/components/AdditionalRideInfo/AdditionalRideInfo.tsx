@@ -9,6 +9,7 @@ import {
 } from './AdditionalRideInfo.style';
 
 interface Props {
+  userId: number | undefined;
   isLoading: boolean;
   seats: number | undefined;
   availableSeats: number | undefined;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const AdditionalRideInfo = ({
+  userId,
   isLoading,
   seats,
   availableSeats,
@@ -58,6 +60,7 @@ export const AdditionalRideInfo = ({
         </TextWrapper>
         <AvatarWrapper>
           <User
+            userId={userId ? userId : -1}
             isAvatarFirstDesktop={false}
             isAvatarFirstMobile={false}
             name={name}
