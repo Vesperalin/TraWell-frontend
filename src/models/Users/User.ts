@@ -1,5 +1,6 @@
 export interface User {
   avatar: string;
+  avg_rate: string;
   date_of_birth: string;
   email: string;
   facebook: string;
