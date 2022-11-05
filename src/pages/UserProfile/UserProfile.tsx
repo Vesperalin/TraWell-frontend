@@ -31,7 +31,6 @@ export const UserProfile = () => {
     navigate(Paths.Home);
   };
 
-  // TODO: add user reviews
   if ((isLoading || !data) && !isError) {
     return <Loader />;
   } else if (isError) {
