@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
 
 export const Wrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -43,7 +42,7 @@ export const ButtonsWrapper = styled(Box)({
   gap: '10px',
 });
 
-export const StyledLink = styled(Link)(({ theme }) => ({
+export const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.darkNavy,
   opacity: '0.5',
@@ -51,6 +50,8 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: '14px',
   display: 'flex',
   alignItems: 'center',
+  alignSelf: 'flex-start',
+  paddingLeft: '0',
 
   [theme.breakpoints.down('sm')]: {
     fontSize: '12px',

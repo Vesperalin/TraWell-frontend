@@ -14,13 +14,11 @@ import {
   DateFilterType,
   TimeFilterType,
   InputFilterType,
-  RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
 import { Loader } from '~/components/Loader';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { Paths } from '~/enums/Paths';
-import { RequestStatus } from '~/enums/RequestStatus';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
@@ -32,7 +30,7 @@ import {
   Content,
   NoRidesWrapper,
   PaginationWrapper,
-} from './OwnRequests.style';
+} from './RequestsFromUsers.style';
 
 // TODO add review sorter keys
 const sortElements: SortElement[] = [
@@ -40,7 +38,7 @@ const sortElements: SortElement[] = [
   { label: 'Date: lowest first', value: 'start_date' },
 ];
 
-export const OwnRequests = () => {
+export const RequestsFromUsers = () => {
   const { token } = useAuth();
   const { page } = useParams();
   const navigate = useNavigate();
@@ -50,7 +48,6 @@ export const OwnRequests = () => {
   const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
   const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
   const [from, setFrom] = useState<AutocompletePlace | null>(null);
-  const [filterRequestStatus, setFilterRequestStatus] = useState<string>('all');
   const [to, setTo] = useState<AutocompletePlace | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
   let dateAndTime: string;
@@ -64,14 +61,13 @@ export const OwnRequests = () => {
     dateAndTime = '';
   }
 
-  const { isLoading, data, isError, refetch } = RidesService.useMyRequests(
+  const { isLoading, data, isError, refetch } = RidesService.usePendingRequests(
     currentPage,
     token,
     sortKey,
     dateAndTime,
     from,
     to,
-    filterRequestStatus,
   );
 
   useEffect(() => {
@@ -79,17 +75,16 @@ export const OwnRequests = () => {
       refetch();
     }, 100);
     // eslint-disable-next-line max-len
-  }, [dateAndTime, from, to, filterRequestStatus, refetch, sortKey, currentPage]);
+  }, [dateAndTime, from, to, refetch, sortKey, currentPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/my-requests/1');
     setTimeout(() => {
-      navigate('/my-requests/1');
+      navigate('/pending-requests/1');
     }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterTime, filterDate, from, to, filterRequestStatus]);
+  }, [filterTime, filterDate, from, to]);
 
   if (isError) {
     return (
@@ -123,25 +118,12 @@ export const OwnRequests = () => {
       to: to,
       setTo: setTo,
     } as InputFilterType,
-    {
-      label: 'Request status:',
-      type: TypeOfFilter.RadioButtonsFilter,
-      options: [
-        { value: 'all', label: 'All' },
-        { value: 'pending', label: 'Pending' },
-        { value: 'accepted', label: 'Accepted' },
-        { value: 'declined', label: 'Declined' },
-        { value: 'cancelled', label: 'Cancelled' },
-      ],
-      defaultValue: 'all',
-      setValue: setFilterRequestStatus,
-    } as RadioButtonsFilterType,
   ];
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/my-requests/${value}`);
+    navigate(`/pending-requests/${value}`);
   };
 
   return (
@@ -174,15 +156,6 @@ export const OwnRequests = () => {
             data &&
             data.results.length > 0 &&
             data.results.map((result) => {
-              let status: RequestStatus = RequestStatus.Pending;
-              if (result.decision === 'accepted') {
-                status = RequestStatus.Accepted;
-              } else if (result.decision === 'declined') {
-                status = RequestStatus.Declined;
-              } else if (result.decision === 'cancelled') {
-                status = RequestStatus.Cancelled;
-              }
-
               return (
                 <Request
                   key={result.id}
@@ -198,7 +171,6 @@ export const OwnRequests = () => {
                   userName={result.ride.driver.first_name}
                   imageSource={result.ride.driver.avatar}
                   reviewMean={Number(result.ride.driver.avg_rate)}
-                  requestStatus={status}
                   refetchData={refetch}
                 />
               );

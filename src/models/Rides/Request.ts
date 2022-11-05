@@ -1,6 +1,6 @@
 import { RideData } from './RideData';
 
-export interface OwnRequest {
+export interface Request {
   id: number;
   ride: RideData;
   decision: string;
