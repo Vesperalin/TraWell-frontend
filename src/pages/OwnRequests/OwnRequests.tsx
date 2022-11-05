@@ -40,8 +40,6 @@ const sortElements: SortElement[] = [
   { label: 'Date: lowest first', value: 'start_date' },
 ];
 
-// TODO: dodać obsługę akcji usera na request
-
 export const OwnRequests = () => {
   const { token } = useAuth();
   const { page } = useParams();
@@ -128,6 +126,7 @@ export const OwnRequests = () => {
         { value: 'pending', label: 'Pending' },
         { value: 'accepted', label: 'Accepted' },
         { value: 'declined', label: 'Declined' },
+        { value: 'cancelled', label: 'Cancelled' },
       ],
       defaultValue: 'all',
       setValue: setFilterRequestStatus,
@@ -174,12 +173,16 @@ export const OwnRequests = () => {
               if (result.decision === 'accepted') {
                 status = RequestStatus.Accepted;
               } else if (result.decision === 'declined') {
-                status = RequestStatus.Rejected;
+                status = RequestStatus.Declined;
+              } else if (result.decision === 'cancelled') {
+                status = RequestStatus.Cancelled;
               }
 
               return (
                 <Request
                   key={result.id}
+                  requestId={result.id}
+                  rideId={result.ride.ride_id}
                   userId={result.ride.driver.user_id}
                   startDate={dayjs(result.ride.start_date)}
                   placeFrom={result.ride.city_from.name}
@@ -191,6 +194,7 @@ export const OwnRequests = () => {
                   imageSource={result.ride.driver.avatar}
                   reviewMean={Number(result.ride.driver.avg_rate)}
                   requestStatus={status}
+                  refetchData={refetch}
                 />
               );
             })}

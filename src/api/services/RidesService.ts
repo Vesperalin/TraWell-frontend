@@ -132,6 +132,7 @@ export default {
         enabled: false,
         refetchOnWindowFocus: false,
         retry: 1,
+        cacheTime: 0,
       },
     );
   },
@@ -404,5 +405,22 @@ export default {
       );
       return response.data;
     });
+  },
+  useCancelOwnRequest: (requestId: number, token: string) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await ridesClient.delete<unknown>(`rides/request/${requestId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        console.log(response.data);
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
+    );
   },
 };
