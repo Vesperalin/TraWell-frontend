@@ -15,7 +15,6 @@ export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
   const { rideId } = useParams();
   const { state } = useLocation();
-  const [seatsToBook, setSeatsToBook] = useState<string>('');
   const { data, isLoading, isError } = RidesService.useRideForPassenger(
     rideId ? Number(rideId) : -1,
   );
