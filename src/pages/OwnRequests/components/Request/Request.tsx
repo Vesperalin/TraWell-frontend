@@ -64,12 +64,23 @@ export const Request = ({
 
   const cancelRequest = async () => {
     setShowQuestionModal(false);
-    const response = await ridesClient.delete<unknown>(`rides/request/${requestId}/`, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
-    setShowInfoModal(true);
-    setText(response.data as string);
-    refetchData();
+
+    await ridesClient
+      .delete<unknown>(`rides/request/${requestId}/`, {
+        headers: { Authorization: 'Bearer ' + token },
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        setShowInfoModal(true);
+        setText(data as string);
+        refetchData();
+      })
+      .catch((error) => {
+        setShowInfoModal(true);
+        setText(error.request.response.slice(1, -1));
+      });
   };
 
   const handleDetailsView = () => {

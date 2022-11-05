@@ -1,19 +1,15 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import Skeleton from '@mui/material/Skeleton';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
-import { PrimaryButton } from '~/components/PrimaryButton';
 import { Paths } from '~/enums/Paths';
-import { Sizes } from '~/enums/StyleSettings';
 import { AdditionalRideInfo } from './components/AdditionalRideInfo';
 import { Car } from './components/Car';
 import { Description } from './components/Description';
 import { RoadMap } from './components/RoadMap';
-import { SelectSeats } from './components/SelectSeats';
 import { TimeLocationOfRide } from './components/TimeLocationOfRide';
 import { UpperDataWrapper } from './components/UpperDataWrapper';
-import { Wrapper, DataWrapper, ButtonWrapper, BackButton } from './SearchedRideForPassenger.style';
+import { Wrapper, DataWrapper, BackButton } from './SearchedRideForPassenger.style';
 
 export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
@@ -58,6 +54,7 @@ export const SearchedRideForPassenger = () => {
         date={data?.start_date}
         isPrivate={data?.driver.private}
         showButton={showButton}
+        rideId={data?.ride_id}
       />
       <DataWrapper>
         <TimeLocationOfRide
@@ -81,27 +78,6 @@ export const SearchedRideForPassenger = () => {
           imageSource={data?.driver.avatar}
           reviewMean={data ? Number(data.driver.avg_rate) : undefined}
         />
-        <ButtonWrapper>
-          <SelectSeats
-            seatsToBook={seatsToBook}
-            setSeatsToBook={setSeatsToBook}
-            isLoading={isLoading}
-            availableSeats={data?.available_seats}
-          />
-          {isLoading ? (
-            <Skeleton
-              width={100}
-              height={40}
-            />
-          ) : (
-            <PrimaryButton
-              label='Book ride'
-              onClick={() => console.log('tu będzie bookowanie przejazdu')}
-              desktopSize={Sizes.Medium}
-              mobileSize={Sizes.Small}
-            />
-          )}
-        </ButtonWrapper>
       </DataWrapper>
       <Car
         isLoading={isLoading}

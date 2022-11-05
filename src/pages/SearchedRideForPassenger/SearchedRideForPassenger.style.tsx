@@ -39,19 +39,3 @@ export const DataWrapper = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
   },
 }));
-
-export const ButtonWrapper = styled(Box)(({ theme }) => ({
-  width: '100%',
-  display: 'none',
-
-  [theme.breakpoints.down('sm')]: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '20px',
-    margin: '20px 0',
-  },
-
-  '& button': {
-    alignSelf: 'center',
-  },
-}));
