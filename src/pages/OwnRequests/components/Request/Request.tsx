@@ -145,7 +145,7 @@ export const Request = ({
       )}
       {showInfoModal && (
         <Modal
-          open={showQuestionModal}
+          open={showInfoModal}
           title='Cancel request'
           text={text}
           handleOpen={() => setShowInfoModal(true)}

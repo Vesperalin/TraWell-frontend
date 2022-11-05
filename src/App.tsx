@@ -50,6 +50,9 @@ const OwnRideForDriver = lazy(() =>
 const OwnRequests = lazy(() =>
   import('~/pages/OwnRequests').then((module) => ({ default: module.OwnRequests })),
 );
+const RequestsFromUsers = lazy(() =>
+  import('~/pages/RequestsFromUsers').then((module) => ({ default: module.RequestsFromUsers })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -132,6 +135,10 @@ const App = () => {
                     role={Role.Private}
                   />
                 }
+              />
+              <Route
+                path={Paths.PendingRequests}
+                element={<PrivateRoute element={<RequestsFromUsers />} />}
               />
               <Route
                 path={Paths.SearchedRideForPassenger}
