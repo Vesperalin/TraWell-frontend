@@ -392,9 +392,9 @@ export default {
           const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
           const cityToCounty = to ? `&city_to_county=${to.county}` : '';
           const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
-          const cityFromLon = from ? `&city_from_lon=${from.lon}` : '';
+          const cityFromLon = from ? `&city_from_lng=${from.lon}` : '';
           const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
-          const cityToLon = to ? `&city_to_lon=${to.lon}` : '';
+          const cityToLon = to ? `&city_to_lng=${to.lon}` : '';
           const cityTo = to ? `&city_to=${to.name}` : '';
           const cityFrom = from ? `&city_from=${from.name}` : '';
           const status = requestStatus ? `&decision=${requestStatus}` : '';
