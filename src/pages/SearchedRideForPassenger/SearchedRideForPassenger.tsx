@@ -1,5 +1,5 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { Paths } from '~/enums/Paths';
