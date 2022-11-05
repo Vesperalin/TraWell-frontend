@@ -81,6 +81,13 @@ export const OwnRides = () => {
     refetch();
   }, [dateAndTime, from, to, refetch, sortKey, value]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentPage(1);
+    navigate('/own-rides/1');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterDate, filterTime, from, to]);
+
   if (isError) {
     return (
       <Navigate
