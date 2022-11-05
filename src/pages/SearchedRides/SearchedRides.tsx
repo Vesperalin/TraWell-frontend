@@ -3,7 +3,7 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
@@ -106,6 +106,20 @@ export const SearchedRides = () => {
     seats,
     dateAndTime,
   );
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentPage(1);
+    navigate(
+      // eslint-disable-next-line max-len
+      `/searched-rides/${cityFrom as string}/${countyFrom as string}/${stateFrom as string}/${
+        latFrom as string
+      }/${lonFrom as string}/${cityTo as string}/${countyTo as string}/${stateTo as string}/${
+        latTo as string
+      }/${lonTo as string}/${dateAndTime}/${seats}/1`,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterDate, filterTime, filterAmountOfStars, filterPriceFrom, filterRideType, filterPriceTo]);
 
   if (isError) {
     return (

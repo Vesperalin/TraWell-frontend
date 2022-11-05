@@ -1,8 +1,5 @@
-import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import { Theme } from '@mui/material/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { Dayjs } from 'dayjs';
@@ -17,16 +14,17 @@ import {
   DateFilterType,
   TimeFilterType,
   InputFilterType,
+  RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
 import { Loader } from '~/components/Loader';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
 import { Paths } from '~/enums/Paths';
-import { RideType } from '~/enums/RideType';
+import { RequestStatus } from '~/enums/RequestStatus';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
-import { Ride } from './components/Ride';
+import { Request } from './components/Request';
 import {
   Wrapper,
   Rides,
@@ -34,16 +32,15 @@ import {
   Content,
   NoRidesWrapper,
   PaginationWrapper,
-} from './OwnRides.style';
+} from './OwnRequests.style';
 
+// TODO add review sorter keys
 const sortElements: SortElement[] = [
-  { label: 'Duration: highest first', value: '-duration' },
-  { label: 'Duration: lowest first', value: 'duration' },
   { label: 'Date: highest first', value: '-start_date' },
   { label: 'Date: lowest first', value: 'start_date' },
 ];
 
-export const OwnRides = () => {
+export const OwnRequests = () => {
   const { token } = useAuth();
   const { page } = useParams();
   const navigate = useNavigate();
@@ -53,9 +50,9 @@ export const OwnRides = () => {
   const [filterDate, setFilterDate] = useState<Dayjs | null>(null);
   const [filterTime, setFilterTime] = useState<Dayjs | null>(null);
   const [from, setFrom] = useState<AutocompletePlace | null>(null);
+  const [filterRequestStatus, setFilterRequestStatus] = useState<string>('all');
   const [to, setTo] = useState<AutocompletePlace | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
-  const [value, setValue] = useState<number>(0);
   let dateAndTime: string;
   dayjs.extend(utc);
 
@@ -67,26 +64,27 @@ export const OwnRides = () => {
     dateAndTime = '';
   }
 
-  const { isLoading, data, isError, refetch } = RidesService.useOwnRides(
+  const { isLoading, data, isError, refetch } = RidesService.useMyRequests(
     currentPage,
-    token ? token : '',
+    token,
     sortKey,
     dateAndTime,
     from,
     to,
-    value === 0 ? 'driver' : 'passenger',
+    filterRequestStatus,
   );
 
   useEffect(() => {
     refetch();
-  }, [dateAndTime, from, to, refetch, sortKey, value]);
+    // eslint-disable-next-line max-len
+  }, [dateAndTime, from, to, filterRequestStatus, refetch, sortKey, currentPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/own-rides/1');
+    navigate('/my-requests/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterDate, filterTime, from, to]);
+  }, [filterTime, filterDate, from, to, filterRequestStatus]);
 
   if (isError) {
     return (
@@ -120,30 +118,29 @@ export const OwnRides = () => {
       to: to,
       setTo: setTo,
     } as InputFilterType,
+    {
+      label: 'Request status:',
+      type: TypeOfFilter.RadioButtonsFilter,
+      options: [
+        { value: 'all', label: 'All' },
+        { value: 'pending', label: 'Pending' },
+        { value: 'accepted', label: 'Accepted' },
+        { value: 'declined', label: 'Declined' },
+        { value: 'cancelled', label: 'Cancelled' },
+      ],
+      defaultValue: 'all',
+      setValue: setFilterRequestStatus,
+    } as RadioButtonsFilterType,
   ];
 
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/own-rides/${value}`);
-  };
-
-  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    navigate(`/my-requests/${value}`);
   };
 
   return (
     <Wrapper>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleChangeTab}
-          variant='fullWidth'
-        >
-          <Tab label='As driver' />
-          <Tab label='As passenger' />
-        </Tabs>
-      </Box>
       <SortAndFiltersComponent>
         <MobileFilter
           filters={
@@ -171,26 +168,39 @@ export const OwnRides = () => {
           {!isLoading &&
             data &&
             data.results.length > 0 &&
-            data.results.map((result) => (
-              <Ride
-                rideId={result.ride_id}
-                editable={value === 0 ? true : false}
-                refetchRides={refetch}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                key={result.ride_id}
-                startDate={dayjs(result.start_date)}
-                placeFrom={result.city_from.name}
-                exactPlaceFrom={result.area_from}
-                lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
-                placeTo={result.city_to.name}
-                exactPlaceTo={result.area_to}
-                rideType={result.recurrent ? RideType.Recurrent : RideType.Singular}
-              />
-            ))}
+            data.results.map((result) => {
+              let status: RequestStatus = RequestStatus.Pending;
+              if (result.decision === 'accepted') {
+                status = RequestStatus.Accepted;
+              } else if (result.decision === 'declined') {
+                status = RequestStatus.Declined;
+              } else if (result.decision === 'cancelled') {
+                status = RequestStatus.Cancelled;
+              }
+
+              return (
+                <Request
+                  key={result.id}
+                  requestId={result.id}
+                  rideId={result.ride.ride_id}
+                  userId={result.ride.driver.user_id}
+                  startDate={dayjs(result.ride.start_date)}
+                  placeFrom={result.ride.city_from.name}
+                  exactPlaceFrom={result.ride.area_from}
+                  lengthInMinutes={result.ride.duration.minutes + result.ride.duration.hours * 60}
+                  placeTo={result.ride.city_to.name}
+                  exactPlaceTo={result.ride.area_to}
+                  userName={result.ride.driver.first_name}
+                  imageSource={result.ride.driver.avatar}
+                  reviewMean={Number(result.ride.driver.avg_rate)}
+                  requestStatus={status}
+                  refetchData={refetch}
+                />
+              );
+            })}
           {!isLoading && data && data.results.length == 0 && (
             <NoRidesWrapper>
-              <Typography variant='h3'>You do not have any rides</Typography>
+              <Typography variant='h3'>You do not have any requests</Typography>
             </NoRidesWrapper>
           )}
         </Rides>

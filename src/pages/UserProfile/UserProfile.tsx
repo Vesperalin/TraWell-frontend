@@ -31,7 +31,6 @@ export const UserProfile = () => {
     navigate(Paths.Home);
   };
 
-  // TODO: add user reviews
   if ((isLoading || !data) && !isError) {
     return <Loader />;
   } else if (isError) {
@@ -53,7 +52,7 @@ export const UserProfile = () => {
           <UserData
             src={data.avatar}
             altText={data.first_name + ' ' + data.last_name}
-            review={4.5}
+            review={data.avg_rate}
             age={age}
           />
           <SocialMedia

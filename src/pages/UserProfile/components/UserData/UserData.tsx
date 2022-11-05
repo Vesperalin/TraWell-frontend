@@ -18,7 +18,7 @@ import {
 interface Props {
   src: string;
   altText: string;
-  review: number;
+  review: string;
   age: number;
 }
 

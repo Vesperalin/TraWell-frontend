@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
 import { RequestStatus } from '~/enums/RequestStatus';
 import { Props } from './Request';
 
@@ -25,17 +24,22 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const FirstInnerWrapper = styled(Box)({
+export const FirstInnerWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    gap: '20px',
+  },
+}));
 
 export const SecondInnerWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   height: '160px',
+  minWidth: '130px',
 
   [theme.breakpoints.down('sm')]: {
     marginTop: '10px',
@@ -53,7 +57,7 @@ export const StatusWrapper = styled(Box, {
   flexDirection: 'column',
   alignItems: 'flex-end',
   flexGrow: '1',
-  justifyContent: requestStatus === RequestStatus.Rejected ? 'flex-start' : 'space-between',
+  justifyContent: requestStatus === RequestStatus.Declined ? 'flex-start' : 'space-between',
 
   [theme.breakpoints.down('sm')]: {
     width: '100%',
@@ -64,7 +68,7 @@ export const StatusWrapper = styled(Box, {
   },
 }));
 
-export const StyledLink = styled(Link)(({ theme }) => ({
+export const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: 'uppercase',
   color: theme.palette.common.darkNavy,
   opacity: '0.5',
@@ -72,6 +76,8 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: '14px',
   display: 'flex',
   alignItems: 'center',
+  alignSelf: 'flex-start',
+  paddingLeft: '0 !important',
 
   [theme.breakpoints.down('sm')]: {
     fontSize: '12px',
