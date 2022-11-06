@@ -26,7 +26,7 @@ import { RideType } from '~/enums/RideType';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
-import { Ride } from './components/Ride';
+import { SingularRide } from './components/SingularRide';
 import {
   Wrapper,
   Rides,
@@ -67,6 +67,8 @@ export const OwnRides = () => {
     dateAndTime = '';
   }
 
+  // TODO: add get for recurrent rides
+
   const {
     isLoading: isLoadingSingularRide,
     data: singularRideData,
@@ -82,6 +84,8 @@ export const OwnRides = () => {
     tabNumber === 0 ? 'driver' : 'passenger',
   );
 
+  // TODO: add refetch for recurrent rides
+
   useEffect(() => {
     if (tabNumber === 0 || tabNumber === 2) {
       refetchSingularRideData();
@@ -94,6 +98,8 @@ export const OwnRides = () => {
     navigate('/own-rides/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
+
+  // TODO: add error handler for recurrent rides
 
   if (isErrorSingularRide) {
     return (
@@ -142,13 +148,13 @@ export const OwnRides = () => {
       return <Loader />;
     } else if (!isLoadingSingularRide && singularRideData && singularRideData.results.length > 0) {
       const rides = singularRideData.results.map((result) => (
-        <Ride
+        <SingularRide
+          key={result.ride_id}
           rideId={result.ride_id}
           editable={tabNumber === 0 ? true : false}
           refetchRides={refetchSingularRideData}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          key={result.ride_id}
           startDate={dayjs(result.start_date)}
           placeFrom={result.city_from.name}
           exactPlaceFrom={result.area_from}
@@ -168,6 +174,7 @@ export const OwnRides = () => {
     } else return <></>;
   };
 
+  // TODO: implement for recurrent rides
   const renderRecurrentRides = () => {
     return <div>rides for recurrent</div>;
   };
@@ -194,6 +201,7 @@ export const OwnRides = () => {
     } else return <></>;
   };
 
+  // TODO: implement for recurrent rides
   const renderPaginationForRecurrentRides = () => {
     return <div>pagination for recurrent</div>;
   };

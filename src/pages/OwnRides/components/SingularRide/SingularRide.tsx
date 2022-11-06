@@ -16,7 +16,7 @@ import {
   StyledDeleteRideButton,
   StyledDetailsRideButton,
   StyledText,
-} from './Ride.style';
+} from './SingularRide.style';
 
 interface Props {
   editable: boolean;
@@ -35,7 +35,7 @@ interface Props {
   ) => Promise<QueryObserverResult<OwnRideResponse, Error>>;
 }
 
-export const Ride = ({
+export const SingularRide = ({
   editable,
   rideId,
   startDate,
@@ -64,22 +64,18 @@ export const Ride = ({
         setCurrentPage(1);
       }
     });
+
     if (isError) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setText((data as any).request.response.slice(1, -1) as string);
     } else {
       setText(data as string);
     }
-
     setShowInfoModal(true);
   };
 
   const handleEdit = () => {
-    if (rideType === RideType.Singular) {
-      navigate(`/edit-singular-ride/${rideId}`);
-    } else {
-      // TODO - recurrent ride redirection
-    }
+    navigate(`/edit-singular-ride/${rideId}`);
   };
 
   const handleOwnRideDetails = () => {

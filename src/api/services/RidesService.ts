@@ -156,17 +156,7 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (
-          token &&
-          placeFrom &&
-          placeTo &&
-          startDate &&
-          price &&
-          seats &&
-          vehicle &&
-          hours &&
-          minutes
-        ) {
+        if (token && placeFrom && placeTo && startDate && price && seats && hours && minutes) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
 
