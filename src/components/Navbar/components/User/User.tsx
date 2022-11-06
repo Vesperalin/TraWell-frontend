@@ -20,7 +20,7 @@ export const User = () => {
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const decodedToken = jwt_decode<any>(token ? token : '');
-  const { data, refetch } = UsersService.useGetMyId(token ? token : decodedToken);
+  const { data, refetch } = UsersService.useGetMyId(token ? token : '');
 
   useEffect(() => {
     if (token) {

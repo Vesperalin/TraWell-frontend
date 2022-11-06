@@ -29,7 +29,7 @@ export const AdditionalRideInfo = ({
   imageSource,
   reviewMean,
 }: Props) => {
-  if (isLoading || !seats || !availableSeats || !cost || !name || !reviewMean) {
+  if (isLoading || !seats || availableSeats === undefined || !cost || !name || !reviewMean) {
     return (
       <Wrapper>
         <DesktopSkeleton

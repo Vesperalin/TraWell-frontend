@@ -159,6 +159,8 @@ export const RequestsFromUsers = () => {
               return (
                 <Request
                   key={result.id}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
                   requestId={result.id}
                   rideId={result.ride.ride_id}
                   userId={result.ride.driver.user_id}

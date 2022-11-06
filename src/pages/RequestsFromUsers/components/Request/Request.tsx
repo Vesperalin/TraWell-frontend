@@ -20,6 +20,8 @@ import {
 } from './Request.style';
 
 interface Props {
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
   requestId: number;
   rideId: number;
   userId: number;
@@ -36,6 +38,8 @@ interface Props {
 }
 
 export const Request = ({
+  currentPage,
+  setCurrentPage,
   requestId,
   rideId,
   userId,
@@ -59,30 +63,56 @@ export const Request = ({
 
   const onAccept = async () => {
     setShowAcceptQuestionModal(false);
-    const response = await ridesClient.post<unknown>(
-      `rides/request/${requestId}/`,
-      { decision: 'accepted' },
-      {
-        headers: { Authorization: 'Bearer ' + token },
-      },
-    );
-    setShowInfoModal(true);
-    setText(response.data as string);
-    refetchData();
+
+    await ridesClient
+      .post<unknown>(
+        `rides/request/${requestId}/`,
+        { decision: 'accepted' },
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        setShowInfoModal(true);
+        setText(data as string);
+        if (currentPage === 1) {
+          refetchData();
+        } else {
+          setCurrentPage(1);
+        }
+      })
+      .catch((error) => {
+        setShowInfoModal(true);
+        setText(error.request.response.slice(1, -1));
+      });
   };
 
   const onDecline = async () => {
     setDeclineAcceptQuestionModal(false);
-    const response = await ridesClient.post<unknown>(
-      `rides/request/${requestId}/`,
-      { decision: 'declined' },
-      {
-        headers: { Authorization: 'Bearer ' + token },
-      },
-    );
-    setShowInfoModal(true);
-    setText(response.data as string);
-    refetchData();
+
+    await ridesClient
+      .post<unknown>(
+        `rides/request/${requestId}/`,
+        { decision: 'declined' },
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        setShowInfoModal(true);
+        setText(data as string);
+        refetchData();
+      })
+      .catch((error) => {
+        setShowInfoModal(true);
+        setText(error.request.response.slice(1, -1));
+      });
   };
 
   const handleDetailsView = () => {
@@ -123,13 +153,13 @@ export const Request = ({
               size='medium'
               onClick={() => setDeclineAcceptQuestionModal(true)}
             >
-              reject
+              decline
             </MediumSecondaryButton>
             <SmallSecondaryButton
               size='small'
               onClick={() => setDeclineAcceptQuestionModal(true)}
             >
-              reject
+              decline
             </SmallSecondaryButton>
             <MediumPrimaryButton
               size='medium'

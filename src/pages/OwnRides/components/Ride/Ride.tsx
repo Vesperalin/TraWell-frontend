@@ -1,8 +1,10 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Dayjs } from 'dayjs';
+import { useState } from 'react';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
 import { useNavigate } from 'react-router';
 import RidesService from '~/api/services/RidesService';
+import { Modal } from '~/components/Modal';
 import { TimeLocationOfRide } from '~/components/TimeLocationOfRide';
 import { RideType } from '~/enums/RideType';
 import { useAuth } from '~/hooks/useAuth';
@@ -49,7 +51,10 @@ export const Ride = ({
 }: Props) => {
   const { token } = useAuth();
   const navigate = useNavigate();
-  const { refetch } = RidesService.useDeleteRide(rideId, token ? token : '');
+  const [showQuestionModal, setShowQuestionModal] = useState<boolean>(false);
+  const [text, setText] = useState<string>('');
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const { refetch, data, isError } = RidesService.useDeleteRide(rideId, token ? token : '');
 
   const handleDelete = () => {
     refetch().then(() => {
@@ -59,6 +64,14 @@ export const Ride = ({
         setCurrentPage(1);
       }
     });
+    if (isError) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setText((data as any).request.response.slice(1, -1) as string);
+    } else {
+      setText(data as string);
+    }
+
+    setShowInfoModal(true);
   };
 
   const handleEdit = () => {
@@ -82,43 +95,71 @@ export const Ride = ({
   };
 
   return (
-    <Wrapper>
-      <div>
-        <StyledText variant='h4'>{rideType}</StyledText>
-        <TimeLocationOfRide
-          startDate={startDate}
-          placeFrom={placeFrom}
-          exactPlaceFrom={exactPlaceFrom}
-          lengthInMinutes={lengthInMinutes}
-          placeTo={placeTo}
-          exactPlaceTo={exactPlaceTo}
+    <>
+      <Wrapper>
+        <div>
+          <StyledText variant='h4'>{rideType}</StyledText>
+          <TimeLocationOfRide
+            startDate={startDate}
+            placeFrom={placeFrom}
+            exactPlaceFrom={exactPlaceFrom}
+            lengthInMinutes={lengthInMinutes}
+            placeTo={placeTo}
+            exactPlaceTo={exactPlaceTo}
+          />
+        </div>
+        <InnerWrapper editable={editable}>
+          {editable && (
+            <StyledEditRideButton onClick={handleEdit}>
+              <span>edit</span>
+              <ArrowForwardIcon fontSize='small' />
+            </StyledEditRideButton>
+          )}
+          {editable && (
+            <StyledDeleteRideButton onClick={() => setShowQuestionModal(true)}>
+              <span>delete</span>
+              <ArrowForwardIcon fontSize='small' />
+            </StyledDeleteRideButton>
+          )}
+          {editable ? (
+            <StyledDetailsRideButton onClick={handleOwnRideDetails}>
+              <span>details</span>
+              <ArrowForwardIcon fontSize='small' />
+            </StyledDetailsRideButton>
+          ) : (
+            <StyledDetailsRideButton onClick={handleOtherRideDetails}>
+              <span>details</span>
+              <ArrowForwardIcon fontSize='small' />
+            </StyledDetailsRideButton>
+          )}
+        </InnerWrapper>
+      </Wrapper>
+      {showQuestionModal && (
+        <Modal
+          open={showQuestionModal}
+          title='Delete ride'
+          text='Are you sure you want to delete this ride?'
+          handleOpen={() => setShowQuestionModal(true)}
+          handleClose={() => setShowQuestionModal(false)}
+          primaryButtonText='Yes'
+          primaryButtonAction={handleDelete}
+          showButtonForOpeningModal={false}
+          secondaryButtonText='No'
+          secondaryButtonAction={() => setShowQuestionModal(false)}
         />
-      </div>
-      <InnerWrapper editable={editable}>
-        {editable && (
-          <StyledEditRideButton onClick={handleEdit}>
-            <span>edit</span>
-            <ArrowForwardIcon fontSize='small' />
-          </StyledEditRideButton>
-        )}
-        {editable && (
-          <StyledDeleteRideButton onClick={handleDelete}>
-            <span>delete</span>
-            <ArrowForwardIcon fontSize='small' />
-          </StyledDeleteRideButton>
-        )}
-        {editable ? (
-          <StyledDetailsRideButton onClick={handleOwnRideDetails}>
-            <span>details</span>
-            <ArrowForwardIcon fontSize='small' />
-          </StyledDetailsRideButton>
-        ) : (
-          <StyledDetailsRideButton onClick={handleOtherRideDetails}>
-            <span>details</span>
-            <ArrowForwardIcon fontSize='small' />
-          </StyledDetailsRideButton>
-        )}
-      </InnerWrapper>
-    </Wrapper>
+      )}
+      {showInfoModal && (
+        <Modal
+          open={showInfoModal}
+          title='Delete ride'
+          text={text}
+          handleOpen={() => setShowInfoModal(true)}
+          handleClose={() => setShowInfoModal(false)}
+          primaryButtonText='Okay'
+          primaryButtonAction={() => setShowInfoModal(false)}
+          showButtonForOpeningModal={false}
+        />
+      )}
+    </>
   );
 };
