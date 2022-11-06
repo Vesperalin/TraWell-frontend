@@ -398,7 +398,7 @@ export default {
       const status = requestStatus ? `&decision=${requestStatus}` : '';
 
       const response = await ridesClient.get<RequestsResponse>(
-        `rides/my_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
+        `requests/my_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
         {
           headers: { Authorization: 'Bearer ' + token },
         },
@@ -428,7 +428,7 @@ export default {
       const cityFrom = from ? `&city_from=${from.name}` : '';
 
       const response = await ridesClient.get<RequestsResponse>(
-        `rides/pending_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
+        `requests/pending_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
         {
           headers: { Authorization: 'Bearer ' + token },
         },

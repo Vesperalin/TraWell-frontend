@@ -66,7 +66,7 @@ export const Request = ({
 
     await ridesClient
       .post<unknown>(
-        `rides/request/${requestId}/`,
+        `requests/${requestId}/decision/`,
         { decision: 'accepted' },
         {
           headers: { Authorization: 'Bearer ' + token },
@@ -95,7 +95,7 @@ export const Request = ({
 
     await ridesClient
       .post<unknown>(
-        `rides/request/${requestId}/`,
+        `requests/${requestId}/decision/`,
         { decision: 'declined' },
         {
           headers: { Authorization: 'Bearer ' + token },
