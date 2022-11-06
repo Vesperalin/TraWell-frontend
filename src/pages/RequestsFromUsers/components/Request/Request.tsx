@@ -20,6 +20,8 @@ import {
 } from './Request.style';
 
 interface Props {
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
   requestId: number;
   rideId: number;
   userId: number;
@@ -36,6 +38,8 @@ interface Props {
 }
 
 export const Request = ({
+  currentPage,
+  setCurrentPage,
   requestId,
   rideId,
   userId,
@@ -74,7 +78,11 @@ export const Request = ({
       .then((data) => {
         setShowInfoModal(true);
         setText(data as string);
-        refetchData();
+        if (currentPage === 1) {
+          refetchData();
+        } else {
+          setCurrentPage(1);
+        }
       })
       .catch((error) => {
         setShowInfoModal(true);
