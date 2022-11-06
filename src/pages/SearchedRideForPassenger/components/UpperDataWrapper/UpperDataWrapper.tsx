@@ -40,8 +40,8 @@ export const UpperDataWrapper = ({
 
     await ridesClient
       .post<unknown>(
-        `rides/${rideId}/send_request/`,
-        { seats: Number(seatsToBook) },
+        'requests/',
+        { seats: Number(seatsToBook), ride: rideId },
         {
           headers: { Authorization: 'Bearer ' + token },
         },
