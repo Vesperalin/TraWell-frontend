@@ -88,7 +88,7 @@ export default {
       },
     );
   },
-  useOwnRides: (
+  useOwnSingularRides: (
     page: number,
     token: string,
     ordering: string,
