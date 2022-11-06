@@ -34,7 +34,7 @@ export const ChooseVehicle = ({ value, setValue }: Props) => {
         size={isSmallScreen ? 'small' : 'medium'}
       >
         <MenuItem value={-1}>None</MenuItem>
-        <MenuItem value={1}>Opel, Astra, Czarny</MenuItem>
+        <MenuItem value={10}>Opel, Astra, Czarny</MenuItem>
         <MenuItem value={20}>Wolksvagen, Polo, biały</MenuItem>
         <MenuItem value={30}>Fiat, 500, Kremowy</MenuItem>
       </Select>
