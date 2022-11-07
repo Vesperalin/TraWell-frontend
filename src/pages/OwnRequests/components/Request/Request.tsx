@@ -66,7 +66,7 @@ export const Request = ({
     setShowQuestionModal(false);
 
     await ridesClient
-      .delete<unknown>(`rides/request/${requestId}/`, {
+      .delete<unknown>(`requests/${requestId}`, {
         headers: { Authorization: 'Bearer ' + token },
       })
       .then((response) => {

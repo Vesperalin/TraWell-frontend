@@ -4,7 +4,7 @@ import { StyledBox, StyledLink, StyledTypography } from './DesktopMenu.style';
 interface Props {
   pages: {
     name: string;
-    path: Paths;
+    path: Paths | string;
   }[];
 }
 

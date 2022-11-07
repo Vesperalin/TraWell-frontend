@@ -10,7 +10,7 @@ import { StyledMenuItem, StyledIconButton } from './MobileMenu.style';
 interface Props {
   pages: {
     name: string;
-    path: Paths;
+    path: Paths | string;
   }[];
 }
 

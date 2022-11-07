@@ -26,7 +26,8 @@ import { RideType } from '~/enums/RideType';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
-import { Ride } from './components/Ride';
+import { RecurrentRide } from './components/RecurrentRide';
+import { SingularRide } from './components/SingularRide';
 import {
   Wrapper,
   Rides,
@@ -55,7 +56,7 @@ export const OwnRides = () => {
   const [from, setFrom] = useState<AutocompletePlace | null>(null);
   const [to, setTo] = useState<AutocompletePlace | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
-  const [value, setValue] = useState<number>(0);
+  const [tabNumber, setTabNumber] = useState<number>(0);
   let dateAndTime: string;
   dayjs.extend(utc);
 
@@ -67,19 +68,51 @@ export const OwnRides = () => {
     dateAndTime = '';
   }
 
-  const { isLoading, data, isError, refetch } = RidesService.useOwnRides(
+  const {
+    isLoading: isLoadingRecurrentRide,
+    data: recurrentRideData,
+    isError: isErrorRecurrentRide,
+    refetch: refetchRecurrentRideData,
+  } = RidesService.useOwnRecurrentRides(
     currentPage,
     token ? token : '',
     sortKey,
     dateAndTime,
     from,
     to,
-    value === 0 ? 'driver' : 'passenger',
+  );
+
+  const {
+    isLoading: isLoadingSingularRide,
+    data: singularRideData,
+    isError: isErrorSingularRide,
+    refetch: refetchSingularRideData,
+  } = RidesService.useOwnSingularRides(
+    currentPage,
+    token ? token : '',
+    sortKey,
+    dateAndTime,
+    from,
+    to,
+    tabNumber === 0 ? 'driver' : 'passenger',
   );
 
   useEffect(() => {
-    refetch();
-  }, [dateAndTime, from, to, refetch, sortKey, value]);
+    setCurrentPage(1);
+    navigate('/own-rides/1');
+  }, [navigate, tabNumber]);
+
+  useEffect(() => {
+    if (tabNumber === 1) {
+      refetchRecurrentRideData();
+    }
+  }, [dateAndTime, from, to, refetchRecurrentRideData, sortKey, tabNumber]);
+
+  useEffect(() => {
+    if (tabNumber === 0 || tabNumber === 2) {
+      refetchSingularRideData();
+    }
+  }, [dateAndTime, from, to, refetchSingularRideData, sortKey, tabNumber]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -88,19 +121,31 @@ export const OwnRides = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
 
-  if (isError) {
+  if (isErrorRecurrentRide) {
     return (
       <Navigate
         to={Paths.Error}
         replace={true}
         state={{
-          text: 'Unexpected error appeared during retrieving data. Try again',
+          // eslint-disable-next-line max-len
+          text: 'Unexpected error appeared during retrieving data about own recurrent rides. Try again',
         }}
       />
     );
   }
 
-  const pagesAmount = Math.ceil((data ? data.count : 0) / (data ? data.page_size : 1));
+  if (isErrorSingularRide) {
+    return (
+      <Navigate
+        to={Paths.Error}
+        replace={true}
+        state={{
+          // eslint-disable-next-line max-len
+          text: 'Unexpected error appeared during retrieving data about own singular rides. Try again',
+        }}
+      />
+    );
+  }
 
   const filters: FilterType[] = [
     {
@@ -129,19 +174,133 @@ export const OwnRides = () => {
   };
 
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabNumber(newValue);
+  };
+
+  const renderSingularRides = () => {
+    if (isLoadingSingularRide) {
+      return <Loader />;
+    } else if (!isLoadingSingularRide && singularRideData && singularRideData.results.length > 0) {
+      const rides = singularRideData.results.map((result) => (
+        <SingularRide
+          key={result.ride_id}
+          rideId={result.ride_id}
+          editable={tabNumber === 0 ? true : false}
+          refetchRides={refetchSingularRideData}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          startDate={dayjs(result.start_date)}
+          placeFrom={result.city_from.name}
+          exactPlaceFrom={result.area_from}
+          lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
+          placeTo={result.city_to.name}
+          exactPlaceTo={result.area_to}
+          rideType={result.recurrent ? RideType.Recurrent : RideType.Singular}
+        />
+      ));
+      return rides;
+    } else if (!isLoadingSingularRide && singularRideData && singularRideData.results.length == 0) {
+      return (
+        <NoRidesWrapper>
+          <Typography variant='h3'>You do not have any rides</Typography>
+        </NoRidesWrapper>
+      );
+    } else return <></>;
+  };
+
+  const renderRecurrentRides = () => {
+    if (isLoadingRecurrentRide) {
+      return <Loader />;
+    } else if (
+      !isLoadingRecurrentRide &&
+      recurrentRideData &&
+      recurrentRideData.results.length > 0
+    ) {
+      const rides = recurrentRideData.results.map((result) => (
+        <RecurrentRide
+          key={result.ride_id}
+          rideId={result.ride_id}
+          refetchRides={refetchRecurrentRideData}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          startDate={dayjs(result.start_date)}
+          placeFrom={result.city_from.name}
+          exactPlaceFrom={result.area_from}
+          lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
+          placeTo={result.city_to.name}
+          exactPlaceTo={result.area_to}
+          rideType={RideType.Recurrent}
+        />
+      ));
+      return rides;
+    } else if (
+      !isLoadingRecurrentRide &&
+      recurrentRideData &&
+      recurrentRideData.results.length == 0
+    ) {
+      return (
+        <NoRidesWrapper>
+          <Typography variant='h3'>You do not have any rides</Typography>
+        </NoRidesWrapper>
+      );
+    } else return <></>;
+  };
+
+  const renderPaginationForSingularRides = () => {
+    if (!(!isLoadingSingularRide && singularRideData && singularRideData.results.length == 0)) {
+      const pagesAmount = Math.ceil(
+        (singularRideData ? singularRideData.count : 0) /
+          (singularRideData ? singularRideData.page_size : 1),
+      );
+
+      return (
+        <PaginationWrapper>
+          <Pagination
+            count={pagesAmount}
+            variant='outlined'
+            shape='rounded'
+            page={currentPage}
+            onChange={handleChange}
+            size={isSmallScreen ? 'small' : 'medium'}
+          />
+        </PaginationWrapper>
+      );
+    } else return <></>;
+  };
+
+  const renderPaginationForRecurrentRides = () => {
+    if (!(!isLoadingRecurrentRide && recurrentRideData && recurrentRideData.results.length == 0)) {
+      const pagesAmount = Math.ceil(
+        (recurrentRideData ? recurrentRideData.count : 0) /
+          (recurrentRideData ? recurrentRideData.page_size : 1),
+      );
+
+      return (
+        <PaginationWrapper>
+          <Pagination
+            count={pagesAmount}
+            variant='outlined'
+            shape='rounded'
+            page={currentPage}
+            onChange={handleChange}
+            size={isSmallScreen ? 'small' : 'medium'}
+          />
+        </PaginationWrapper>
+      );
+    } else return <></>;
   };
 
   return (
     <Wrapper>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
+          value={tabNumber}
           onChange={handleChangeTab}
           variant='fullWidth'
         >
-          <Tab label='As driver' />
-          <Tab label='As passenger' />
+          <Tab label='Singular as driver' />
+          <Tab label='Recurrent as driver' />
+          <Tab label='Singular as passenger' />
         </Tabs>
       </Box>
       <SortAndFiltersComponent>
@@ -167,46 +326,12 @@ export const OwnRides = () => {
           }
         />
         <Rides>
-          {isLoading && <Loader />}
-          {!isLoading &&
-            data &&
-            data.results.length > 0 &&
-            data.results.map((result) => (
-              <Ride
-                rideId={result.ride_id}
-                editable={value === 0 ? true : false}
-                refetchRides={refetch}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                key={result.ride_id}
-                startDate={dayjs(result.start_date)}
-                placeFrom={result.city_from.name}
-                exactPlaceFrom={result.area_from}
-                lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
-                placeTo={result.city_to.name}
-                exactPlaceTo={result.area_to}
-                rideType={result.recurrent ? RideType.Recurrent : RideType.Singular}
-              />
-            ))}
-          {!isLoading && data && data.results.length == 0 && (
-            <NoRidesWrapper>
-              <Typography variant='h3'>You do not have any rides</Typography>
-            </NoRidesWrapper>
-          )}
+          {(tabNumber === 0 || tabNumber === 2) && renderSingularRides()}
+          {tabNumber === 1 && renderRecurrentRides()}
         </Rides>
       </Content>
-      {!(!isLoading && data && data.results.length == 0) && (
-        <PaginationWrapper>
-          <Pagination
-            count={pagesAmount}
-            variant='outlined'
-            shape='rounded'
-            page={currentPage}
-            onChange={handleChange}
-            size={isSmallScreen ? 'small' : 'medium'}
-          />
-        </PaginationWrapper>
-      )}
+      {(tabNumber === 0 || tabNumber === 2) && renderPaginationForSingularRides()}
+      {tabNumber === 1 && renderPaginationForRecurrentRides()}
     </Wrapper>
   );
 };

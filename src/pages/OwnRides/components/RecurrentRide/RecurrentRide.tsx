@@ -16,10 +16,9 @@ import {
   StyledDeleteRideButton,
   StyledDetailsRideButton,
   StyledText,
-} from './Ride.style';
+} from './RecurrentRide.style';
 
 interface Props {
-  editable: boolean;
   rideId: number;
   startDate: Dayjs;
   placeFrom: string;
@@ -35,8 +34,7 @@ interface Props {
   ) => Promise<QueryObserverResult<OwnRideResponse, Error>>;
 }
 
-export const Ride = ({
-  editable,
+export const RecurrentRide = ({
   rideId,
   startDate,
   placeFrom,
@@ -50,48 +48,38 @@ export const Ride = ({
   refetchRides,
 }: Props) => {
   const { token } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [showQuestionModal, setShowQuestionModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-  const { refetch, data, isError } = RidesService.useDeleteRide(rideId, token ? token : '');
+  // const { refetch, data, isError } = RidesService.useDeleteRide(rideId, token ? token : '');
 
   const handleDelete = () => {
-    refetch().then(() => {
-      if (currentPage === 1) {
-        refetchRides();
-      } else {
-        setCurrentPage(1);
-      }
-    });
-    if (isError) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setText((data as any).request.response.slice(1, -1) as string);
-    } else {
-      setText(data as string);
-    }
-
-    setShowInfoModal(true);
+    // TODO: handle delete of recurrent ride
+    // refetch().then(() => {
+    //   if (currentPage === 1) {
+    //     refetchRides();
+    //   } else {
+    //     setCurrentPage(1);
+    //   }
+    // });
+    // if (isError) {
+    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //   setText((data as any).request.response.slice(1, -1) as string);
+    // } else {
+    //   setText(data as string);
+    // }
+    // setShowInfoModal(true);
   };
 
   const handleEdit = () => {
-    if (rideType === RideType.Singular) {
-      navigate(`/edit-singular-ride/${rideId}`);
-    } else {
-      // TODO - recurrent ride redirection
-    }
+    // TODO: handle edit of recurrent ride
+    // navigate(`/edit-singular-ride/${rideId}`);
   };
 
   const handleOwnRideDetails = () => {
-    navigate(`/my-ride/${rideId}`);
-  };
-
-  const handleOtherRideDetails = () => {
-    navigate(`/searched-ride/${rideId}`, {
-      state: {
-        showButton: false,
-      },
-    });
+    // TODO: handle see details of recurrent ride
+    // navigate(`/my-ride/${rideId}`);
   };
 
   return (
@@ -108,36 +96,25 @@ export const Ride = ({
             exactPlaceTo={exactPlaceTo}
           />
         </div>
-        <InnerWrapper editable={editable}>
-          {editable && (
-            <StyledEditRideButton onClick={handleEdit}>
-              <span>edit</span>
-              <ArrowForwardIcon fontSize='small' />
-            </StyledEditRideButton>
-          )}
-          {editable && (
-            <StyledDeleteRideButton onClick={() => setShowQuestionModal(true)}>
-              <span>delete</span>
-              <ArrowForwardIcon fontSize='small' />
-            </StyledDeleteRideButton>
-          )}
-          {editable ? (
-            <StyledDetailsRideButton onClick={handleOwnRideDetails}>
-              <span>details</span>
-              <ArrowForwardIcon fontSize='small' />
-            </StyledDetailsRideButton>
-          ) : (
-            <StyledDetailsRideButton onClick={handleOtherRideDetails}>
-              <span>details</span>
-              <ArrowForwardIcon fontSize='small' />
-            </StyledDetailsRideButton>
-          )}
+        <InnerWrapper>
+          <StyledEditRideButton onClick={handleEdit}>
+            <span>edit</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledEditRideButton>
+          <StyledDeleteRideButton onClick={() => setShowQuestionModal(true)}>
+            <span>delete</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledDeleteRideButton>
+          <StyledDetailsRideButton onClick={handleOwnRideDetails}>
+            <span>details</span>
+            <ArrowForwardIcon fontSize='small' />
+          </StyledDetailsRideButton>
         </InnerWrapper>
       </Wrapper>
       {showQuestionModal && (
         <Modal
           open={showQuestionModal}
-          title='Delete ride'
+          title='Delete recurrent ride'
           text='Are you sure you want to delete this ride?'
           handleOpen={() => setShowQuestionModal(true)}
           handleClose={() => setShowQuestionModal(false)}
@@ -151,7 +128,7 @@ export const Ride = ({
       {showInfoModal && (
         <Modal
           open={showInfoModal}
-          title='Delete ride'
+          title='Delete recurrent ride'
           text={text}
           handleOpen={() => setShowInfoModal(true)}
           handleClose={() => setShowInfoModal(false)}

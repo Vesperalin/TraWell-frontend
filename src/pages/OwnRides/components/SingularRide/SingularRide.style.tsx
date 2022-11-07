@@ -27,6 +27,7 @@ export const InnerWrapper = styled(Box, {
   flexDirection: 'column',
   justifyContent: editable ? 'space-between' : 'center',
   height: '140px',
+  gap: '10px',
 
   [theme.breakpoints.down('sm')]: {
     marginTop: '10px',
