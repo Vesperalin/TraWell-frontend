@@ -17,7 +17,7 @@ export const ChooseCreateRideType = () => {
       />
       <PrimaryButton
         label='Recurrent'
-        onClick={() => console.log('xd')}
+        onClick={() => navigate(Paths.AddRecurrentRide)}
         desktopSize={Sizes.Medium}
         mobileSize={Sizes.Medium}
       />
