@@ -91,4 +91,9 @@ theme.typography.subtitle2 = {
   },
 };
 
+theme.typography.body2 = {
+  fontSize: '16px',
+  fontWeight: '400',
+};
+
 export { theme };
