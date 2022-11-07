@@ -119,6 +119,36 @@ export default {
       return response.data;
     });
   },
+  useOwnRecurrentRides: (
+    page: number,
+    token: string,
+    ordering: string,
+    startDate: string | undefined,
+    from: AutocompletePlace | null,
+    to: AutocompletePlace | null,
+  ) => {
+    return useQuery<OwnRideResponse, Error>([`ownRides-${token}`, token, page], async () => {
+      const date = startDate !== '' ? `&start_date=${startDate}` : '';
+      const cityFromState = from ? `&city_from_state=${from.state}` : '';
+      const cityToState = to ? `&city_to_state=${to.state}` : '';
+      const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
+      const cityToCounty = to ? `&city_to_county=${to.county}` : '';
+      const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
+      const cityFromLng = from ? `&city_from_lng=${from.lon}` : '';
+      const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
+      const cityToLng = to ? `&city_to_lng=${to.lon}` : '';
+      const cityTo = to ? `&city_to=${to.name}` : '';
+      const cityFrom = from ? `&city_from=${from.name}` : '';
+
+      const response = await ridesClient.get<OwnRideResponse>(
+        // eslint-disable-next-line max-len
+        `rides/user_rides/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLng}${cityToLat}${cityToLng}${cityTo}${cityFrom}`,
+        { headers: { Authorization: 'Bearer ' + token } },
+      );
+
+      return response.data;
+    });
+  },
   useDeleteRide: (rideId: number, token: string) => {
     return useQuery<unknown, Error>(
       [`ownRides-delete-${rideId}`, rideId],
