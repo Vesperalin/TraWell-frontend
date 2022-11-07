@@ -25,6 +25,7 @@ export const InnerWrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   height: '140px',
+  gap: '10px',
 
   [theme.breakpoints.down('sm')]: {
     marginTop: '10px',

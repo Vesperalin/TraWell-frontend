@@ -114,7 +114,7 @@ export const RecurrentRide = ({
       {showQuestionModal && (
         <Modal
           open={showQuestionModal}
-          title='Delete ride'
+          title='Delete recurrent ride'
           text='Are you sure you want to delete this ride?'
           handleOpen={() => setShowQuestionModal(true)}
           handleClose={() => setShowQuestionModal(false)}
@@ -128,7 +128,7 @@ export const RecurrentRide = ({
       {showInfoModal && (
         <Modal
           open={showInfoModal}
-          title='Delete ride'
+          title='Delete recurrent ride'
           text={text}
           handleOpen={() => setShowInfoModal(true)}
           handleClose={() => setShowInfoModal(false)}
