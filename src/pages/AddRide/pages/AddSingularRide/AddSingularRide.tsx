@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -125,7 +124,7 @@ export const AddSingularRide = () => {
       <Title variant='h3'>Add a ride</Title>
       {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
       <FormSectionWrapper>
-        <Label variant='h5'>From</Label>
+        <Label variant='body2'>From</Label>
         <PlaceAutocompleteInput
           label='Place from'
           value={placeFrom}
@@ -138,7 +137,7 @@ export const AddSingularRide = () => {
         />
       </FormSectionWrapper>
       <FormSectionWrapper>
-        <Label variant='h5'>To</Label>
+        <Label variant='body2'>To</Label>
         <PlaceAutocompleteInput
           label='Place to'
           value={placeTo}
@@ -152,7 +151,7 @@ export const AddSingularRide = () => {
       </FormSectionWrapper>
       <SectionWrapper>
         <FormSectionWrapper>
-          <Label variant='h5'>Start time</Label>
+          <Label variant='body2'>Start time</Label>
           <InnerWrapper>
             <DatePicker
               date={startDate}
@@ -164,17 +163,17 @@ export const AddSingularRide = () => {
             />
           </InnerWrapper>
         </FormSectionWrapper>
-        <Box>
-          <Label variant='h5'>Amount of people</Label>
+        <FormSectionWrapper>
+          <Label variant='body2'>Amount of people</Label>
           <AmountOfPeopleInput
             amountOfPeople={amountOfPeople}
             setAmountOfPeople={setAmountOfPeople}
           />
-        </Box>
+        </FormSectionWrapper>
       </SectionWrapper>
       <SectionWrapper>
         <FormSectionWrapper>
-          <Label variant='h5'>Duration</Label>
+          <Label variant='body2'>Duration</Label>
           <InnerWrapper>
             <IntegerInput
               id='hours'
@@ -190,18 +189,18 @@ export const AddSingularRide = () => {
             />
           </InnerWrapper>
         </FormSectionWrapper>
-        <Box>
-          <Label variant='h5'>Price</Label>
+        <FormSectionWrapper>
+          <Label variant='body2'>Price</Label>
           <DoubleNumberInput
             value={price}
             setValue={setPrice}
           />
-        </Box>
+        </FormSectionWrapper>
       </SectionWrapper>
       <FormSectionWrapper>
         {hasRole(Role.Private) && (
           <>
-            <Label variant='h5'>Vehicle</Label>
+            <Label variant='body2'>Vehicle</Label>
             <ChooseVehicle
               value={vehicle}
               setValue={setVehicle}
@@ -210,7 +209,7 @@ export const AddSingularRide = () => {
         )}
         {hasRole(Role.Company) && (
           <>
-            <Label variant='h5'>Passenger acceptance</Label>
+            <Label variant='body2'>Passenger acceptance</Label>
             <RadioGroup
               options={[
                 { value: 'automatic', label: 'Automatic' },

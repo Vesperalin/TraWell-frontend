@@ -22,13 +22,16 @@ export const ErrorMessage = styled(Typography)(({ theme }) => ({
 
 export const Label = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.dimmedWhite,
+  fontWeight: '400',
+  marginBottom: '-15px',
 }));
 
 export const FormSectionWrapper = styled(Box)({
   padding: '10px 0',
 
   '& > div': {
-    margin: '10px 0',
+    display: 'flex',
+    margin: '15px 0',
   },
 });
 
