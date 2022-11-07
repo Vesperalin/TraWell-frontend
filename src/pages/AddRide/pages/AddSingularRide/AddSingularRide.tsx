@@ -67,7 +67,7 @@ export const AddSingularRide = () => {
     }
   }, [placeFrom, placeTo]);
 
-  const { refetch, isError } = RidesService.useAddRide(
+  const { refetch, isError } = RidesService.useAddSingularRide(
     token,
     placeFrom,
     placeTo,

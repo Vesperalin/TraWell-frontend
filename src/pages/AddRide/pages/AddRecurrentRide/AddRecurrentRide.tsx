@@ -1,22 +1,17 @@
-import Box from '@mui/material/Box';
-import dayjs, { Dayjs } from 'dayjs';
-import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
-import { DatePicker } from '~/components/DatePicker';
 import { Description } from '~/components/Description';
 import { DoubleNumberInput } from '~/components/DoubleNumberInput';
-import { IntegerInput } from '~/components/IntegerInput';
 import { Modal } from '~/components/Modal';
 import { PlaceAutocompleteInput } from '~/components/PlaceAutocompleteInput';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { RadioGroup } from '~/components/RadioGroup';
 import { Recurrence } from '~/components/Recurrence';
-import { RoadMap } from '~/components/RoadMap';
 import { TextInput } from '~/components/TextInput';
-import { TimePicker } from '~/components/TimePicker';
 import { FrequencyType } from '~/enums/FrequencyType';
 import { Paths } from '~/enums/Paths';
 import { Role } from '~/enums/Role';
@@ -31,7 +26,6 @@ import {
   Title,
   FormSectionWrapper,
   Label,
-  InnerWrapper,
   SectionWrapper,
   DescriptionWrapper,
   ButtonWrapper,
@@ -51,6 +45,8 @@ const initialState = {
   } as Duration,
 };
 
+const endTime = dayjs().hour(23).minute(59).second(59).millisecond(59);
+
 export const AddRecurrentRide = () => {
   const { hasRole, token } = useAuth();
   const navigate = useNavigate();
@@ -62,80 +58,63 @@ export const AddRecurrentRide = () => {
   const [exactPlaceTo, setExactPlaceTo] = useState<string>('');
   const [amountOfPeople, setAmountOfPeople] = useState<string | null>('1');
   const [recurrence, setRecurrence] = useState<RecurrenceType>(initialState);
-  const [hours, setHours] = useState<string | null>('');
-  const [minutes, setMinutes] = useState<string | null>('');
   const [price, setPrice] = useState<string | null>('');
   const [vehicle, setVehicle] = useState<number | null>(null);
   const [passengerAcceptance, setPassengerAcceptance] = useState<string>('automatic');
   const [description, setDescription] = useState<string>('');
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
-  const [allPoints, setAllPoints] = useState<[number, number][]>([]);
-  const [mapChecked, setMapChecked] = useState<boolean>(false);
 
-  const isError = false;
-
-  // useEffect(() => {
-  //   if (placeFrom !== null && placeTo !== null) {
-  //     const tempPoints: [number, number][] = [];
-  //     tempPoints.push([Number(placeTo.lat), Number(placeTo.lon)]);
-  //     tempPoints.push([Number(placeFrom.lat), Number(placeFrom.lon)]);
-  //     setAllPoints(tempPoints);
-  //   } else {
-  //     setAllPoints([]);
-  //     setMapChecked(false);
-  //   }
-  // }, [placeFrom, placeTo]);
-
-  // const { refetch, isError } = RidesService.useAddRide(
-  //   token,
-  //   placeFrom,
-  //   placeTo,
-  //   exactPlaceFrom,
-  //   exactPlaceTo,
-  //   startDate && startTime ? transformToFullDate(startDate, startTime) : null,
-  //   price,
-  //   amountOfPeople,
-  //   vehicle,
-  //   hours,
-  //   minutes,
-  //   description,
-  //   allPoints,
-  //   passengerAcceptance,
-  //   hasRole,
-  // );
+  const { refetch, isError } = RidesService.useAddRecurrentRide(
+    token,
+    placeFrom,
+    placeTo,
+    exactPlaceFrom,
+    exactPlaceTo,
+    recurrence.startDate && recurrence.startTime
+      ? transformToFullDate(recurrence.startDate, recurrence.startTime)
+      : null,
+    recurrence.endDate ? transformToFullDate(recurrence.endDate, endTime) : null,
+    recurrence.frequencyType,
+    recurrence.frequenceOccurrences,
+    recurrence.weekDays,
+    price,
+    amountOfPeople,
+    vehicle,
+    recurrence.duration.hours,
+    recurrence.duration.minutes,
+    description,
+    passengerAcceptance,
+    hasRole,
+  );
 
   const submitHandler = () => {
-    // if (placeFrom === null) {
-    //   setError('You have to choose starting place - "Place from"');
-    // } else if (placeTo === null) {
-    //   setError('You have to choose destination place - "Place to"');
-    // } else if (startDate === null) {
-    //   setError('You have to choose start date');
-    // } else if (startTime === null) {
-    //   setError('You have to choose start time');
-    // } else if (!startDate.isValid()) {
-    //   setError('You have to choose valid date');
-    // } else if (!startTime.isValid()) {
-    //   setError('You have to choose valid time');
-    // } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
-    //   setError('You have to choose amount of people');
-    // } else if (hours === null || hours.trim() === '') {
-    //   setError('You have to choose hours. If none, give: 0');
-    // } else if (minutes === null || minutes.trim() === '') {
-    //   setError('You have to choose minutes. If none, give: 0');
-    // } else if (price === null || price.trim() === '') {
-    //   setError('You have to choose price per passenger');
-    // } else if (hasRole(Role.Private) && vehicle === null) {
-    //   setError('You have to choose vehicle');
-    // } else if (exactPlaceFrom.length > 100) {
-    //   setError('"Exact place from" is too long. Maximum is 100 signs.');
-    // } else if (exactPlaceTo.length > 100) {
-    //   setError('"Exact place to" is too long. Maximum is 100 signs.');
-    // } else {
-    //   refetch().then(() => {
-    //     setOpenModal(true);
-    //   });
-    // }
+    if (placeFrom === null) {
+      setError('You have to choose starting place - "Place from"');
+    } else if (placeTo === null) {
+      setError('You have to choose destination place - "Place to"');
+    } else if (exactPlaceFrom.length > 100) {
+      setError('"Exact place from" is too long. Maximum is 100 signs.');
+    } else if (exactPlaceTo.length > 100) {
+      setError('"Exact place to" is too long. Maximum is 100 signs.');
+    } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
+      setError('You have to choose amount of people');
+    } else if (price === null || price.trim() === '') {
+      setError('You have to choose price per passenger');
+    } else if (hasRole(Role.Private) && vehicle === null) {
+      setError('You have to choose vehicle');
+    } else if (recurrence.startDate == null) {
+      setError('You have to choose start date');
+    } else if (recurrence.endDate == null) {
+      setError('You have to choose endDate date');
+    } else if (recurrence.startTime == null) {
+      setError('You have to choose start time');
+    } else if (recurrence.duration.hours === null) {
+      setError('You have to choose hours. If none, give: 0');
+    } else {
+      refetch().then(() => {
+        setOpenModal(true);
+      });
+    }
   };
 
   return (
@@ -221,15 +200,6 @@ export const AddRecurrentRide = () => {
           setChecked={setDescriptionChecked}
         />
       </DescriptionWrapper>
-      <RoadMap
-        coordinates={allPoints}
-        heightOfMap={500}
-        isEditable={true}
-        setPoints={setAllPoints}
-        label='Road map (optional)'
-        checked={mapChecked}
-        setChecked={setMapChecked}
-      />
       <ButtonWrapper>
         <PrimaryButton
           label='Add ride'

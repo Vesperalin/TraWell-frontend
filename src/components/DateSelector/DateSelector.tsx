@@ -21,6 +21,7 @@ const DateSelector = ({ date, setDate, label }: Props) => {
       <DatePicker
         disablePast
         value={date}
+        inputFormat='DD/MM/YYYY'
         onChange={(newValue) => {
           setDate(newValue);
         }}

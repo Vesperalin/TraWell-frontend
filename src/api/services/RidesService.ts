@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import { useQuery } from 'react-query';
 import { ridesClient } from '~/api/clients';
+import { FrequencyType } from '~/enums/FrequencyType';
 import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/DetailedRideData';
@@ -180,7 +181,7 @@ export default {
       },
     );
   },
-  useAddRide: (
+  useAddSingularRide: (
     token: string | undefined,
     placeFrom: AutocompletePlace | null,
     placeTo: AutocompletePlace | null,
@@ -237,6 +238,94 @@ export default {
               area_from: areaFrom,
               area_to: areaTo,
               start_date: startDate,
+              price: Number(price),
+              seats: Number(seats),
+              vehicle: hasRole(Role.Private) ? vehicle : -1,
+              duration: {
+                hours: Number(hours),
+                minutes: Number(minutes),
+              },
+              description: description,
+              coordinates: points.length > 0 ? points : [],
+              automatic_confirm: hasRole(Role.Company) ? automaticConfirm : false,
+            },
+            { headers: { Authorization: 'Bearer ' + token } },
+          );
+          return response.data;
+        }
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
+      },
+    );
+  },
+  useAddRecurrentRide: (
+    token: string | undefined,
+    placeFrom: AutocompletePlace | null,
+    placeTo: AutocompletePlace | null,
+    areaFrom: string,
+    areaTo: string,
+    startDate: string | null,
+    endDate: string | null,
+    frequencyType: FrequencyType,
+    frequence: number | null,
+    occurrences: Array<string>,
+    price: string | null,
+    seats: string | null,
+    vehicle: number | null,
+    hours: number | null,
+    minutes: number | null,
+    description: string,
+    passengerAcceptance: string,
+    hasRole: (role: Role) => boolean,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        if (
+          token &&
+          placeFrom &&
+          placeTo &&
+          startDate &&
+          endDate &&
+          frequencyType &&
+          frequence &&
+          occurrences &&
+          price &&
+          seats &&
+          hours &&
+          minutes
+        ) {
+          const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
+          const points: { lat: number; lng: number; sequence_no: number }[] = [];
+
+          const response = await ridesClient.post<unknown>(
+            'recurrent_rides/',
+            {
+              city_from: {
+                name: placeFrom.name,
+                county: placeFrom.county,
+                state: placeFrom.state,
+                lat: placeFrom.lat,
+                lng: placeFrom.lon,
+              },
+              city_to: {
+                name: placeTo.name,
+                county: placeTo.county,
+                state: placeTo.state,
+                lat: placeTo.lat,
+                lng: placeTo.lon,
+              },
+              area_from: areaFrom,
+              area_to: areaTo,
+              start_date: startDate,
+              end_date: endDate,
+              frequencyType: frequencyType,
+              frequence: frequence,
+              occurrences: occurrences,
               price: Number(price),
               seats: Number(seats),
               vehicle: hasRole(Role.Private) ? vehicle : -1,
