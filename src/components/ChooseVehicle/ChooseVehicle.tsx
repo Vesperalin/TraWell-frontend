@@ -33,10 +33,26 @@ export const ChooseVehicle = ({ value, setValue }: Props) => {
         onChange={handleChange}
         size={isSmallScreen ? 'small' : 'medium'}
       >
-        <MenuItem value={-1}>None</MenuItem>
-        <MenuItem value={10}>Opel, Astra, Czarny</MenuItem>
-        <MenuItem value={20}>Wolksvagen, Polo, biały</MenuItem>
-        <MenuItem value={30}>Fiat, 500, Kremowy</MenuItem>
+        <MenuItem value={1}>Opel, Astra, Czarny 1</MenuItem>
+        <MenuItem value={2}>Opel, Astra, Czarny 2</MenuItem>
+        <MenuItem value={3}>Opel, Astra, Czarny 3</MenuItem>
+        <MenuItem value={4}>Opel, Astra, Czarny 4</MenuItem>
+        <MenuItem value={5}>Opel, Astra, Czarny 5</MenuItem>
+        <MenuItem value={6}>Opel, Astra, Czarny 6</MenuItem>
+        <MenuItem value={7}>Opel, Astra, Czarny 7</MenuItem>
+        <MenuItem value={8}>Opel, Astra, Czarny 8</MenuItem>
+        <MenuItem value={9}>Opel, Astra, Czarny 9</MenuItem>
+        <MenuItem value={10}>Opel, Astra, Czarny 10</MenuItem>
+        <MenuItem value={11}>Opel, Astra, Czarny 11</MenuItem>
+        <MenuItem value={12}>Opel, Astra, Czarny 12</MenuItem>
+        <MenuItem value={13}>Opel, Astra, Czarny 13</MenuItem>
+        <MenuItem value={14}>Opel, Astra, Czarny 14</MenuItem>
+        <MenuItem value={15}>Opel, Astra, Czarny 15</MenuItem>
+        <MenuItem value={16}>Opel, Astra, Czarny 16</MenuItem>
+        <MenuItem value={17}>Opel, Astra, Czarny 17</MenuItem>
+        <MenuItem value={18}>Opel, Astra, Czarny 18</MenuItem>
+        <MenuItem value={19}>Opel, Astra, Czarny 19</MenuItem>
+        <MenuItem value={20}>Opel, Astra, Czarny 20</MenuItem>
       </Select>
     </StyledFormControl>
   );
