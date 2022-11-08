@@ -27,7 +27,7 @@ export const OwnRideForDriver = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
   const { rideId } = useParams();
-  const { data, isLoading, refetch, isError } = RidesService.useRideForDriver(
+  const { data, isLoading, refetch, isError } = RidesService.useSingularRideForDriver(
     rideId ? Number(rideId) : -1,
     token ? token : '',
   );

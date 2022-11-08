@@ -76,7 +76,7 @@ export const FullRideEdit = () => {
     refetch: refetchRideData,
     isLoading: isLoadingRideData,
     isError: isErrorRideData,
-  } = RidesService.useRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
+  } = RidesService.useSingularRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
 
   const checkIfHasRole = (role: Role) => {
     if (role === Role.Private) {

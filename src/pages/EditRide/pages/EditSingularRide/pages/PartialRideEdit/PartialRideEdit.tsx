@@ -61,7 +61,7 @@ export const PartialRideEdit = () => {
     refetch: refetchRideData,
     isLoading: isLoadingRideData,
     isError: isErrorRideData,
-  } = RidesService.useRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
+  } = RidesService.useSingularRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
 
   const { refetch: refetchEditData, isError: isErrorEditData } =
     RidesService.useEditPartialSingularRide(

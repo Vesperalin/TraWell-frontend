@@ -74,7 +74,7 @@ export default {
       return response.data;
     });
   },
-  useRideForDriver: (rideId: number, token: string) => {
+  useSingularRideForDriver: (rideId: number, token: string) => {
     return useQuery<RideForDriverResponse, Error>(
       ['rideForDriver', rideId],
       async () => {
