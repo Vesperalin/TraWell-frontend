@@ -4,6 +4,7 @@ export enum Paths {
   SearchedRides = '/searched-rides/:cityFrom/:countyFrom/:stateFrom/:latFrom/:lonFrom/:cityTo/:countyTo/:stateTo/:latTo/:lonTo/:date/:seatsAmount/:page',
   SearchedRideForPassenger = '/searched-ride/:rideId',
   OwnRideForDriver = '/my-ride/:rideId',
+  OwnRecurrentRideForDriver = '/my-recurrent-ride/:rideId',
   OwnRides = '/own-rides/:page',
   UserProfile = '/profile/:userId',
   ChooseRideType = '/choose-ride-type',

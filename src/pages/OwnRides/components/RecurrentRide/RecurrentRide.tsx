@@ -48,7 +48,7 @@ export const RecurrentRide = ({
   refetchRides,
 }: Props) => {
   const { token } = useAuth();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showQuestionModal, setShowQuestionModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
@@ -80,8 +80,7 @@ export const RecurrentRide = ({
   };
 
   const handleOwnRideDetails = () => {
-    // TODO: handle see details of recurrent ride
-    // navigate(`/my-ride/${rideId}`);
+    navigate(`/my-recurrent-ride/${rideId}`);
   };
 
   return (
