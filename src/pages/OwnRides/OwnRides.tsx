@@ -97,6 +97,9 @@ export const OwnRides = () => {
     tabNumber === 0 ? 'driver' : 'passenger',
   );
 
+  // TODO - naprawić nawigację między komponentami, albo wgl je rozdzielić
+  // - chyba tak będzie najlepiej, ni wszystko w jednym komponencie
+
   useEffect(() => {
     setCurrentPage(1);
     navigate('/own-rides/1');

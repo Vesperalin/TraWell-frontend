@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 import Box from '@mui/material/Box';
 import dayjs, { Dayjs } from 'dayjs';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
+import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
 import { DatePicker } from '~/components/DatePicker';
 import { Description } from '~/components/Description';
@@ -58,6 +59,17 @@ export const FullRideEdit = () => {
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
   const [allPoints, setAllPoints] = useState<[number, number][]>([]);
   const [mapChecked, setMapChecked] = useState<boolean>(false);
+  const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = async () => {
+      if (await hasRole(Role.Private)) {
+        setIsPrivateRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     data: rideData,
@@ -65,6 +77,14 @@ export const FullRideEdit = () => {
     isLoading: isLoadingRideData,
     isError: isErrorRideData,
   } = RidesService.useRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
+
+  const checkIfHasRole = (role: Role) => {
+    if (role === Role.Private) {
+      return isPrivateRole;
+    } else {
+      return !isPrivateRole;
+    }
+  };
 
   const { refetch: refetchEditData, isError: isErrorEditData } =
     RidesService.useEditFullSingularRide(
@@ -83,7 +103,7 @@ export const FullRideEdit = () => {
       description,
       allPoints,
       passengerAcceptance,
-      hasRole,
+      checkIfHasRole,
     );
 
   useEffect(() => {
@@ -204,7 +224,7 @@ export const FullRideEdit = () => {
       setError('You have to choose minutes. If none, give: 0');
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
-    } else if (hasRole(Role.Private) && vehicle === null) {
+    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
     } else if (exactPlaceFrom.length > 100) {
       setError('"Exact place from" is too long. Maximum is 100 signs.');
@@ -216,6 +236,30 @@ export const FullRideEdit = () => {
       });
     }
   };
+
+  const chooseVehicle: ReactNode = (
+    <>
+      <Label variant='body2'>Vehicle</Label>
+      <ChooseVehicle
+        value={vehicle}
+        setValue={setVehicle}
+      />
+    </>
+  );
+
+  const acceptance: ReactNode = (
+    <>
+      <Label variant='body2'>Passenger acceptance</Label>
+      <RadioGroup
+        options={[
+          { value: 'automatic', label: 'Automatic' },
+          { value: 'manual', label: 'Manual' },
+        ]}
+        defaultValue='automatic'
+        setValue={setPassengerAcceptance}
+      />
+    </>
+  );
 
   if (isLoadingRideData) {
     return <Loader />;
@@ -232,7 +276,7 @@ export const FullRideEdit = () => {
   } else {
     return (
       <Form>
-        <Title variant='h3'>Add a ride</Title>
+        <Title variant='h3'>Edit a ride</Title>
         {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
         <FormSectionWrapper>
           <Label variant='h5'>From</Label>
@@ -309,28 +353,12 @@ export const FullRideEdit = () => {
           </Box>
         </SectionWrapper>
         <FormSectionWrapper>
-          {hasRole(Role.Private) && (
-            <>
-              <Label variant='h5'>Vehicle</Label>
-              <ChooseVehicle
-                value={vehicle}
-                setValue={setVehicle}
-              />
-            </>
-          )}
-          {hasRole(Role.Company) && (
-            <>
-              <Label variant='h5'>Passenger acceptance</Label>
-              <RadioGroup
-                options={[
-                  { value: 'automatic', label: 'Automatic' },
-                  { value: 'manual', label: 'Manual' },
-                ]}
-                defaultValue='automatic'
-                setValue={setPassengerAcceptance}
-              />
-            </>
-          )}
+          <AuthorizedElement
+            // eslint-disable-next-line react/no-children-prop
+            children={chooseVehicle}
+            role={Role.Private}
+            elementToPutInstead={acceptance}
+          />
         </FormSectionWrapper>
         <DescriptionWrapper>
           <Description

@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
+import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
 import { Description } from '~/components/Description';
 import { DoubleNumberInput } from '~/components/DoubleNumberInput';
@@ -63,6 +64,25 @@ export const AddRecurrentRide = () => {
   const [passengerAcceptance, setPassengerAcceptance] = useState<string>('automatic');
   const [description, setDescription] = useState<string>('');
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
+  const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = async () => {
+      if (await hasRole(Role.Private)) {
+        setIsPrivateRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const checkIfHasRole = (role: Role) => {
+    if (role === Role.Private) {
+      return isPrivateRole;
+    } else {
+      return !isPrivateRole;
+    }
+  };
 
   const { refetch, isError } = RidesService.useAddRecurrentRide(
     token,
@@ -84,7 +104,7 @@ export const AddRecurrentRide = () => {
     recurrence.duration.minutes,
     description,
     passengerAcceptance,
-    hasRole,
+    checkIfHasRole,
   );
 
   const submitHandler = () => {
@@ -100,7 +120,7 @@ export const AddRecurrentRide = () => {
       setError('You have to choose amount of people');
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
-    } else if (hasRole(Role.Private) && vehicle === null) {
+    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
     } else if (recurrence.startDate == null) {
       setError('You have to choose start date');
@@ -116,6 +136,30 @@ export const AddRecurrentRide = () => {
       });
     }
   };
+
+  const chooseVehicle: ReactNode = (
+    <FormSectionWrapper>
+      <Label variant='body2'>Vehicle</Label>
+      <ChooseVehicle
+        value={vehicle}
+        setValue={setVehicle}
+      />
+    </FormSectionWrapper>
+  );
+
+  const acceptance: ReactNode = (
+    <FormSectionWrapper>
+      <Label variant='body2'>Passenger acceptance</Label>
+      <RadioGroup
+        options={[
+          { value: 'automatic', label: 'Automatic' },
+          { value: 'manual', label: 'Manual' },
+        ]}
+        defaultValue='automatic'
+        setValue={setPassengerAcceptance}
+      />
+    </FormSectionWrapper>
+  );
 
   return (
     <Form>
@@ -162,28 +206,12 @@ export const AddRecurrentRide = () => {
             setValue={setPrice}
           />
         </FormSectionWrapper>
-        {hasRole(Role.Private) && (
-          <FormSectionWrapper>
-            <Label variant='body2'>Vehicle</Label>
-            <ChooseVehicle
-              value={vehicle}
-              setValue={setVehicle}
-            />
-          </FormSectionWrapper>
-        )}
-        {hasRole(Role.Company) && (
-          <FormSectionWrapper>
-            <Label variant='body2'>Passenger acceptance</Label>
-            <RadioGroup
-              options={[
-                { value: 'automatic', label: 'Automatic' },
-                { value: 'manual', label: 'Manual' },
-              ]}
-              defaultValue='automatic'
-              setValue={setPassengerAcceptance}
-            />
-          </FormSectionWrapper>
-        )}
+        <AuthorizedElement
+          // eslint-disable-next-line react/no-children-prop
+          children={chooseVehicle}
+          role={Role.Private}
+          elementToPutInstead={acceptance}
+        />
       </SectionWrapper>
       <FormSectionWrapper>
         <Recurrence

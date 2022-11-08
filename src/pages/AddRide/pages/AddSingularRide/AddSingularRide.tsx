@@ -1,8 +1,9 @@
 import { Dayjs } from 'dayjs';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
+import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
 import { DatePicker } from '~/components/DatePicker';
 import { Description } from '~/components/Description';
@@ -54,6 +55,17 @@ export const AddSingularRide = () => {
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
   const [allPoints, setAllPoints] = useState<[number, number][]>([]);
   const [mapChecked, setMapChecked] = useState<boolean>(false);
+  const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = async () => {
+      if (await hasRole(Role.Private)) {
+        setIsPrivateRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (placeFrom !== null && placeTo !== null) {
@@ -66,6 +78,14 @@ export const AddSingularRide = () => {
       setMapChecked(false);
     }
   }, [placeFrom, placeTo]);
+
+  const checkIfHasRole = (role: Role) => {
+    if (role === Role.Private) {
+      return isPrivateRole;
+    } else {
+      return !isPrivateRole;
+    }
+  };
 
   const { refetch, isError } = RidesService.useAddSingularRide(
     token,
@@ -82,7 +102,7 @@ export const AddSingularRide = () => {
     description,
     allPoints,
     passengerAcceptance,
-    hasRole,
+    checkIfHasRole,
   );
 
   const submitHandler = () => {
@@ -106,7 +126,7 @@ export const AddSingularRide = () => {
       setError('You have to choose minutes. If none, give: 0');
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
-    } else if (hasRole(Role.Private) && vehicle === null) {
+    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
     } else if (exactPlaceFrom.length > 100) {
       setError('"Exact place from" is too long. Maximum is 100 signs.');
@@ -118,6 +138,30 @@ export const AddSingularRide = () => {
       });
     }
   };
+
+  const chooseVehicle: ReactNode = (
+    <>
+      <Label variant='body2'>Vehicle</Label>
+      <ChooseVehicle
+        value={vehicle}
+        setValue={setVehicle}
+      />
+    </>
+  );
+
+  const acceptance: ReactNode = (
+    <>
+      <Label variant='body2'>Passenger acceptance</Label>
+      <RadioGroup
+        options={[
+          { value: 'automatic', label: 'Automatic' },
+          { value: 'manual', label: 'Manual' },
+        ]}
+        defaultValue='automatic'
+        setValue={setPassengerAcceptance}
+      />
+    </>
+  );
 
   return (
     <Form>
@@ -198,28 +242,12 @@ export const AddSingularRide = () => {
         </FormSectionWrapper>
       </SectionWrapper>
       <FormSectionWrapper>
-        {hasRole(Role.Private) && (
-          <>
-            <Label variant='body2'>Vehicle</Label>
-            <ChooseVehicle
-              value={vehicle}
-              setValue={setVehicle}
-            />
-          </>
-        )}
-        {hasRole(Role.Company) && (
-          <>
-            <Label variant='body2'>Passenger acceptance</Label>
-            <RadioGroup
-              options={[
-                { value: 'automatic', label: 'Automatic' },
-                { value: 'manual', label: 'Manual' },
-              ]}
-              defaultValue='automatic'
-              setValue={setPassengerAcceptance}
-            />
-          </>
-        )}
+        <AuthorizedElement
+          // eslint-disable-next-line react/no-children-prop
+          children={chooseVehicle}
+          role={Role.Private}
+          elementToPutInstead={acceptance}
+        />
       </FormSectionWrapper>
       <DescriptionWrapper>
         <Description

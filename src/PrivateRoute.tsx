@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
 import { Role } from '~/enums/Role';
@@ -10,8 +11,19 @@ interface Props {
 
 export const PrivateRoute = ({ element, role }: Props) => {
   const { authenticated, hasRole } = useAuth();
+  const [isRole, setIsRole] = useState<boolean>(false);
 
-  if (authenticated && (!role || hasRole(role))) {
+  useEffect(() => {
+    const check = async () => {
+      if (role && (await hasRole(role))) {
+        setIsRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (authenticated && (!role || isRole)) {
     return element;
   }
 
