@@ -164,11 +164,28 @@ export default {
       },
     );
   },
-  useDeleteRide: (rideId: number, token: string) => {
+  useDeleteSingularRide: (rideId: number, token: string) => {
     return useQuery<unknown, Error>(
-      [`ownRides-delete-${rideId}`, rideId],
+      [],
       async () => {
         const response = await ridesClient.delete<unknown>(`rides/${rideId}/`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: 1,
+        cacheTime: 0,
+      },
+    );
+  },
+  useDeleteRecurrentRide: (rideId: number, token: string) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await ridesClient.delete<unknown>(`recurrent_rides/${rideId}/`, {
           headers: { Authorization: 'Bearer ' + token },
         });
         return response.data;
@@ -325,7 +342,7 @@ export default {
               end_date: endDate,
               frequencyType: frequencyType,
               frequence: frequence,
-              occurrences: occurrences,
+              occurrences: occurrences.map((elem) => elem.toUpperCase()),
               price: Number(price),
               seats: Number(seats),
               vehicle: hasRole(Role.Private) ? vehicle : -1,

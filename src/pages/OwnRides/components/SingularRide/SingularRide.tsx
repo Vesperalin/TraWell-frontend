@@ -54,7 +54,7 @@ export const SingularRide = ({
   const [showQuestionModal, setShowQuestionModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-  const { refetch, data, isError } = RidesService.useDeleteRide(rideId, token ? token : '');
+  const { refetch, data, isError } = RidesService.useDeleteSingularRide(rideId, token ? token : '');
 
   const handleDelete = () => {
     refetch().then(() => {

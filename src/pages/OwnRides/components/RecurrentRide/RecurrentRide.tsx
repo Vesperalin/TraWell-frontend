@@ -52,24 +52,26 @@ export const RecurrentRide = ({
   const [showQuestionModal, setShowQuestionModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-  // const { refetch, data, isError } = RidesService.useDeleteRide(rideId, token ? token : '');
+  const { refetch, data, isError } = RidesService.useDeleteRecurrentRide(
+    rideId,
+    token ? token : '',
+  );
 
   const handleDelete = () => {
-    // TODO: handle delete of recurrent ride
-    // refetch().then(() => {
-    //   if (currentPage === 1) {
-    //     refetchRides();
-    //   } else {
-    //     setCurrentPage(1);
-    //   }
-    // });
-    // if (isError) {
-    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   setText((data as any).request.response.slice(1, -1) as string);
-    // } else {
-    //   setText(data as string);
-    // }
-    // setShowInfoModal(true);
+    refetch().then(() => {
+      if (currentPage === 1) {
+        refetchRides();
+      } else {
+        setCurrentPage(1);
+      }
+    });
+    if (isError) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setText((data as any).request.response.slice(1, -1) as string);
+    } else {
+      setText(data as string);
+    }
+    setShowInfoModal(true);
   };
 
   const handleEdit = () => {
