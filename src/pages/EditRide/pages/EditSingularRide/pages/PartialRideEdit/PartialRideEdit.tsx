@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
+import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
 import { Description } from '~/components/Description';
 import { Loader } from '~/components/Loader';
@@ -35,6 +36,25 @@ export const PartialRideEdit = () => {
   const [passengerAcceptance, setPassengerAcceptance] = useState<string>('automatic');
   const [description, setDescription] = useState<string>('');
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
+  const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = async () => {
+      if (await hasRole(Role.Private)) {
+        setIsPrivateRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const checkIfHasRole = (role: Role) => {
+    if (role === Role.Private) {
+      return isPrivateRole;
+    } else {
+      return !isPrivateRole;
+    }
+  };
 
   const {
     data: rideData,
@@ -51,7 +71,7 @@ export const PartialRideEdit = () => {
       vehicle,
       description,
       passengerAcceptance,
-      hasRole,
+      checkIfHasRole,
     );
 
   useEffect(() => {
@@ -73,7 +93,7 @@ export const PartialRideEdit = () => {
   const submitHandler = () => {
     if (amountOfPeople === null || amountOfPeople.trim() === '') {
       setError('You have to choose amount of people');
-    } else if (hasRole(Role.Private) && vehicle === null) {
+    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
     } else {
       refetchEditData().then(() => {
@@ -81,6 +101,30 @@ export const PartialRideEdit = () => {
       });
     }
   };
+
+  const chooseVehicle: ReactNode = (
+    <Box>
+      <Label variant='body2'>Vehicle</Label>
+      <ChooseVehicle
+        value={vehicle}
+        setValue={setVehicle}
+      />
+    </Box>
+  );
+
+  const acceptance: ReactNode = (
+    <Box>
+      <Label variant='body2'>Passenger acceptance</Label>
+      <RadioGroup
+        options={[
+          { value: 'automatic', label: 'Automatic' },
+          { value: 'manual', label: 'Manual' },
+        ]}
+        defaultValue='automatic'
+        setValue={setPassengerAcceptance}
+      />
+    </Box>
+  );
 
   if (isLoadingRideData) {
     return <Loader />;
@@ -97,7 +141,7 @@ export const PartialRideEdit = () => {
   } else {
     return (
       <Form>
-        <Title variant='h3'>Add a ride</Title>
+        <Title variant='h3'>Edit a ride</Title>
         {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
         <SectionWrapper>
           <Box>
@@ -109,28 +153,12 @@ export const PartialRideEdit = () => {
           </Box>
         </SectionWrapper>
         <SectionWrapper>
-          {hasRole(Role.Private) && (
-            <Box>
-              <Label variant='h5'>Vehicle</Label>
-              <ChooseVehicle
-                value={vehicle}
-                setValue={setVehicle}
-              />
-            </Box>
-          )}
-          {hasRole(Role.Company) && (
-            <Box>
-              <Label variant='h5'>Passenger acceptance</Label>
-              <RadioGroup
-                options={[
-                  { value: 'automatic', label: 'Automatic' },
-                  { value: 'manual', label: 'Manual' },
-                ]}
-                defaultValue='automatic'
-                setValue={setPassengerAcceptance}
-              />
-            </Box>
-          )}
+          <AuthorizedElement
+            // eslint-disable-next-line react/no-children-prop
+            children={chooseVehicle}
+            role={Role.Private}
+            elementToPutInstead={acceptance}
+          />
         </SectionWrapper>
         <DescriptionWrapper>
           <Description

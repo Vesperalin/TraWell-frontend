@@ -1,4 +1,6 @@
 import MenuItem from '@mui/material/MenuItem';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { ChangeEvent } from 'react';
 // eslint-disable-next-line max-len
 import { DropdownOption } from '../Recurrence/components/RecurrenceWrapper/components/FrequenceSelector/models/DropdownOption';
@@ -12,12 +14,15 @@ interface Props {
 }
 
 const Dropdown = ({ options, label, onChange, value }: Props) => {
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   return (
     <DropdownBox component='form'>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextField
         select
         value={value}
+        size={isSmallScreen ? 'small' : 'medium'}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           onChange(event.target.value);
         }}

@@ -34,13 +34,13 @@ const RecurrenceWrapper = () => {
   return (
     <ReccurenceGrid
       container
-      spacing={3}
+      rowSpacing={3}
       direction='column'
     >
       <Grid
         item
         container
-        spacing={isSmallScreen ? 2 : 15}
+        spacing={isSmallScreen ? 2 : 10}
       >
         <Grid item>
           <DateSelector
@@ -57,13 +57,10 @@ const RecurrenceWrapper = () => {
           />
         </Grid>
       </Grid>
-      <Grid item>
-        <FrequenceSelector />
-      </Grid>
       <Grid
         item
         container
-        spacing={isSmallScreen ? 2 : 15}
+        spacing={isSmallScreen ? 2 : 10}
       >
         <Grid item>
           <TimeSelector
@@ -78,6 +75,9 @@ const RecurrenceWrapper = () => {
             setDuration={handleDurationChange}
           />
         </Grid>
+      </Grid>
+      <Grid item>
+        <FrequenceSelector />
       </Grid>
     </ReccurenceGrid>
   );

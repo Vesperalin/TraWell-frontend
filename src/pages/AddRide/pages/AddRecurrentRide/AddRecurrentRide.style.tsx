@@ -42,12 +42,6 @@ export const SectionWrapper = styled(Box)({
   columnGap: '30px',
 });
 
-export const InnerWrapper = styled(Box)({
-  display: 'flex',
-  gap: '10px',
-  flexWrap: 'wrap',
-});
-
 export const DescriptionWrapper = styled(Box)({
   marginBottom: '20px',
 });

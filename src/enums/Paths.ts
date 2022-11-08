@@ -10,6 +10,7 @@ export enum Paths {
   MyRequests = '/my-requests/:page',
   PendingRequests = '/pending-requests/:page',
   AddSingularRide = '/add-singular-ride',
+  AddRecurrentRide = '/add-recurrent-ride',
   EditSingularRide = '/edit-singular-ride/:rideId',
   EditFullSingularRide = '/edit-full-singular-ride/:rideId',
   EditPartialSingularRide = '/edit-partial-singular-ride/:rideId',

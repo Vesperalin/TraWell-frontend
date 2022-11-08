@@ -1,0 +1,1 @@
+export { RidesSingularAsDriver } from './RidesSingularAsDriver';

@@ -1,40 +1,54 @@
-import { Dayjs } from 'dayjs';
-import { ReactNode, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import { useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
 import { AmountOfPeopleInput } from '~/components/AmountOfPeopleInput';
 import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { ChooseVehicle } from '~/components/ChooseVehicle';
-import { DatePicker } from '~/components/DatePicker';
 import { Description } from '~/components/Description';
 import { DoubleNumberInput } from '~/components/DoubleNumberInput';
-import { IntegerInput } from '~/components/IntegerInput';
 import { Modal } from '~/components/Modal';
 import { PlaceAutocompleteInput } from '~/components/PlaceAutocompleteInput';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { RadioGroup } from '~/components/RadioGroup';
-import { RoadMap } from '~/components/RoadMap';
+import { Recurrence } from '~/components/Recurrence';
 import { TextInput } from '~/components/TextInput';
-import { TimePicker } from '~/components/TimePicker';
+import { FrequencyType } from '~/enums/FrequencyType';
 import { Paths } from '~/enums/Paths';
 import { Role } from '~/enums/Role';
 import { Sizes } from '~/enums/StyleSettings';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { Duration } from '~/models/Duration';
+import { RecurrenceType } from '~/models/RecurrenceType';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
 import {
   Form,
   Title,
   FormSectionWrapper,
   Label,
-  InnerWrapper,
   SectionWrapper,
   DescriptionWrapper,
   ButtonWrapper,
   ErrorMessage,
-} from './AddSingularRide.style';
+} from './AddRecurrentRide.style';
 
-export const AddSingularRide = () => {
+const initialState = {
+  startDate: dayjs(),
+  endDate: dayjs(),
+  startTime: dayjs(),
+  frequencyType: FrequencyType.Weekly,
+  weekDays: [],
+  frequenceOccurrences: 1,
+  duration: {
+    hours: 0,
+    minutes: 0,
+  } as Duration,
+};
+
+const endTime = dayjs().hour(23).minute(59).second(59).millisecond(59);
+
+export const AddRecurrentRide = () => {
   const { hasRole, token } = useAuth();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -43,18 +57,13 @@ export const AddSingularRide = () => {
   const [exactPlaceFrom, setExactPlaceFrom] = useState<string>('');
   const [placeTo, setPlaceTo] = useState<AutocompletePlace | null>(null);
   const [exactPlaceTo, setExactPlaceTo] = useState<string>('');
-  const [startDate, setStartDate] = useState<Dayjs | null>(null);
-  const [startTime, setStartTime] = useState<Dayjs | null>(null);
   const [amountOfPeople, setAmountOfPeople] = useState<string | null>('1');
-  const [hours, setHours] = useState<string | null>('');
-  const [minutes, setMinutes] = useState<string | null>('');
+  const [recurrence, setRecurrence] = useState<RecurrenceType>(initialState);
   const [price, setPrice] = useState<string | null>('');
   const [vehicle, setVehicle] = useState<number | null>(null);
   const [passengerAcceptance, setPassengerAcceptance] = useState<string>('automatic');
   const [description, setDescription] = useState<string>('');
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
-  const [allPoints, setAllPoints] = useState<[number, number][]>([]);
-  const [mapChecked, setMapChecked] = useState<boolean>(false);
   const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
 
   useEffect(() => {
@@ -67,18 +76,6 @@ export const AddSingularRide = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (placeFrom !== null && placeTo !== null) {
-      const tempPoints: [number, number][] = [];
-      tempPoints.push([Number(placeTo.lat), Number(placeTo.lon)]);
-      tempPoints.push([Number(placeFrom.lat), Number(placeFrom.lon)]);
-      setAllPoints(tempPoints);
-    } else {
-      setAllPoints([]);
-      setMapChecked(false);
-    }
-  }, [placeFrom, placeTo]);
-
   const checkIfHasRole = (role: Role) => {
     if (role === Role.Private) {
       return isPrivateRole;
@@ -87,20 +84,25 @@ export const AddSingularRide = () => {
     }
   };
 
-  const { refetch, isError } = RidesService.useAddSingularRide(
+  const { refetch, isError } = RidesService.useAddRecurrentRide(
     token,
     placeFrom,
     placeTo,
     exactPlaceFrom,
     exactPlaceTo,
-    startDate && startTime ? transformToFullDate(startDate, startTime) : null,
+    recurrence.startDate && recurrence.startTime
+      ? transformToFullDate(recurrence.startDate, recurrence.startTime)
+      : null,
+    recurrence.endDate ? transformToFullDate(recurrence.endDate, endTime) : null,
+    recurrence.frequencyType,
+    recurrence.frequenceOccurrences,
+    recurrence.weekDays,
     price,
     amountOfPeople,
     vehicle,
-    hours,
-    minutes,
+    recurrence.duration.hours,
+    recurrence.duration.minutes,
     description,
-    allPoints,
     passengerAcceptance,
     checkIfHasRole,
   );
@@ -110,28 +112,24 @@ export const AddSingularRide = () => {
       setError('You have to choose starting place - "Place from"');
     } else if (placeTo === null) {
       setError('You have to choose destination place - "Place to"');
-    } else if (startDate === null) {
-      setError('You have to choose start date');
-    } else if (startTime === null) {
-      setError('You have to choose start time');
-    } else if (!startDate.isValid()) {
-      setError('You have to choose valid date');
-    } else if (!startTime.isValid()) {
-      setError('You have to choose valid time');
-    } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
-      setError('You have to choose amount of people');
-    } else if (hours === null || hours.trim() === '') {
-      setError('You have to choose hours. If none, give: 0');
-    } else if (minutes === null || minutes.trim() === '') {
-      setError('You have to choose minutes. If none, give: 0');
-    } else if (price === null || price.trim() === '') {
-      setError('You have to choose price per passenger');
-    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
-      setError('You have to choose vehicle');
     } else if (exactPlaceFrom.length > 100) {
       setError('"Exact place from" is too long. Maximum is 100 signs.');
     } else if (exactPlaceTo.length > 100) {
       setError('"Exact place to" is too long. Maximum is 100 signs.');
+    } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
+      setError('You have to choose amount of people');
+    } else if (price === null || price.trim() === '') {
+      setError('You have to choose price per passenger');
+    } else if (checkIfHasRole(Role.Private) && vehicle === null) {
+      setError('You have to choose vehicle');
+    } else if (recurrence.startDate == null) {
+      setError('You have to choose start date');
+    } else if (recurrence.endDate == null) {
+      setError('You have to choose endDate date');
+    } else if (recurrence.startTime == null) {
+      setError('You have to choose start time');
+    } else if (recurrence.duration.hours === null) {
+      setError('You have to choose hours. If none, give: 0');
     } else {
       refetch().then(() => {
         setOpenModal(true);
@@ -140,17 +138,17 @@ export const AddSingularRide = () => {
   };
 
   const chooseVehicle: ReactNode = (
-    <>
+    <FormSectionWrapper>
       <Label variant='body2'>Vehicle</Label>
       <ChooseVehicle
         value={vehicle}
         setValue={setVehicle}
       />
-    </>
+    </FormSectionWrapper>
   );
 
   const acceptance: ReactNode = (
-    <>
+    <FormSectionWrapper>
       <Label variant='body2'>Passenger acceptance</Label>
       <RadioGroup
         options={[
@@ -160,7 +158,7 @@ export const AddSingularRide = () => {
         defaultValue='automatic'
         setValue={setPassengerAcceptance}
       />
-    </>
+    </FormSectionWrapper>
   );
 
   return (
@@ -195,43 +193,11 @@ export const AddSingularRide = () => {
       </FormSectionWrapper>
       <SectionWrapper>
         <FormSectionWrapper>
-          <Label variant='body2'>Start time</Label>
-          <InnerWrapper>
-            <DatePicker
-              date={startDate}
-              setDate={setStartDate}
-            />
-            <TimePicker
-              time={startTime}
-              setTime={setStartTime}
-            />
-          </InnerWrapper>
-        </FormSectionWrapper>
-        <FormSectionWrapper>
           <Label variant='body2'>Amount of people</Label>
           <AmountOfPeopleInput
             amountOfPeople={amountOfPeople}
             setAmountOfPeople={setAmountOfPeople}
           />
-        </FormSectionWrapper>
-      </SectionWrapper>
-      <SectionWrapper>
-        <FormSectionWrapper>
-          <Label variant='body2'>Duration</Label>
-          <InnerWrapper>
-            <IntegerInput
-              id='hours'
-              value={hours}
-              setValue={setHours}
-              adornment='h'
-            />
-            <IntegerInput
-              id='minutes'
-              value={minutes}
-              setValue={setMinutes}
-              adornment='min'
-            />
-          </InnerWrapper>
         </FormSectionWrapper>
         <FormSectionWrapper>
           <Label variant='body2'>Price</Label>
@@ -240,13 +206,17 @@ export const AddSingularRide = () => {
             setValue={setPrice}
           />
         </FormSectionWrapper>
-      </SectionWrapper>
-      <FormSectionWrapper>
         <AuthorizedElement
           // eslint-disable-next-line react/no-children-prop
           children={chooseVehicle}
           role={Role.Private}
           elementToPutInstead={acceptance}
+        />
+      </SectionWrapper>
+      <FormSectionWrapper>
+        <Recurrence
+          recurrence={recurrence}
+          onChange={setRecurrence}
         />
       </FormSectionWrapper>
       <DescriptionWrapper>
@@ -258,15 +228,6 @@ export const AddSingularRide = () => {
           setChecked={setDescriptionChecked}
         />
       </DescriptionWrapper>
-      <RoadMap
-        coordinates={allPoints}
-        heightOfMap={500}
-        isEditable={true}
-        setPoints={setAllPoints}
-        label='Road map (optional)'
-        checked={mapChecked}
-        setChecked={setMapChecked}
-      />
       <ButtonWrapper>
         <PrimaryButton
           label='Add ride'

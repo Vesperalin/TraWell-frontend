@@ -25,11 +25,14 @@ export const Navbar = () => {
   const [pages, setPages] = useState<{ name: string; path: Paths | string }[]>(initialPages);
 
   useEffect(() => {
-    if (hasRole(Role.Company)) {
-      setPages((prevPages) => {
-        return prevPages.filter((page) => page.name !== 'My requests');
-      });
-    }
+    const check = async () => {
+      if (await hasRole(Role.Company)) {
+        setPages((prevPages) => {
+          return prevPages.filter((page) => page.name !== 'My requests');
+        });
+      }
+    };
+    check();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

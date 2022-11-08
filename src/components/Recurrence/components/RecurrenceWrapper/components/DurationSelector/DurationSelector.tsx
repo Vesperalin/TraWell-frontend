@@ -1,4 +1,6 @@
 import { Grid, InputAdornment } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { ChangeEvent } from 'react';
 import { Duration } from '../FrequenceSelector/models/Duration';
 import { StyledInputLabel, StyledTextField } from './DurationSelector.style';
@@ -9,6 +11,8 @@ interface Props {
 }
 
 const DurationSelector = ({ duration, setDuration }: Props) => {
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+
   const handleChangeHours = (event: ChangeEvent<HTMLInputElement>) => {
     const newDuration = { hours: Number(event.target.value), minutes: duration.minutes };
     setDuration(newDuration);
@@ -29,6 +33,7 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
         <Grid item>
           <StyledTextField
             type='number'
+            size={isSmallScreen ? 'small' : 'medium'}
             InputProps={{
               endAdornment: <InputAdornment position='end'>h</InputAdornment>,
               value: duration.hours,
@@ -40,6 +45,7 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
         <Grid item>
           <StyledTextField
             type='number'
+            size={isSmallScreen ? 'small' : 'medium'}
             InputProps={{
               endAdornment: <InputAdornment position='end'>min</InputAdornment>,
               value: duration.minutes,

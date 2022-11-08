@@ -35,6 +35,11 @@ const AddSingularRide = lazy(() =>
     default: module.AddSingularRide,
   })),
 );
+const AddRecurrentRide = lazy(() =>
+  import('~/pages/AddRide').then((module) => ({
+    default: module.AddRecurrentRide,
+  })),
+);
 const EditSingularRide = lazy(() =>
   import('~/pages/EditRide').then((module) => ({ default: module.EditSingularRide })),
 );
@@ -110,6 +115,10 @@ const App = () => {
               <Route
                 path={Paths.AddSingularRide}
                 element={<PrivateRoute element={<AddSingularRide />} />}
+              />
+              <Route
+                path={Paths.AddRecurrentRide}
+                element={<PrivateRoute element={<AddRecurrentRide />} />}
               />
               <Route
                 path={Paths.EditSingularRide}

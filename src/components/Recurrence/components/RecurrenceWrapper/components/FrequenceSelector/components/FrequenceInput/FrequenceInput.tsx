@@ -1,5 +1,7 @@
 import { InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useContext, useEffect } from 'react';
 import { RecurrenceContext } from '~/context/RecurrenceContext';
 import { FrequencyType } from '~/enums/FrequencyType';
@@ -8,6 +10,7 @@ import { WeekDaysButtons } from './components/WeekDaysButtons';
 import { StyledInputLabel, StyledTextField } from './FrequenceInput.style';
 
 const FrequenceInput = () => {
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { recurrence, onFieldChange } = useContext(RecurrenceContext);
 
   useEffect(() => {
@@ -35,6 +38,7 @@ const FrequenceInput = () => {
       <Grid item>
         <StyledInputLabel>Frequence</StyledInputLabel>
         <StyledTextField
+          size={isSmallScreen ? 'small' : 'medium'}
           type='number'
           InputProps={{
             endAdornment: (
