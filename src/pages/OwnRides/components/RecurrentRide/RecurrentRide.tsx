@@ -75,8 +75,7 @@ export const RecurrentRide = ({
   };
 
   const handleEdit = () => {
-    // TODO: handle edit of recurrent ride
-    // navigate(`/edit-singular-ride/${rideId}`);
+    navigate(`/edit-recurrent-ride/${rideId}`);
   };
 
   const handleOwnRideDetails = () => {

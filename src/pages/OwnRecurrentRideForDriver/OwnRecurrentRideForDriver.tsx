@@ -42,7 +42,7 @@ export const OwnRecurrentRideForDriver = () => {
   }, [token, rideId, refetch]);
 
   const handleEdit = () => {
-    navigate(`/edit-singular-ride/${rideId}`);
+    navigate(`/edit-recurrent-ride/${rideId}`);
   };
 
   if (isError) {
