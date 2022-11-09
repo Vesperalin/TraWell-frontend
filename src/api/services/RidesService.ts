@@ -5,11 +5,13 @@ import { ridesClient } from '~/api/clients';
 import { FrequencyType } from '~/enums/FrequencyType';
 import { Role } from '~/enums/Role';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
+import { DetailedOwnRecurrentRideData } from '~/models/Rides/DetailedOwnRecurrentRideData';
 import { RideForPassengerResponse, RideForDriverResponse } from '~/models/Rides/DetailedRideData';
 import { EditionPermissions } from '~/models/Rides/EditionPermissions';
 import { OwnRideResponse } from '~/models/Rides/OwnRideResponse';
 import { RequestsResponse } from '~/models/Rides/RequestsResponse';
 import { RideResponse } from '~/models/Rides/RideResponse';
+import { SingleRideInRecurrentRide } from '~/models/Rides/SingleRideInRecurrentRide';
 
 export default {
   useRides: (
@@ -76,11 +78,29 @@ export default {
   },
   useSingularRideForDriver: (rideId: number, token: string) => {
     return useQuery<RideForDriverResponse, Error>(
-      ['rideForDriver', rideId],
+      ['singularRideForDriver', rideId],
       async () => {
         const response = await ridesClient.get<RideForDriverResponse>(`rides/${rideId}/`, {
           headers: { Authorization: 'Bearer ' + token },
         });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
+  useRecurrentRideForDriver: (rideId: number, token: string) => {
+    return useQuery<DetailedOwnRecurrentRideData, Error>(
+      ['recurrentRideForDriver', rideId],
+      async () => {
+        const response = await ridesClient.get<DetailedOwnRecurrentRideData>(
+          `recurrent_rides/${rideId}/`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
         return response.data;
       },
       {
@@ -575,5 +595,30 @@ export default {
       );
       return response.data;
     });
+  },
+  useGetNextRidesInRecurrentRide: (
+    token: string | undefined,
+    startDate: string | null,
+    id: number | undefined,
+  ) => {
+    return useQuery<SingleRideInRecurrentRide[], Error>(
+      [`nextRides-${startDate}`, id, startDate],
+      async () => {
+        const date = startDate ? `?single_start_date=${startDate}` : '';
+
+        const response = await ridesClient.get<SingleRideInRecurrentRide[]>(
+          `recurrent_rides/${id}/single_rides/${date}`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    );
   },
 };
