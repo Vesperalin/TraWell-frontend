@@ -52,6 +52,11 @@ const EditFullPartialRide = lazy(() =>
 const OwnRideForDriver = lazy(() =>
   import('~/pages/OwnRideForDriver').then((module) => ({ default: module.OwnRideForDriver })),
 );
+const OwnRecurrentRideForDriver = lazy(() =>
+  import('~/pages/OwnRecurrentRideForDriver').then((module) => ({
+    default: module.OwnRecurrentRideForDriver,
+  })),
+);
 const OwnRequests = lazy(() =>
   import('~/pages/OwnRequests').then((module) => ({ default: module.OwnRequests })),
 );
@@ -135,6 +140,10 @@ const App = () => {
               <Route
                 path={Paths.OwnRideForDriver}
                 element={<PrivateRoute element={<OwnRideForDriver />} />}
+              />
+              <Route
+                path={Paths.OwnRecurrentRideForDriver}
+                element={<PrivateRoute element={<OwnRecurrentRideForDriver />} />}
               />
               <Route
                 path={Paths.MyRequests}

@@ -9,8 +9,7 @@ import { Sizes } from '~/enums/StyleSettings';
 import { useAuth } from '~/hooks/useAuth';
 import { Car } from './components/Car';
 import { Description } from './components/Description';
-import { Passengers } from './components/Passengers';
-import { RoadMap } from './components/RoadMap';
+import { NextRides } from './components/NextRides';
 import { TimeLocationOfRide } from './components/TimeLocationOfRide';
 import { UpperDataWrapper } from './components/UpperDataWrapper';
 import {
@@ -21,13 +20,13 @@ import {
   RightColumnWrapper,
   SeatsText,
   AdditionalDataWrapper,
-} from './OwnRideForDriver.style';
+} from './OwnRecurrentRideForDriver.style';
 
-export const OwnRideForDriver = () => {
+export const OwnRecurrentRideForDriver = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
   const { rideId } = useParams();
-  const { data, isLoading, refetch, isError } = RidesService.useSingularRideForDriver(
+  const { data, isLoading, refetch, isError } = RidesService.useRecurrentRideForDriver(
     rideId ? Number(rideId) : -1,
     token ? token : '',
   );
@@ -72,7 +71,6 @@ export const OwnRideForDriver = () => {
         <LeftColumnWrapper>
           <UpperDataWrapper
             isLoading={isLoading}
-            date={data?.start_date}
             isPrivate={data?.driver.private}
           />
           <TimeLocationOfRide
@@ -101,7 +99,7 @@ export const OwnRideForDriver = () => {
           ) : (
             <AdditionalDataWrapper>
               <SeatsText variant='h4'>
-                Available seats: <span>{data?.available_seats}</span>
+                Seats: <span>{data?.seats}</span>
               </SeatsText>
               <SeatsText variant='h4'>
                 Price: <span>{data?.price} zł</span>
@@ -110,23 +108,12 @@ export const OwnRideForDriver = () => {
           )}
         </LeftColumnWrapper>
         <RightColumnWrapper>
-          <Passengers
-            isLoading={isLoading}
-            passengers={data?.passengers}
-          />
+          <NextRides id={data?.ride_id} />
         </RightColumnWrapper>
       </ColumnsWrapper>
       <Description
         isLoading={isLoading}
         value={data?.description}
-      />
-      <RoadMap
-        isLoading={isLoading}
-        startingLat={data?.city_from.lat}
-        startingLon={data?.city_from.lng}
-        endingLat={data?.city_to.lat}
-        endingLon={data?.city_to.lng}
-        coordinates={data?.coordinates}
       />
       <PrimaryButton
         label='Edit'
