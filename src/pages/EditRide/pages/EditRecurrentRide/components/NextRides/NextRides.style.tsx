@@ -7,7 +7,7 @@ export const Wrapper = styled(Box)({
   flexDirection: 'column',
   gap: '10px',
   alignItems: 'flex-start',
-  backgroundColor: '#06283de8',
+  backgroundColor: '#F6F8FA',
   borderRadius: '10px',
   paddingBottom: '20px',
   height: '350px',
@@ -32,7 +32,7 @@ export const DateWrapper = styled(Box)({
 
 export const Label = styled(Typography)(({ theme }) => ({
   fontWeight: '400',
-  color: theme.palette.common.dimmedWhite,
+  color: theme.palette.common.darkNavy,
   marginLeft: '20px',
   marginTop: '20px',
 }));
@@ -55,7 +55,7 @@ export const NoPassengersLabel = styled(Typography)(({ theme }) => ({
 export const RideWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: '5px',
-  backgroundColor: '#47b5ff98',
+  backgroundColor: '#47b5ffcf',
   color: theme.palette.common.dimmedWhite,
   width: '200px',
   borderRadius: '10px',
