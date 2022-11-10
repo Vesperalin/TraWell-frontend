@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import Box from '@mui/material/Box';
+import dayjs from 'dayjs';
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import RidesService from '~/api/services/RidesService';
@@ -16,6 +17,7 @@ import { Role } from '~/enums/Role';
 import { Sizes } from '~/enums/StyleSettings';
 import { useAuth } from '~/hooks/useAuth';
 import { NextRides } from './components/NextRides';
+import { UserSearchRideInputData } from './components/UserSearchRideInputData';
 import {
   Form,
   Title,
@@ -26,6 +28,7 @@ import {
   InnerWrapper,
   UpperWrapper,
   RightWrapper,
+  StyledSkeleton,
 } from './EditRecurrentRide.style';
 
 export const EditRecurrentRide = () => {
@@ -142,61 +145,78 @@ export const EditRecurrentRide = () => {
     );
   } else {
     return (
-      <Form>
-        <Title variant='h3'>Edit a ride</Title>
-        {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
-        <InnerWrapper>
-          <NextRides id={rideId} />
-          <RightWrapper>
-            <UpperWrapper>
-              <Box>
-                <Label variant='h5'>Amount of people</Label>
-                <AmountOfPeopleInput
-                  amountOfPeople={amountOfPeople}
-                  setAmountOfPeople={setAmountOfPeople}
-                />
-              </Box>
-              <AuthorizedElement
-                // eslint-disable-next-line react/no-children-prop
-                children={chooseVehicle}
-                role={Role.Private}
-                elementToPutInstead={acceptance}
-              />
-            </UpperWrapper>
-            <DescriptionWrapper>
-              <Description
-                label='Description (optional)'
-                value={description}
-                setValue={setDescription}
-                checked={descriptionChecked}
-                setChecked={setDescriptionChecked}
-              />
-            </DescriptionWrapper>
-          </RightWrapper>
-        </InnerWrapper>
-        <ButtonWrapper>
-          <PrimaryButton
-            label='Save changes'
-            onClick={submitHandler}
-            desktopSize={Sizes.Medium}
-            mobileSize={Sizes.Small}
+      <div>
+        {rideData ? (
+          <UserSearchRideInputData
+            placeFrom={rideData.city_from.name}
+            exactPlaceFrom={rideData.area_from}
+            placeTo={rideData.city_to.name}
+            exactPlaceTo={rideData.area_from}
+            startDate={dayjs(rideData.start_date)}
+            endDate={dayjs(rideData.end_date)}
           />
-        </ButtonWrapper>
-        <Modal
-          open={openModal}
-          title={isErrorEditData ? 'Error occurred' : 'Ride changed successfully'}
-          text={
-            isErrorEditData
-              ? 'Unexpected error occurred while adding the ride. Ride was not changed!'
-              : 'The ride was changed successfully. Wait for first passengers to book a place!'
-          }
-          showButtonForOpeningModal={false}
-          handleOpen={() => setOpenModal(true)}
-          handleClose={() => navigate(Paths.Home)}
-          primaryButtonText='Okay'
-          primaryButtonAction={() => navigate(Paths.Home)}
-        />
-      </Form>
+        ) : (
+          <StyledSkeleton
+            variant='rectangular'
+            height='50'
+          />
+        )}
+        <Form>
+          <Title variant='h3'>Edit a ride</Title>
+          {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
+          <InnerWrapper>
+            <NextRides id={rideId} />
+            <RightWrapper>
+              <UpperWrapper>
+                <Box>
+                  <Label variant='h5'>Amount of people</Label>
+                  <AmountOfPeopleInput
+                    amountOfPeople={amountOfPeople}
+                    setAmountOfPeople={setAmountOfPeople}
+                  />
+                </Box>
+                <AuthorizedElement
+                  // eslint-disable-next-line react/no-children-prop
+                  children={chooseVehicle}
+                  role={Role.Private}
+                  elementToPutInstead={acceptance}
+                />
+              </UpperWrapper>
+              <DescriptionWrapper>
+                <Description
+                  label='Description (optional)'
+                  value={description}
+                  setValue={setDescription}
+                  checked={descriptionChecked}
+                  setChecked={setDescriptionChecked}
+                />
+              </DescriptionWrapper>
+            </RightWrapper>
+          </InnerWrapper>
+          <ButtonWrapper>
+            <PrimaryButton
+              label='Save changes'
+              onClick={submitHandler}
+              desktopSize={Sizes.Medium}
+              mobileSize={Sizes.Small}
+            />
+          </ButtonWrapper>
+          <Modal
+            open={openModal}
+            title={isErrorEditData ? 'Error occurred' : 'Ride changed successfully'}
+            text={
+              isErrorEditData
+                ? 'Unexpected error occurred while adding the ride. Ride was not changed!'
+                : 'The ride was changed successfully. Wait for first passengers to book a place!'
+            }
+            showButtonForOpeningModal={false}
+            handleOpen={() => setOpenModal(true)}
+            handleClose={() => navigate(Paths.Home)}
+            primaryButtonText='Okay'
+            primaryButtonAction={() => navigate(Paths.Home)}
+          />
+        </Form>
+      </div>
     );
   }
 };

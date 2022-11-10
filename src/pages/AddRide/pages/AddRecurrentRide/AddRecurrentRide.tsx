@@ -130,6 +130,8 @@ export const AddRecurrentRide = () => {
       setError('You have to choose start time');
     } else if (recurrence.duration.hours === null) {
       setError('You have to choose hours. If none, give: 0');
+    } else if (recurrence.duration.minutes === null) {
+      setError('You have to choose minutes. If none, give: 0');
     } else {
       refetch().then(() => {
         setOpenModal(true);

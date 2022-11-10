@@ -23,7 +23,7 @@ export const RidesWrapper = styled(Box)({
 
 export const DateWrapper = styled(Box)({
   width: '200px',
-  marginLeft: '20px',
+  margin: '0 20px',
 
   'fieldset > legend > span': {
     display: 'none',
