@@ -333,8 +333,10 @@ export default {
           occurrences &&
           price &&
           seats &&
-          hours &&
-          minutes
+          hours !== null &&
+          hours >= 0 &&
+          minutes !== null &&
+          minutes >= 0
         ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
