@@ -7,8 +7,8 @@ import { DropdownBox, StyledTextField, StyledInputLabel } from './Dropdown.style
 interface Props {
   options: Array<{ key: number; value: string }>;
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: number;
+  onChange: (value: number) => void;
 }
 
 const Dropdown = ({ options, label, onChange, value }: Props) => {
