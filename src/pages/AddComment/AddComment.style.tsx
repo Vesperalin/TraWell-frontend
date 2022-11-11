@@ -16,11 +16,16 @@ export const Title = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.blue,
 }));
 
-export const UpperWrapper = styled(Box)({
+export const UpperWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   display: 'flex',
   columnGap: '30px',
-});
+
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column-reverse',
+    rowGap: '20px',
+  },
+}));
 
 export const LeftUpperWrapper = styled(Box)({
   display: 'flex',
@@ -34,3 +39,7 @@ export const ButtonWrapper = styled(Box)({
   justifyContent: 'flex-end',
   marginTop: '10px',
 });
+
+export const ErrorMessage = styled(Typography)(({ theme }) => ({
+  color: theme.palette.common.lightRed,
+}));

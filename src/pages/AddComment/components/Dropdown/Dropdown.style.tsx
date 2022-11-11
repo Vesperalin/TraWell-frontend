@@ -2,7 +2,11 @@ import { Box, InputLabel, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const DropdownBox = styled(Box)({
+  maxWidth: '500px',
   '& .MuiTextField-root': { width: '100%' },
+  '& MuiFormControl-root': {
+    minWidth: '250px',
+  },
 });
 
 export const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
