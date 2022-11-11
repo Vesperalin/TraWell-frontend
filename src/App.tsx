@@ -178,7 +178,7 @@ const App = () => {
               />
               <Route
                 path={Paths.AddComment}
-                element={<AddComment />}
+                element={<PrivateRoute element={<AddComment />} />}
               />
               <Route
                 path={Paths.Error}

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useParams, Navigate } from 'react-router-dom';
 import UsersService from '~/api/services/UsersService';
+import { AuthorizedElement } from '~/components/AuthorizedElement';
 import { Loader } from '~/components/Loader';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Paths } from '~/enums/Paths';
@@ -60,12 +61,14 @@ export const UserProfile = () => {
             instagramLink={data.instagram}
           />
         </StyledUserWrapper>
-        <PrimaryButton
-          label='Add review'
-          onClick={onClickHandler}
-          desktopSize={Sizes.Medium}
-          mobileSize={Sizes.Small}
-        />
+        <AuthorizedElement>
+          <PrimaryButton
+            label='Add review'
+            onClick={onClickHandler}
+            desktopSize={Sizes.Medium}
+            mobileSize={Sizes.Small}
+          />
+        </AuthorizedElement>
       </StyledProfileWrapper>
     );
   }
