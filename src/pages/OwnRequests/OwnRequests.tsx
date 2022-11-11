@@ -34,10 +34,11 @@ import {
   PaginationWrapper,
 } from './OwnRequests.style';
 
-// TODO add review sorter keys
 const sortElements: SortElement[] = [
   { label: 'Date: highest first', value: '-start_date' },
   { label: 'Date: lowest first', value: 'start_date' },
+  { label: 'Driver rate: highest first', value: '-driver_rate' },
+  { label: 'Driver rate: lowest first', value: 'driver_rate' },
 ];
 
 export const OwnRequests = () => {
