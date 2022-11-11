@@ -32,10 +32,11 @@ import {
   PaginationWrapper,
 } from './RequestsFromUsers.style';
 
-// TODO add review sorter keys
 const sortElements: SortElement[] = [
   { label: 'Date: highest first', value: '-start_date' },
   { label: 'Date: lowest first', value: 'start_date' },
+  { label: 'Passenger rate: highest first', value: '-passenger_rate' },
+  { label: 'Passenger rate: lowest first', value: 'passenger_rate' },
 ];
 
 export const RequestsFromUsers = () => {
@@ -69,6 +70,8 @@ export const RequestsFromUsers = () => {
     from,
     to,
   );
+
+  console.log(data);
 
   useEffect(() => {
     setTimeout(() => {
@@ -170,9 +173,9 @@ export const RequestsFromUsers = () => {
                   lengthInMinutes={result.ride.duration.minutes + result.ride.duration.hours * 60}
                   placeTo={result.ride.city_to.name}
                   exactPlaceTo={result.ride.area_to}
-                  userName={result.ride.driver.first_name}
-                  imageSource={result.ride.driver.avatar}
-                  reviewMean={Number(result.ride.driver.avg_rate)}
+                  userName={result.user ? result.user.first_name : ''}
+                  imageSource={result.user ? result.user.avatar : ''}
+                  reviewMean={result.user ? Number(result.user.avg_rate) : 0}
                   refetchData={refetch}
                 />
               );
