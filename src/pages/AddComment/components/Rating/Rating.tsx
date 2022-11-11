@@ -12,7 +12,7 @@ export const Rating = ({ rating, setRating }: Props) => {
 
   return (
     <div>
-      <Label variant='h5'>Rating</Label>
+      <Label variant='h4'>Rating</Label>
       <MUIRating
         value={rating}
         emptyIcon={<Star className={icon} />}

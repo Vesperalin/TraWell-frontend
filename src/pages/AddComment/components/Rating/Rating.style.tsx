@@ -6,7 +6,7 @@ import { styled } from '@mui/system';
 export const useStyles = makeStyles<Theme>((theme: Theme) => ({
   icon: {
     color: theme.palette.common.dimmedWhite,
-    opacity: '0.7',
+    opacity: '0.6',
   },
 }));
 
