@@ -28,7 +28,7 @@ export const UserProfile = () => {
   }, [token, refetch]);
 
   const onClickHandler = () => {
-    navigate(Paths.Home);
+    navigate(`/add-comment/${userId}`);
   };
 
   if ((isLoading || !data) && !isError) {

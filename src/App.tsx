@@ -66,6 +66,9 @@ const OwnRequests = lazy(() =>
 const RequestsFromUsers = lazy(() =>
   import('~/pages/RequestsFromUsers').then((module) => ({ default: module.RequestsFromUsers })),
 );
+const AddComment = lazy(() =>
+  import('~/pages/AddComment').then((module) => ({ default: module.AddComment })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -172,6 +175,10 @@ const App = () => {
               <Route
                 path={Paths.UserProfile}
                 element={<UserProfile />}
+              />
+              <Route
+                path={Paths.AddComment}
+                element={<AddComment />}
               />
               <Route
                 path={Paths.Error}
