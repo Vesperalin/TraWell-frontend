@@ -1,3 +1,5 @@
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useParams, Navigate } from 'react-router-dom';
@@ -21,6 +23,9 @@ export const UserProfile = () => {
     token ? token : '',
     userId ? Number(userId) : -1,
   );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isTheSame = token && data && (jwt_decode(token) as any).email === data.email;
 
   useEffect(() => {
     if (token) {
@@ -61,14 +66,16 @@ export const UserProfile = () => {
             instagramLink={data.instagram}
           />
         </StyledUserWrapper>
-        <AuthorizedElement>
-          <PrimaryButton
-            label='Add review'
-            onClick={onClickHandler}
-            desktopSize={Sizes.Medium}
-            mobileSize={Sizes.Small}
-          />
-        </AuthorizedElement>
+        {!isTheSame && (
+          <AuthorizedElement>
+            <PrimaryButton
+              label='Add review'
+              onClick={onClickHandler}
+              desktopSize={Sizes.Medium}
+              mobileSize={Sizes.Small}
+            />
+          </AuthorizedElement>
+        )}
       </StyledProfileWrapper>
     );
   }
