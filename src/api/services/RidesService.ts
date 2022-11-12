@@ -119,7 +119,7 @@ export default {
     userType: 'driver' | 'passenger',
   ) => {
     return useQuery<OwnRideResponse, Error>(
-      [`ownRides-${token}`, token, page],
+      ['ownRides', token, page, ordering, startDate, from, to, userType],
       async () => {
         const date = startDate !== '' ? `&start_date=${startDate}` : '';
         const cityFromState = from ? `&city_from_state=${from.state}` : '';
@@ -156,7 +156,7 @@ export default {
     to: AutocompletePlace | null,
   ) => {
     return useQuery<OwnRideResponse, Error>(
-      [`ownRides-${token}`, token, page],
+      ['ownRides', token, page, ordering, from, to, startDate],
       async () => {
         const date = startDate !== '' ? `&start_date=${startDate}` : '';
         const cityFromState = from ? `&city_from_state=${from.state}` : '';
@@ -391,7 +391,7 @@ export default {
   },
   useCheckEditionPermissionForSingularRide: (rideId: number, token: string) => {
     return useQuery<EditionPermissions, Error>(
-      [],
+      ['permission-for-ride', rideId],
       async () => {
         const response = await ridesClient.get<EditionPermissions>(
           `rides/${rideId}/check_edition_permissions/`,
@@ -581,28 +581,31 @@ export default {
     to: AutocompletePlace | null,
     requestStatus: string | null,
   ) => {
-    return useQuery<RequestsResponse | undefined, Error>([], async () => {
-      const date = startDate ? `&start_date=${startDate}` : '';
-      const cityFromState = from ? `&city_from_state=${from.state}` : '';
-      const cityToState = to ? `&city_to_state=${to.state}` : '';
-      const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
-      const cityToCounty = to ? `&city_to_county=${to.county}` : '';
-      const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
-      const cityFromLon = from ? `&city_from_lng=${from.lon}` : '';
-      const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
-      const cityToLon = to ? `&city_to_lng=${to.lon}` : '';
-      const cityTo = to ? `&city_to=${to.name}` : '';
-      const cityFrom = from ? `&city_from=${from.name}` : '';
-      const status = requestStatus ? `&decision=${requestStatus}` : '';
+    return useQuery<RequestsResponse | undefined, Error>(
+      ['myRequests', page, ordering, startDate, from, to, requestStatus],
+      async () => {
+        const date = startDate ? `&start_date=${startDate}` : '';
+        const cityFromState = from ? `&city_from_state=${from.state}` : '';
+        const cityToState = to ? `&city_to_state=${to.state}` : '';
+        const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
+        const cityToCounty = to ? `&city_to_county=${to.county}` : '';
+        const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
+        const cityFromLon = from ? `&city_from_lng=${from.lon}` : '';
+        const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
+        const cityToLon = to ? `&city_to_lng=${to.lon}` : '';
+        const cityTo = to ? `&city_to=${to.name}` : '';
+        const cityFrom = from ? `&city_from=${from.name}` : '';
+        const status = requestStatus ? `&decision=${requestStatus}` : '';
 
-      const response = await ridesClient.get<RequestsResponse>(
-        `requests/my_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
-      );
-      return response.data;
-    });
+        const response = await ridesClient.get<RequestsResponse>(
+          `requests/my_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+    );
   },
   usePendingRequests: (
     page: number,
@@ -612,27 +615,30 @@ export default {
     from: AutocompletePlace | null,
     to: AutocompletePlace | null,
   ) => {
-    return useQuery<RequestsResponse | undefined, Error>([], async () => {
-      const date = startDate ? `&start_date=${startDate}` : '';
-      const cityFromState = from ? `&city_from_state=${from.state}` : '';
-      const cityToState = to ? `&city_to_state=${to.state}` : '';
-      const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
-      const cityToCounty = to ? `&city_to_county=${to.county}` : '';
-      const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
-      const cityFromLon = from ? `&city_from_lng=${from.lon}` : '';
-      const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
-      const cityToLon = to ? `&city_to_lng=${to.lon}` : '';
-      const cityTo = to ? `&city_to=${to.name}` : '';
-      const cityFrom = from ? `&city_from=${from.name}` : '';
+    return useQuery<RequestsResponse | undefined, Error>(
+      ['pendingRequests', page, ordering, startDate, from, to],
+      async () => {
+        const date = startDate ? `&start_date=${startDate}` : '';
+        const cityFromState = from ? `&city_from_state=${from.state}` : '';
+        const cityToState = to ? `&city_to_state=${to.state}` : '';
+        const cityFromCounty = from ? `&city_from_county=${from.county}` : '';
+        const cityToCounty = to ? `&city_to_county=${to.county}` : '';
+        const cityFromLat = from ? `&city_from_lat=${from.lat}` : '';
+        const cityFromLon = from ? `&city_from_lng=${from.lon}` : '';
+        const cityToLat = to ? `&city_to_lat=${to.lat}` : '';
+        const cityToLon = to ? `&city_to_lng=${to.lon}` : '';
+        const cityTo = to ? `&city_to=${to.name}` : '';
+        const cityFrom = from ? `&city_from=${from.name}` : '';
 
-      const response = await ridesClient.get<RequestsResponse>(
-        `requests/pending_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
-      );
-      return response.data;
-    });
+        const response = await ridesClient.get<RequestsResponse>(
+          `requests/pending_requests/?page=${page}&ordering=${ordering}${date}${cityFromState}${cityToState}${cityFromCounty}${cityToCounty}${cityFromLat}${cityFromLon}${cityToLat}${cityToLon}${cityTo}${cityFrom}${status}`,
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+    );
   },
   useGetNextRidesInRecurrentRide: (
     token: string | undefined,
@@ -640,7 +646,7 @@ export default {
     id: number | undefined,
   ) => {
     return useQuery<SingleRideInRecurrentRide[], Error>(
-      [`nextRides-${startDate}`, id, startDate],
+      ['nextRides', id, startDate],
       async () => {
         const date = startDate ? `?single_start_date=${startDate}` : '';
 
