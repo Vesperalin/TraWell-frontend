@@ -39,7 +39,7 @@ export const User = () => {
     {
       key: 'my_profile',
       name: 'My profile',
-      path: '/profile/' + data?.user_id,
+      path: '/profile/1/' + data?.user_id,
       icon: <AccountCircleOutlinedIcon />,
     },
     { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },

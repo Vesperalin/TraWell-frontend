@@ -24,7 +24,7 @@ export const User = ({
 
   const handleUserClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
-    navigate(`/profile/${userId}`);
+    navigate(`/profile/1/${userId}`);
   };
 
   return (
