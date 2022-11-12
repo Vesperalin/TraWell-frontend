@@ -10,6 +10,7 @@ import { EnumFilter } from '../components/EnumFilter';
 import { InputFilter } from '../components/InputFilter';
 import { PriceFilter } from '../components/PriceFilter';
 import { RatingFilter } from '../components/RatingFilter';
+import { RatingMeanFilter } from '../components/RatingMeanFilter';
 import { TimeFilter } from '../components/TimeFilter';
 import { TypeOfFilter } from '../enums/TypeOfFilter';
 import {
@@ -20,6 +21,7 @@ import {
   RatingFilterType,
   InputFilterType,
   PriceFilterType,
+  RatingMeanFilterType,
 } from '../models/FilterType';
 import {
   StyledBox,
@@ -99,6 +101,13 @@ export const MobileFilter = ({ filters }: Props) => {
                 <PriceFilter
                   key={filter.type}
                   filter={filter as PriceFilterType}
+                />
+              );
+            } else if (filter.type === TypeOfFilter.RatingMeanFilterType) {
+              return (
+                <RatingMeanFilter
+                  key={filter.type}
+                  filter={filter as RatingMeanFilterType}
                 />
               );
             }

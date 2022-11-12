@@ -5,4 +5,5 @@ export enum TypeOfFilter {
   PriceFilter = 'price-filter',
   RatingFilter = 'rating-filter',
   TimeFilter = 'time-filter',
+  RatingMeanFilterType = 'rating-mean-filter',
 }

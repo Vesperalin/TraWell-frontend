@@ -1,0 +1,1 @@
+export { RatingMeanFilter } from './RatingMeanFilter';

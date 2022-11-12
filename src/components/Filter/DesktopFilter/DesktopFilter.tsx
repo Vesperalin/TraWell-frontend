@@ -3,6 +3,7 @@ import { EnumFilter } from '../components/EnumFilter';
 import { InputFilter } from '../components/InputFilter';
 import { PriceFilter } from '../components/PriceFilter';
 import { RatingFilter } from '../components/RatingFilter';
+import { RatingMeanFilter } from '../components/RatingMeanFilter';
 import { TimeFilter } from '../components/TimeFilter';
 import { TypeOfFilter } from '../enums/TypeOfFilter';
 import {
@@ -12,6 +13,7 @@ import {
   TimeFilterType,
   RatingFilterType,
   InputFilterType,
+  RatingMeanFilterType,
   PriceFilterType,
 } from '../models/FilterType';
 import { StyledBox } from './DesktopFilter.style';
@@ -64,6 +66,13 @@ export const DesktopFilter = ({ filters }: Props) => {
             <PriceFilter
               key={filter.type}
               filter={filter as PriceFilterType}
+            />
+          );
+        } else if (filter.type === TypeOfFilter.RatingMeanFilterType) {
+          return (
+            <RatingMeanFilter
+              key={filter.type}
+              filter={filter as RatingMeanFilterType}
             />
           );
         }
