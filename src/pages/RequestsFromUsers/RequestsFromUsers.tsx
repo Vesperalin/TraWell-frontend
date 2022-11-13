@@ -71,8 +71,6 @@ export const RequestsFromUsers = () => {
     to,
   );
 
-  console.log(data);
-
   useEffect(() => {
     setTimeout(() => {
       refetch();
