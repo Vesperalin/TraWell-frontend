@@ -2,12 +2,13 @@
 import { useQuery } from 'react-query';
 import { reviewsClient } from '~/api/clients';
 import { CommentsResponse } from '~/models/Comments/CommentsResponse';
+import { NotRatedRides } from '~/models/Comments/NotRatedRides';
 
 export default {
   useAddComment: (
     token: string,
     userId: number,
-    ratedUserType: 'driver' | 'passenger',
+    ratedUserType: string,
     rideId: number,
     review: number,
     description: string,
@@ -47,7 +48,7 @@ export default {
     reviewTo: string,
   ) => {
     return useQuery<CommentsResponse, Error>(
-      ['comments-for-parameters', page, userId, userType, ratingOrder, reviewFrom, reviewTo],
+      ['comments-for-parameters', page, token, userId, userType, ratingOrder, reviewFrom, reviewTo],
       async () => {
         const ratingFrom = reviewFrom.length > 0 ? `&rating_from=${reviewFrom}` : '';
         const ratingTo = reviewTo.length > 0 ? `&rating_to=${reviewTo}` : '';
@@ -59,6 +60,26 @@ export default {
         );
 
         return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
+  useNotRatedRides: (token: string | undefined, userId: number | undefined) => {
+    return useQuery<NotRatedRides[], Error>(
+      ['not-rated-rides', userId, token],
+      async () => {
+        const response = await reviewsClient.get<NotRatedRides[]>(`rides/${userId}`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
       },
     );
   },

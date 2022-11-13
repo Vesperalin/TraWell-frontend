@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import ReviewsService from '~/api/services/ReviewsService';
@@ -9,6 +10,7 @@ import { PrimaryButton } from '~/components/PrimaryButton';
 import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
 import { useAuth } from '~/hooks/useAuth';
+import { NotRatedRides } from '~/models/Comments/NotRatedRides';
 import {
   Wrapper,
   Title,
@@ -21,10 +23,20 @@ import { Dropdown } from './components/Dropdown';
 import { Rating } from './components/Rating';
 import { User } from './components/User';
 
-const DUMMY_OPTIONS = [
-  { key: 2366, value: 'Katowice - Warszawa  18:15, 24.09.2022 - driver' },
-  { key: 2367, value: 'Katowice - Warszawa  18:15, 30.09.2022 - driver' },
-];
+const transformRides = (rides: NotRatedRides[]) => {
+  return rides.map((ride) => {
+    const date = dayjs(ride.start_date);
+    return {
+      key: ride.ride_id,
+      // eslint-disable-next-line max-len
+      value: `${ride.city_from} - ${
+        ride.city_to
+      }, ${date.hour()}:${date.minute()}, ${date.date()}.${date.month()}.${date.year()} - ${
+        ride.was_driver ? 'driver' : 'passenger'
+      }`,
+    };
+  });
+};
 
 export const AddComment = () => {
   const navigate = useNavigate();
@@ -32,8 +44,9 @@ export const AddComment = () => {
   const [error, setError] = useState<string>('');
   const [rating, setRating] = useState<number | null>(null);
   const [description, setDescription] = useState<string>('');
+  const [userType, setUserType] = useState<string>('');
   const [descriptionChecked, setDescriptionChecked] = useState<boolean>(false);
-  const [ride, setRide] = useState<number>(2366);
+  const [ride, setRide] = useState<number | null>(null);
   const { userId } = useParams();
   const { token } = useAuth();
   const { isLoading, data, refetch, isError } = UsersService.useGetUserData(
@@ -41,21 +54,36 @@ export const AddComment = () => {
     userId ? Number(userId) : -1,
   );
 
-  // TODO - zmienić user type potem i rideId
   const { refetch: refetchReview, isError: isErrorReview } = ReviewsService.useAddComment(
     token ? token : '',
     userId ? Number(userId) : -1,
-    'driver',
-    1,
-    4,
+    userType,
+    ride ? ride : -1,
+    rating ? rating : -1,
     description,
   );
+
+  const {
+    refetch: refetchNotRatedRides,
+    isError: isErrorNotRatedRides,
+    data: dataNotRatedRides,
+  } = ReviewsService.useNotRatedRides(token ? token : '', userId ? Number(userId) : -1);
+
+  useEffect(() => {
+    if (dataNotRatedRides && ride !== null) {
+      const tempRide = dataNotRatedRides.filter((ride) => ride.ride_id === ride.ride_id);
+      if (tempRide.length > 0) {
+        setUserType(tempRide[0].was_driver ? 'driver' : 'passenger');
+      }
+    }
+  }, [dataNotRatedRides, ride]);
 
   useEffect(() => {
     if (token && userId) {
       refetch();
+      refetchNotRatedRides();
     }
-  }, [refetch, token, userId]);
+  }, [refetch, refetchNotRatedRides, token, userId]);
 
   const submitHandler = () => {
     if (rating === null || rating === 0) {
@@ -79,6 +107,16 @@ export const AddComment = () => {
         }}
       />
     );
+  } else if (isErrorNotRatedRides) {
+    return (
+      <Navigate
+        to={Paths.Error}
+        replace={true}
+        state={{
+          text: 'Could not find rides of user.',
+        }}
+      />
+    );
   } else if (isLoading) {
     return <Loader />;
   } else if (data) {
@@ -90,7 +128,7 @@ export const AddComment = () => {
           <UpperWrapper>
             <LeftUpperWrapper>
               <Dropdown
-                options={DUMMY_OPTIONS}
+                options={dataNotRatedRides ? transformRides(dataNotRatedRides) : []}
                 label='Ride'
                 onChange={setRide}
                 value={ride}
