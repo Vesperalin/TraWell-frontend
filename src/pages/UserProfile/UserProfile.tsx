@@ -1,6 +1,5 @@
 import Pagination from '@mui/material/Pagination';
 import { Theme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 // eslint-disable-next-line camelcase
@@ -28,6 +27,7 @@ import { UserFunctionType } from '~/enums/UserFunctionType';
 import { useAuth } from '~/hooks/useAuth';
 import { calculateAge } from '~/utils/CalculateAge';
 import { Comment } from './components/Comment';
+import { NoCommentsFound } from './components/NoCommentsFound';
 import { SocialMedia } from './components/SocialMedia';
 import { UserData } from './components/UserData';
 import {
@@ -42,8 +42,8 @@ import {
 } from './UserProfile.style';
 
 const sortElements: SortElement[] = [
-  { label: 'Driver rate: highest first', value: 'desc' },
-  { label: 'Driver rate: lowest first', value: 'asc' },
+  { label: 'Rate: highest first', value: 'desc' },
+  { label: 'Rate: lowest first', value: 'asc' },
 ];
 
 export const UserProfile = () => {
@@ -221,7 +221,7 @@ export const UserProfile = () => {
             </>
             {!areCommentsLoading && comments && comments.results.length == 0 && (
               <NoCommentsWrapper>
-                <Typography variant='h3'>You do not have any requests</Typography>
+                <NoCommentsFound />
               </NoCommentsWrapper>
             )}
           </Comments>
