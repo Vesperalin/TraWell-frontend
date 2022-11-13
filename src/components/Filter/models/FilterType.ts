@@ -41,3 +41,10 @@ export interface PriceFilterType extends FilterType {
   to: string;
   setTo(value: string): void;
 }
+
+export interface RatingMeanFilterType extends FilterType {
+  from: string;
+  setFrom(value: string): void;
+  to: string;
+  setTo(value: string): void;
+}

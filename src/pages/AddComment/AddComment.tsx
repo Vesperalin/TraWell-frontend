@@ -42,7 +42,7 @@ export const AddComment = () => {
   );
 
   // TODO - zmienić user type potem i rideId
-  const { refetch: refetchReview, isError: isErrorReview } = ReviewsService.useComment(
+  const { refetch: refetchReview, isError: isErrorReview } = ReviewsService.useAddComment(
     token ? token : '',
     userId ? Number(userId) : -1,
     'driver',

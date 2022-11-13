@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 import { useQuery } from 'react-query';
 import { reviewsClient } from '~/api/clients';
+import { CommentsResponse } from '~/models/Comments/CommentsResponse';
 
 export default {
-  useComment: (
+  useAddComment: (
     token: string,
     userId: number,
     ratedUserType: 'driver' | 'passenger',
@@ -33,6 +34,31 @@ export default {
         refetchOnWindowFocus: false,
         retry: false,
         cacheTime: 0,
+      },
+    );
+  },
+  useComments: (
+    page: number,
+    token: string | undefined,
+    userId: number | undefined,
+    userType: string,
+    ratingOrder: string,
+    reviewFrom: string,
+    reviewTo: string,
+  ) => {
+    return useQuery<CommentsResponse, Error>(
+      ['comments-for-parameters', page, userId, userType, ratingOrder, reviewFrom, reviewTo],
+      async () => {
+        const ratingFrom = reviewFrom.length > 0 ? `&rating_from=${reviewFrom}` : '';
+        const ratingTo = reviewTo.length > 0 ? `&rating_to=${reviewTo}` : '';
+
+        const response = await reviewsClient.get<CommentsResponse>(
+          // eslint-disable-next-line max-len
+          `reviews/user_reviews/${userId}?page=${page}&user_type=${userType}&rating_order=${ratingOrder}${ratingFrom}${ratingTo}`,
+          { headers: { Authorization: 'Bearer ' + token } },
+        );
+
+        return response.data;
       },
     );
   },

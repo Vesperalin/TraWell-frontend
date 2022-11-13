@@ -85,7 +85,6 @@ export const OwnRequests = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/my-requests/1');
     setTimeout(() => {
       navigate('/my-requests/1');
     }, 100);
