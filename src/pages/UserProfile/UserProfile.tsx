@@ -1,6 +1,5 @@
 import Pagination from '@mui/material/Pagination';
 import { Theme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 // eslint-disable-next-line camelcase
@@ -19,6 +18,7 @@ import {
   RadioButtonsFilterType,
 } from '~/components/Filter/models/FilterType';
 import { Loader } from '~/components/Loader';
+import { Modal } from '~/components/Modal';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sort } from '~/components/Sort';
 import { SortElement } from '~/components/Sort/models/SortElement';
@@ -28,6 +28,7 @@ import { UserFunctionType } from '~/enums/UserFunctionType';
 import { useAuth } from '~/hooks/useAuth';
 import { calculateAge } from '~/utils/CalculateAge';
 import { Comment } from './components/Comment';
+import { NoCommentsFound } from './components/NoCommentsFound';
 import { SocialMedia } from './components/SocialMedia';
 import { UserData } from './components/UserData';
 import {
@@ -42,8 +43,9 @@ import {
 } from './UserProfile.style';
 
 const sortElements: SortElement[] = [
-  { label: 'Driver rate: highest first', value: 'desc' },
-  { label: 'Driver rate: lowest first', value: 'asc' },
+  { label: 'Opinions: my first', value: 'my_first' },
+  { label: 'Rate: highest first', value: 'desc' },
+  { label: 'Rate: lowest first', value: 'asc' },
 ];
 
 export const UserProfile = () => {
@@ -54,8 +56,10 @@ export const UserProfile = () => {
   const [filteredUserRole, setFilteredUserRole] = useState<string>('all');
   const [filterReviewFrom, setFilterReviewFrom] = useState<string>('');
   const [filterReviewTo, setFilterReviewTo] = useState<string>('');
-  const [sortKey, setSortKey] = useState<string>('desc');
+  const [sortKey, setSortKey] = useState<string>('my_first');
   const [currentPage, setCurrentPage] = useState<number>(page ? Number(page) : 1);
+  const [text, setText] = useState<string>('');
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const { isLoading, data, refetch, isError } = UsersService.useGetUserData(
     token ? token : '',
     userId ? Number(userId) : -1,
@@ -65,7 +69,7 @@ export const UserProfile = () => {
     isLoading: areCommentsLoading,
     data: comments,
     isError: isCommentsError,
-    refetch: refetchComment,
+    refetch: refetchComments,
   } = ReviewsService.useComments(
     currentPage,
     token,
@@ -88,11 +92,11 @@ export const UserProfile = () => {
   useEffect(() => {
     setTimeout(() => {
       if (token && userId) {
-        refetchComment();
+        refetchComments();
       }
     }, 100);
     // eslint-disable-next-line max-len, react-hooks/exhaustive-deps
-  }, [filteredUserRole, filterReviewFrom, filterReviewTo, sortKey, currentPage, refetchComment]);
+  }, [filteredUserRole, filterReviewFrom, filterReviewTo, sortKey, currentPage, refetchComments]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -156,89 +160,111 @@ export const UserProfile = () => {
     );
 
     return (
-      <Wrapper>
-        <StyledProfileWrapper>
-          <StyledUserWrapper>
-            <UserData
-              src={data.avatar}
-              altText={data.first_name + ' ' + data.last_name}
-              review={data.avg_rate}
-              age={age}
-            />
-            <SocialMedia
-              facebookLink={data.facebook}
-              instagramLink={data.instagram}
-            />
-          </StyledUserWrapper>
-          {!isTheSame && (
-            <AuthorizedElement>
-              <PrimaryButton
-                label='Add review'
-                onClick={onClickHandler}
-                desktopSize={Sizes.Medium}
-                mobileSize={Sizes.Small}
+      <>
+        <Wrapper>
+          <StyledProfileWrapper>
+            <StyledUserWrapper>
+              <UserData
+                src={data.avatar}
+                altText={data.first_name + ' ' + data.last_name}
+                review={data.avg_rate}
+                age={age}
               />
-            </AuthorizedElement>
-          )}
-        </StyledProfileWrapper>
-        <SortAndFiltersComponent>
-          <MobileFilter filters={filters} />
-          <Sort
-            sortElements={sortElements}
-            setSortElementKey={setSortKey}
-            sortElementKey={sortKey}
-          />
-        </SortAndFiltersComponent>
-        <Content>
-          <DesktopFilter filters={filters} />
-          <Comments>
-            <>
-              {areCommentsLoading && <Loader />}
-              {!areCommentsLoading &&
-                comments &&
-                comments.results.length > 0 &&
-                comments.results.map((comment) => {
-                  return (
-                    <Comment
-                      key={comment.review_id}
-                      userId={comment.reviewer.user_id}
-                      userName={comment.reviewer.first_name}
-                      imageSource={comment.reviewer.avatar}
-                      reviewMean={Number(comment.reviewer.avg_rate)}
-                      isOwnComment={
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        comment.reviewer.email === (jwt_decode(token ? token : '') as any).email
-                      }
-                      asWho={
-                        comment.was_rated_driver ? UserFunctionType.Driver : UserFunctionType.Rider
-                      }
-                      description={comment.description}
-                      givenStars={comment.stars}
-                      date={dayjs(comment.created_on)}
-                    />
-                  );
-                })}
-            </>
-            {!areCommentsLoading && comments && comments.results.length == 0 && (
-              <NoCommentsWrapper>
-                <Typography variant='h3'>You do not have any requests</Typography>
-              </NoCommentsWrapper>
+              <SocialMedia
+                facebookLink={data.facebook}
+                instagramLink={data.instagram}
+              />
+            </StyledUserWrapper>
+            {!isTheSame && (
+              <AuthorizedElement>
+                <PrimaryButton
+                  label='Add review'
+                  onClick={onClickHandler}
+                  desktopSize={Sizes.Medium}
+                  mobileSize={Sizes.Small}
+                />
+              </AuthorizedElement>
             )}
-          </Comments>
-        </Content>
-        {!(!areCommentsLoading && comments && comments.results.length === 0) && (
-          <PaginationWrapper>
-            <Pagination
-              count={pagesAmount}
-              variant='outlined'
-              shape='rounded'
-              page={currentPage}
-              onChange={handleChange}
-              size={isSmallScreen ? 'small' : 'medium'}
+          </StyledProfileWrapper>
+          <SortAndFiltersComponent>
+            <MobileFilter filters={filters} />
+            <Sort
+              sortElements={sortElements}
+              setSortElementKey={setSortKey}
+              sortElementKey={sortKey}
             />
-          </PaginationWrapper>
+          </SortAndFiltersComponent>
+          <Content>
+            <DesktopFilter filters={filters} />
+            <Comments>
+              <>
+                {areCommentsLoading && <Loader />}
+                {!areCommentsLoading &&
+                  comments &&
+                  comments.results.length > 0 &&
+                  comments.results.map((comment) => {
+                    return (
+                      <Comment
+                        key={comment.review_id}
+                        reviewId={comment.review_id}
+                        userId={comment.reviewer.user_id}
+                        userName={comment.reviewer.first_name}
+                        imageSource={comment.reviewer.avatar}
+                        reviewMean={Number(comment.reviewer.avg_rate)}
+                        isOwnComment={
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          comment.reviewer.email === (jwt_decode(token ? token : '') as any).email
+                        }
+                        asWho={
+                          comment.was_rated_driver
+                            ? UserFunctionType.Driver
+                            : UserFunctionType.Rider
+                        }
+                        description={comment.description}
+                        givenStars={comment.stars}
+                        date={dayjs(comment.created_on)}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        refetchComments={refetchComments}
+                        setText={setText}
+                        setShowInfoModal={setShowInfoModal}
+                      />
+                    );
+                  })}
+              </>
+              {!areCommentsLoading && comments && comments.results.length == 0 && (
+                <NoCommentsWrapper>
+                  <NoCommentsFound />
+                </NoCommentsWrapper>
+              )}
+            </Comments>
+          </Content>
+          {!(!areCommentsLoading && comments && comments.results.length === 0) && (
+            <PaginationWrapper>
+              <Pagination
+                count={pagesAmount}
+                variant='outlined'
+                shape='rounded'
+                page={currentPage}
+                onChange={handleChange}
+                size={isSmallScreen ? 'small' : 'medium'}
+              />
+            </PaginationWrapper>
+          )}
+        </Wrapper>
+        {showInfoModal && (
+          <Modal
+            open={showInfoModal}
+            title='Delete comment'
+            text={text}
+            handleOpen={() => setShowInfoModal(true)}
+            handleClose={() => setShowInfoModal(false)}
+            primaryButtonText='Okay'
+            primaryButtonAction={() => setShowInfoModal(false)}
+            showButtonForOpeningModal={false}
+          />
         )}
-      </Wrapper>
+      </>
     );
   }
 };

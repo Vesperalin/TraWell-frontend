@@ -83,4 +83,20 @@ export default {
       },
     );
   },
+  useDeleteComment: (token: string | undefined, reviewId: number | undefined) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await reviewsClient.delete<unknown>(`reviews/${reviewId}`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
 };
