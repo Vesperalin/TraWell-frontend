@@ -28,6 +28,8 @@ export const User = () => {
     }
   }, [refetch, token]);
 
+  console.log(data?.user_id);
+
   // TODO change paths in the future
   const settings = [
     {
@@ -39,7 +41,7 @@ export const User = () => {
     {
       key: 'my_profile',
       name: 'My profile',
-      path: '/profile/1/' + data?.user_id,
+      path: '/profile/' + data?.user_id + '/1',
       icon: <AccountCircleOutlinedIcon />,
     },
     { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
