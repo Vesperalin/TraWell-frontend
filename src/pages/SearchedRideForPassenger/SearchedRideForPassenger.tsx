@@ -78,12 +78,14 @@ export const SearchedRideForPassenger = () => {
           reviewMean={data ? Number(data.driver.avg_rate) : undefined}
         />
       </DataWrapper>
-      <Car
-        isLoading={isLoading}
-        carDescription={
-          data ? `${data.vehicle.color} ${data.vehicle.make} ${data.vehicle.model}` : undefined
-        }
-      />
+      {data?.vehicle !== null && (
+        <Car
+          isLoading={isLoading}
+          carDescription={
+            data ? `${data.vehicle.color} ${data.vehicle.make} ${data.vehicle.model}` : undefined
+          }
+        />
+      )}
       <Description
         isLoading={isLoading}
         value={data?.description}

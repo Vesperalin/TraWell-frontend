@@ -28,8 +28,6 @@ export const User = () => {
     }
   }, [refetch, token]);
 
-  console.log(data?.user_id);
-
   // TODO change paths in the future
   const settings = [
     {

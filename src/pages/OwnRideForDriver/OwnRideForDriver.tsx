@@ -86,12 +86,16 @@ export const OwnRideForDriver = () => {
             placeTo={data ? `${data.city_to.county}, ${data.city_to.state}` : ''}
             exactPlaceTo={data?.area_to}
           />
-          <Car
-            isLoading={isLoading}
-            carDescription={
-              data ? `${data.vehicle.color} ${data.vehicle.make} ${data.vehicle.model}` : undefined
-            }
-          />
+          {data?.vehicle !== null && (
+            <Car
+              isLoading={isLoading}
+              carDescription={
+                data
+                  ? `${data.vehicle.color} ${data.vehicle.make} ${data.vehicle.model}`
+                  : undefined
+              }
+            />
+          )}
           {isLoading ? (
             <Skeleton
               variant='rectangular'

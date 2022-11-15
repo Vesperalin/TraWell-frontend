@@ -8,7 +8,7 @@ export const NoCommentsFound = () => {
         alt='not found page'
         src={pageNotFound}
       />
-      <StyledText variant='h5'>There are no reviews abut the user</StyledText>
+      <StyledText variant='h5'>There are no reviews about the user</StyledText>
     </Wrapper>
   );
 };
