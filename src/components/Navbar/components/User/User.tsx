@@ -44,7 +44,7 @@ export const User = () => {
     {
       key: 'history',
       name: 'History',
-      path: `/history-rides/0/${data?.user_id}/1`,
+      path: '/history-rides/0/1',
       icon: <HistoryOutlinedIcon />,
     },
     { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },

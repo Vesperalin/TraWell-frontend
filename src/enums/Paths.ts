@@ -17,7 +17,7 @@ export enum Paths {
   EditFullSingularRide = '/edit-full-singular-ride/:rideId',
   EditPartialSingularRide = '/edit-partial-singular-ride/:rideId',
   AddComment = '/add-comment/:userId',
-  HistoryRides = '/history-rides/:tab/:userId/:page',
+  HistoryRides = '/history-rides/:tab/:page',
   Error = '/error',
   NotFound = '*',
 }
