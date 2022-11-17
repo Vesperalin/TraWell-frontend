@@ -84,7 +84,7 @@ export const RidesSingularAsDriver = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/own-rides/1');
+    navigate('/own-rides/0/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
 
@@ -124,7 +124,7 @@ export const RidesSingularAsDriver = () => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/own-rides/${value}`);
+    navigate(`/own-rides/0/${value}`);
   };
 
   const renderSingularRides = () => {

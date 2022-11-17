@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useEffect, useState } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
-import RidesService from '~/api/services/RidesService';
+import HistoryService from '~/api/services/HistoryService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
 import {
@@ -67,7 +67,7 @@ export const RidesSingularAsPassenger = () => {
     data: singularRideData,
     isError: isErrorSingularRide,
     refetch: refetchSingularRideData,
-  } = RidesService.useOwnSingularRides(
+  } = HistoryService.useOwnSingularRides(
     currentPage,
     token ? token : '',
     sortKey,
@@ -84,7 +84,7 @@ export const RidesSingularAsPassenger = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/own-rides/2/1');
+    navigate('/history-rides/2/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
 
@@ -124,7 +124,7 @@ export const RidesSingularAsPassenger = () => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/own-rides/2/${value}`);
+    navigate(`/history-rides/2/${value}`);
   };
 
   const renderSingularRides = () => {
@@ -135,10 +135,7 @@ export const RidesSingularAsPassenger = () => {
         <SingularRide
           key={result.ride_id}
           rideId={result.ride_id}
-          editable={false}
-          refetchRides={refetchSingularRideData}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          isOwn={false}
           startDate={dayjs(result.start_date)}
           placeFrom={result.city_from.name}
           exactPlaceFrom={result.area_from}

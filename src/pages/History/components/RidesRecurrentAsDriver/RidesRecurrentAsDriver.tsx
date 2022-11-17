@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useEffect, useState } from 'react';
 import { useParams, Navigate, useNavigate } from 'react-router-dom';
-import RidesService from '~/api/services/RidesService';
+import HistoryService from '~/api/services/HistoryService';
 import { DesktopFilter, MobileFilter } from '~/components/Filter';
 import { TypeOfFilter } from '~/components/Filter/enums/TypeOfFilter';
 import {
@@ -23,14 +23,14 @@ import { RideType } from '~/enums/RideType';
 import { useAuth } from '~/hooks/useAuth';
 import { AutocompletePlace } from '~/models/AutocompletePlace';
 import { transformToFullDate } from '~/utils/TransformToFullDate';
-import { SingularRide } from '../SingularRide';
+import { RecurrentRide } from '../RecurrentRide';
 import {
   Rides,
   SortAndFiltersComponent,
   Content,
   NoRidesWrapper,
   PaginationWrapper,
-} from './RidesSingularAsPassenger.style';
+} from './RidesRecurrentAsDriver.style';
 
 const sortElements: SortElement[] = [
   { label: 'Duration: highest first', value: '-duration' },
@@ -39,7 +39,7 @@ const sortElements: SortElement[] = [
   { label: 'Date: lowest first', value: 'start_date' },
 ];
 
-export const RidesSingularAsPassenger = () => {
+export const RidesRecurrentAsDriver = () => {
   const { token } = useAuth();
   const { page } = useParams();
   const navigate = useNavigate();
@@ -63,39 +63,38 @@ export const RidesSingularAsPassenger = () => {
   }
 
   const {
-    isLoading: isLoadingSingularRide,
-    data: singularRideData,
-    isError: isErrorSingularRide,
-    refetch: refetchSingularRideData,
-  } = RidesService.useOwnSingularRides(
+    isLoading: isLoadingRecurrentRide,
+    data: recurrentRideData,
+    isError: isErrorRecurrentRide,
+    refetch: refetchRecurrentRideData,
+  } = HistoryService.useOwnRecurrentRides(
     currentPage,
     token ? token : '',
     sortKey,
     dateAndTime,
     from,
     to,
-    'passenger',
   );
 
   useEffect(() => {
-    refetchSingularRideData();
-  }, [dateAndTime, from, to, refetchSingularRideData, sortKey, currentPage]);
+    refetchRecurrentRideData();
+  }, [dateAndTime, from, to, refetchRecurrentRideData, sortKey, currentPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/own-rides/2/1');
+    navigate('/history-rides/1/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
 
-  if (isErrorSingularRide) {
+  if (isErrorRecurrentRide) {
     return (
       <Navigate
         to={Paths.Error}
         replace={true}
         state={{
           // eslint-disable-next-line max-len
-          text: 'Unexpected error appeared during retrieving data about own singular rides. Try again',
+          text: 'Unexpected error appeared during retrieving data about own recurrent rides. Try again',
         }}
       />
     );
@@ -124,32 +123,36 @@ export const RidesSingularAsPassenger = () => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/own-rides/2/${value}`);
+    navigate(`/history-rides/1/${value}`);
   };
 
-  const renderSingularRides = () => {
-    if (isLoadingSingularRide) {
+  const renderRecurrentRides = () => {
+    if (isLoadingRecurrentRide) {
       return <Loader />;
-    } else if (!isLoadingSingularRide && singularRideData && singularRideData.results.length > 0) {
-      const rides = singularRideData.results.map((result) => (
-        <SingularRide
+    } else if (
+      !isLoadingRecurrentRide &&
+      recurrentRideData &&
+      recurrentRideData.results.length > 0
+    ) {
+      const rides = recurrentRideData.results.map((result) => (
+        <RecurrentRide
           key={result.ride_id}
           rideId={result.ride_id}
-          editable={false}
-          refetchRides={refetchSingularRideData}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
           startDate={dayjs(result.start_date)}
           placeFrom={result.city_from.name}
           exactPlaceFrom={result.area_from}
           lengthInMinutes={result.duration.minutes + result.duration.hours * 60}
           placeTo={result.city_to.name}
           exactPlaceTo={result.area_to}
-          rideType={result.recurrent ? RideType.Recurrent : RideType.Singular}
+          rideType={RideType.Recurrent}
         />
       ));
       return rides;
-    } else if (!isLoadingSingularRide && singularRideData && singularRideData.results.length == 0) {
+    } else if (
+      !isLoadingRecurrentRide &&
+      recurrentRideData &&
+      recurrentRideData.results.length == 0
+    ) {
       return (
         <NoRidesWrapper>
           <Typography variant='h3'>You do not have any rides</Typography>
@@ -158,11 +161,11 @@ export const RidesSingularAsPassenger = () => {
     } else return <></>;
   };
 
-  const renderPaginationForSingularRides = () => {
-    if (!(!isLoadingSingularRide && singularRideData && singularRideData.results.length == 0)) {
+  const renderPaginationForRecurrentRides = () => {
+    if (!(!isLoadingRecurrentRide && recurrentRideData && recurrentRideData.results.length == 0)) {
       const pagesAmount = Math.ceil(
-        (singularRideData ? singularRideData.count : 0) /
-          (singularRideData ? singularRideData.page_size : 1),
+        (recurrentRideData ? recurrentRideData.count : 0) /
+          (recurrentRideData ? recurrentRideData.page_size : 1),
       );
 
       return (
@@ -179,6 +182,7 @@ export const RidesSingularAsPassenger = () => {
       );
     } else return <></>;
   };
+
   return (
     <>
       <SortAndFiltersComponent>
@@ -203,9 +207,9 @@ export const RidesSingularAsPassenger = () => {
               : filters.filter((elem) => elem.type !== TypeOfFilter.TimeFilter)
           }
         />
-        <Rides>{renderSingularRides()}</Rides>
+        <Rides>{renderRecurrentRides()}</Rides>
       </Content>
-      {renderPaginationForSingularRides()}
+      {renderPaginationForRecurrentRides()}
     </>
   );
 };

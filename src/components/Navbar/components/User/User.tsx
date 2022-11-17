@@ -28,7 +28,6 @@ export const User = () => {
     }
   }, [refetch, token]);
 
-  // TODO change paths in the future
   const settings = [
     {
       key: 'account_settings',
@@ -39,10 +38,15 @@ export const User = () => {
     {
       key: 'my_profile',
       name: 'My profile',
-      path: '/profile/1/' + data?.user_id,
+      path: '/profile/' + data?.user_id + '/1',
       icon: <AccountCircleOutlinedIcon />,
     },
-    { key: 'history', name: 'History', path: Paths.Home, icon: <HistoryOutlinedIcon /> },
+    {
+      key: 'history',
+      name: 'History',
+      path: '/history-rides/0/1',
+      icon: <HistoryOutlinedIcon />,
+    },
     { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
   ];
 

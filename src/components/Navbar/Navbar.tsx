@@ -16,7 +16,7 @@ import { StyledAppBar, MobileWrapper, DesktopWrapper } from './Navbar.style';
 const initialPages = [
   { name: 'Pending requests', path: '/pending-requests/1' },
   { name: 'My requests', path: '/my-requests/1' },
-  { name: 'My rides', path: '/own-rides/1' },
+  { name: 'My rides', path: '/own-rides/0/1' },
   { name: 'Post a ride', path: Paths.ChooseRideType },
 ];
 

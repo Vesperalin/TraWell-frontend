@@ -1,0 +1,1 @@
+export { RidesSingularAsPassenger } from './RidesSingularAsPassenger';

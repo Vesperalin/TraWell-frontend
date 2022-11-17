@@ -6,9 +6,9 @@ import { useParams } from 'react-router-dom';
 import { RidesRecurrentAsDriver } from './components/RidesRecurrentAsDriver';
 import { RidesSingularAsDriver } from './components/RidesSingularAsDriver';
 import { RidesSingularAsPassenger } from './components/RidesSingularAsPassenger';
-import { Wrapper } from './OwnRides.style';
+import { Wrapper } from './History.style';
 
-export const OwnRides = () => {
+export const History = () => {
   const { tab } = useParams();
   const [tabNumber, setTabNumber] = useState<number>(Number(tab));
 

@@ -3,9 +3,12 @@ export enum Paths {
   // eslint-disable-next-line max-len
   SearchedRides = '/searched-rides/:cityFrom/:countyFrom/:stateFrom/:latFrom/:lonFrom/:cityTo/:countyTo/:stateTo/:latTo/:lonTo/:date/:seatsAmount/:page',
   SearchedRideForPassenger = '/searched-ride/:rideId',
+  SearchedHistoricalRideForPassenger = '/searched-historical-ride/:rideId',
   OwnRideForDriver = '/my-ride/:rideId',
+  OwnHistoricalRideForDriver = '/my-historical-ride/:rideId',
   OwnRecurrentRideForDriver = '/my-recurrent-ride/:rideId',
-  OwnRides = '/own-rides/:page',
+  OwnHistoricalRecurrentRideForDriver = '/my-historical-recurrent-ride/:rideId',
+  OwnRides = '/own-rides/:tab/:page',
   UserProfile = '/profile/:userId/:page',
   ChooseRideType = '/choose-ride-type',
   MyRequests = '/my-requests/:page',
@@ -17,6 +20,7 @@ export enum Paths {
   EditFullSingularRide = '/edit-full-singular-ride/:rideId',
   EditPartialSingularRide = '/edit-partial-singular-ride/:rideId',
   AddComment = '/add-comment/:userId',
+  HistoryRides = '/history-rides/:tab/:page',
   Error = '/error',
   NotFound = '*',
 }

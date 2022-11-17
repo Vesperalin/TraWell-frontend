@@ -71,10 +71,17 @@ export default {
     );
   },
   useRideForPassenger: (rideId: number) => {
-    return useQuery<RideForPassengerResponse, Error>(['rideForPassenger', rideId], async () => {
-      const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
-      return response.data;
-    });
+    return useQuery<RideForPassengerResponse, Error>(
+      ['rideForPassenger', rideId],
+      async () => {
+        const response = await ridesClient.get<RideForPassengerResponse>(`rides/${rideId}/`);
+        return response.data;
+      },
+      {
+        enabled: true,
+        refetchOnWindowFocus: false,
+      },
+    );
   },
   useSingularRideForDriver: (rideId: number, token: string) => {
     return useQuery<RideForDriverResponse, Error>(
