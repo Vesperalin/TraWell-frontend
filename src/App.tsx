@@ -155,7 +155,15 @@ const App = () => {
                 element={<PrivateRoute element={<OwnRideForDriver />} />}
               />
               <Route
+                path={Paths.OwnHistoricalRideForDriver}
+                element={<PrivateRoute element={<OwnRideForDriver />} />}
+              />
+              <Route
                 path={Paths.OwnRecurrentRideForDriver}
+                element={<PrivateRoute element={<OwnRecurrentRideForDriver />} />}
+              />
+              <Route
+                path={Paths.OwnHistoricalRecurrentRideForDriver}
                 element={<PrivateRoute element={<OwnRecurrentRideForDriver />} />}
               />
               <Route
@@ -173,6 +181,10 @@ const App = () => {
               />
               <Route
                 path={Paths.SearchedRideForPassenger}
+                element={<SearchedRideForPassenger />}
+              />
+              <Route
+                path={Paths.SearchedHistoricalRideForPassenger}
                 element={<SearchedRideForPassenger />}
               />
               <Route

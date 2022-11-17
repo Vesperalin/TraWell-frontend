@@ -22,6 +22,7 @@ export const LeftColumnWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '30px',
+  maxWidth: '75%',
 });
 
 export const RightColumnWrapper = styled(Box)(({ theme }) => ({

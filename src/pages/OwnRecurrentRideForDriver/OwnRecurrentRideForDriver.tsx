@@ -1,7 +1,8 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react';
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import HistoryService from '~/api/services/HistoryService';
 import RidesService from '~/api/services/RidesService';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Paths } from '~/enums/Paths';
@@ -25,11 +26,23 @@ import {
 export const OwnRecurrentRideForDriver = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
+  const { pathname } = useLocation();
   const { rideId } = useParams();
-  const { data, isLoading, refetch, isError } = RidesService.useRecurrentRideForDriver(
-    rideId ? Number(rideId) : -1,
-    token ? token : '',
-  );
+  const isHistorical = pathname.includes('my-historical') ? true : false;
+
+  const {
+    data: currentData,
+    isLoading: currentIsLoading,
+    refetch: currentRefetch,
+    isError: currentIsError,
+  } = RidesService.useRecurrentRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
+
+  const {
+    data: historicalData,
+    isLoading: historicalIsLoading,
+    refetch: historicalRefetch,
+    isError: historicalIsError,
+  } = HistoryService.useRecurrentRideForDriver(rideId ? Number(rideId) : -1, token ? token : '');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,15 +50,19 @@ export const OwnRecurrentRideForDriver = () => {
 
   useEffect(() => {
     if (token && rideId) {
-      refetch();
+      if (isHistorical) {
+        historicalRefetch();
+      } else {
+        currentRefetch();
+      }
     }
-  }, [token, rideId, refetch]);
+  }, [token, rideId, isHistorical, historicalRefetch, currentRefetch]);
 
   const handleEdit = () => {
     navigate(`/edit-recurrent-ride/${rideId}`);
   };
 
-  if (isError) {
+  if ((isHistorical && historicalIsError) || (!isHistorical && currentIsError)) {
     return (
       <Navigate
         to={Paths.Error}
@@ -55,6 +72,29 @@ export const OwnRecurrentRideForDriver = () => {
         }}
       />
     );
+  }
+
+  let carDescription: string | undefined = undefined;
+  let placeFrom = '';
+  let placeTo = '';
+  let lengthInMinutes = 0;
+
+  if (isHistorical && historicalData) {
+    if (historicalData.vehicle) {
+      // eslint-disable-next-line max-len
+      carDescription = `${historicalData.vehicle.color} ${historicalData.vehicle.make} ${historicalData.vehicle.model}`;
+    }
+    placeFrom = `${historicalData.city_from.county}, ${historicalData.city_from.state}`;
+    placeTo = `${historicalData.city_to.county}, ${historicalData.city_to.state}`;
+    lengthInMinutes = historicalData.duration.minutes + historicalData.duration.hours * 60;
+  } else if (!isHistorical && currentData) {
+    if (currentData.vehicle) {
+      // eslint-disable-next-line max-len
+      carDescription = `${currentData.vehicle.color} ${currentData.vehicle.make} ${currentData.vehicle.model}`;
+    }
+    placeFrom = `${currentData.city_from.county}, ${currentData.city_from.state}`;
+    placeTo = `${currentData.city_to.county}, ${currentData.city_to.state}`;
+    lengthInMinutes = currentData.duration.minutes + currentData.duration.hours * 60;
   }
 
   return (
@@ -70,27 +110,27 @@ export const OwnRecurrentRideForDriver = () => {
       <ColumnsWrapper>
         <LeftColumnWrapper>
           <UpperDataWrapper
-            isLoading={isLoading}
-            isPrivate={data?.driver.private}
+            isLoading={isHistorical ? historicalIsLoading : currentIsLoading}
+            isPrivate={isHistorical ? historicalData?.driver.private : currentData?.driver.private}
           />
           <TimeLocationOfRide
-            isLoading={isLoading}
-            startDate={data?.start_date}
-            cityFrom={data?.city_from.name}
-            placeFrom={data ? `${data.city_from.county}, ${data.city_from.state}` : ''}
-            exactPlaceFrom={data?.area_from}
-            lengthInMinutes={data ? data.duration.minutes + data.duration.hours * 60 : 0}
-            cityTo={data?.city_to.name}
-            placeTo={data ? `${data.city_to.county}, ${data.city_to.state}` : ''}
-            exactPlaceTo={data?.area_to}
+            isLoading={isHistorical ? historicalIsLoading : currentIsLoading}
+            startDate={isHistorical ? historicalData?.start_date : currentData?.start_date}
+            cityFrom={isHistorical ? historicalData?.city_from.name : currentData?.city_from.name}
+            placeFrom={placeFrom}
+            exactPlaceFrom={isHistorical ? historicalData?.area_from : currentData?.area_from}
+            lengthInMinutes={lengthInMinutes}
+            cityTo={isHistorical ? historicalData?.city_to.name : currentData?.city_to.name}
+            placeTo={placeTo}
+            exactPlaceTo={isHistorical ? historicalData?.area_to : currentData?.area_to}
           />
-          <Car
-            isLoading={isLoading}
-            carDescription={
-              data ? `${data.vehicle.color} ${data.vehicle.make} ${data.vehicle.model}` : undefined
-            }
-          />
-          {isLoading ? (
+          {carDescription && (
+            <Car
+              isLoading={isHistorical ? historicalIsLoading : currentIsLoading}
+              carDescription={carDescription}
+            />
+          )}
+          {(isHistorical ? historicalIsLoading : currentIsLoading) ? (
             <Skeleton
               variant='rectangular'
               width={150}
@@ -99,28 +139,30 @@ export const OwnRecurrentRideForDriver = () => {
           ) : (
             <AdditionalDataWrapper>
               <SeatsText variant='h4'>
-                Seats: <span>{data?.seats}</span>
+                Seats: <span>{isHistorical ? historicalData?.seats : currentData?.seats}</span>
               </SeatsText>
               <SeatsText variant='h4'>
-                Price: <span>{data?.price} zł</span>
+                Price: <span>{isHistorical ? historicalData?.price : currentData?.price} zł</span>
               </SeatsText>
             </AdditionalDataWrapper>
           )}
         </LeftColumnWrapper>
         <RightColumnWrapper>
-          <NextRides id={data?.ride_id} />
+          <NextRides id={isHistorical ? historicalData?.ride_id : currentData?.ride_id} />
         </RightColumnWrapper>
       </ColumnsWrapper>
       <Description
-        isLoading={isLoading}
-        value={data?.description}
+        isLoading={isHistorical ? historicalIsLoading : currentIsLoading}
+        value={isHistorical ? historicalData?.description : currentData?.description}
       />
-      <PrimaryButton
-        label='Edit'
-        onClick={handleEdit}
-        desktopSize={Sizes.Medium}
-        mobileSize={Sizes.Small}
-      />
+      {!isHistorical && (
+        <PrimaryButton
+          label='Edit'
+          onClick={handleEdit}
+          desktopSize={Sizes.Medium}
+          mobileSize={Sizes.Small}
+        />
+      )}
     </Wrapper>
   );
 };
