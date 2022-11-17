@@ -84,7 +84,7 @@ export const RidesSingularAsPassenger = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(1);
-    navigate('/own-rides/1');
+    navigate('/own-rides/2/1');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterDate, filterTime, from, to]);
 
@@ -124,7 +124,7 @@ export const RidesSingularAsPassenger = () => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPage(value);
-    navigate(`/own-rides/${value}`);
+    navigate(`/own-rides/2/${value}`);
   };
 
   const renderSingularRides = () => {
@@ -135,7 +135,7 @@ export const RidesSingularAsPassenger = () => {
         <SingularRide
           key={result.ride_id}
           rideId={result.ride_id}
-          editable={true}
+          editable={false}
           refetchRides={refetchSingularRideData}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

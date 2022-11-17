@@ -8,7 +8,7 @@ export enum Paths {
   OwnHistoricalRideForDriver = '/my-historical-ride/:rideId',
   OwnRecurrentRideForDriver = '/my-recurrent-ride/:rideId',
   OwnHistoricalRecurrentRideForDriver = '/my-historical-recurrent-ride/:rideId',
-  OwnRides = '/own-rides/:page',
+  OwnRides = '/own-rides/:tab/:page',
   UserProfile = '/profile/:userId/:page',
   ChooseRideType = '/choose-ride-type',
   MyRequests = '/my-requests/:page',

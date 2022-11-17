@@ -9,8 +9,6 @@ import { RidesSingularAsPassenger } from './components/RidesSingularAsPassenger'
 import { Wrapper } from './History.style';
 
 export const History = () => {
-  // TODO : add tab param to path in own rides
-
   const { tab } = useParams();
   const [tabNumber, setTabNumber] = useState<number>(Number(tab));
 

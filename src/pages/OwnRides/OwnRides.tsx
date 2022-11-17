@@ -2,13 +2,15 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { RidesRecurrentAsDriver } from './components/RidesRecurrentAsDriver';
 import { RidesSingularAsDriver } from './components/RidesSingularAsDriver';
 import { RidesSingularAsPassenger } from './components/RidesSingularAsPassenger';
 import { Wrapper } from './OwnRides.style';
 
 export const OwnRides = () => {
-  const [tabNumber, setTabNumber] = useState<number>(0);
+  const { tab } = useParams();
+  const [tabNumber, setTabNumber] = useState<number>(Number(tab));
 
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTabNumber(newValue);

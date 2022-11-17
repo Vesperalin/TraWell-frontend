@@ -55,7 +55,7 @@ export const SingularRide = ({
           exactPlaceTo={exactPlaceTo}
         />
       </div>
-      <InnerWrapper editable={isOwn}>
+      <InnerWrapper>
         {isOwn ? (
           <StyledDetailsRideButton onClick={handleOwnRideDetails}>
             <span>details</span>

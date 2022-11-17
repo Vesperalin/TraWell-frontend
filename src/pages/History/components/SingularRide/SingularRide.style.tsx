@@ -20,12 +20,10 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const InnerWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'editable',
-})<{ editable: boolean }>(({ theme, editable }) => ({
+export const InnerWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: editable ? 'space-between' : 'center',
+  justifyContent: 'center',
   height: '140px',
   gap: '10px',
 

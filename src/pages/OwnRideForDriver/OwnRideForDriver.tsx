@@ -80,8 +80,6 @@ export const OwnRideForDriver = () => {
   let placeTo = '';
   let lengthInMinutes = 0;
 
-  console.log(historicalData?.available_seats);
-
   if (isHistorical && historicalData) {
     if (historicalData.vehicle) {
       // eslint-disable-next-line max-len
