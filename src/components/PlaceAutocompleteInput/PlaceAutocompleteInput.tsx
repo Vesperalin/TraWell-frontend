@@ -11,13 +11,14 @@ import { transformPlaceToText } from '~/utils/TransformPlaceToText';
 import { useStyles, StyledTextField, InputWrapper, InnerBox } from './PlaceAutocompleteInput.style';
 
 interface Props {
+  id?: string;
   value: AutocompletePlace | null;
   setValue(value: AutocompletePlace | null): void;
   label: string;
   isSmall?: boolean;
 }
 
-export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Props) => {
+export const PlaceAutocompleteInput = ({ id, value, setValue, label, isSmall }: Props) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { autocomplete } = useStyles(theme);
@@ -43,6 +44,7 @@ export const PlaceAutocompleteInput = ({ value, setValue, label, isSmall }: Prop
 
   return (
     <Autocomplete
+      id={id}
       className={autocomplete}
       getOptionLabel={(option) =>
         typeof option === 'string'

@@ -45,6 +45,7 @@ export const Description = ({ value, setValue, label, checked, setChecked }: Pro
       </TopSectionWrapper>
       {checked && (
         <TextArea
+          id='description'
           placeholder='Add description'
           multiline={true}
           rows={6}

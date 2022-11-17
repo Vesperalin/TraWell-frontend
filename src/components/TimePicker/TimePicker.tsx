@@ -30,6 +30,7 @@ export const TimePicker = ({ time, setTime }: Props) => {
         ampm={false}
         renderInput={(params) => (
           <TextField
+            id='time-picker'
             {...params}
             size={isSmallScreen ? 'small' : 'medium'}
             placeholder='Time'

@@ -10,12 +10,14 @@ export const ChooseCreateRideType = () => {
     <Wrapper>
       <StyledText variant='h3'>Choose a ride type you want to create</StyledText>
       <PrimaryButton
+        id='add-singular-ride-button'
         label='Singular'
         onClick={() => navigate(Paths.AddSingularRide)}
         desktopSize={Sizes.Medium}
         mobileSize={Sizes.Medium}
       />
       <PrimaryButton
+        id='add-recurrent-ride-button'
         label='Recurrent'
         onClick={() => navigate(Paths.AddRecurrentRide)}
         desktopSize={Sizes.Medium}

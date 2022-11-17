@@ -3,11 +3,12 @@ import { ChangeEvent } from 'react';
 import { useStyles } from './DoubleNumberInput.style';
 
 interface Props {
+  id?: string;
   value: string | null;
   setValue: (amount: string | null) => void;
 }
 
-export const DoubleNumberInput = ({ value, setValue }: Props) => {
+export const DoubleNumberInput = ({ id, value, setValue }: Props) => {
   const theme = useTheme();
   const { input } = useStyles(theme);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
@@ -42,6 +43,7 @@ export const DoubleNumberInput = ({ value, setValue }: Props) => {
 
   return (
     <TextField
+      id={id}
       value={value}
       onChange={handleChange}
       className={input}

@@ -38,6 +38,7 @@ const FrequenceInput = () => {
       <Grid item>
         <StyledInputLabel>Frequence</StyledInputLabel>
         <StyledTextField
+          id='frequence-input'
           size={isSmallScreen ? 'small' : 'medium'}
           type='number'
           InputProps={{

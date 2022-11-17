@@ -15,6 +15,7 @@ const WeekDaysButtons = ({ value, onChange }: Props) => {
     >
       {weekDays.map((day) => (
         <StyledToggleButton
+          id={`day-name-${day.value}`}
           key={day.key}
           value={day.value}
           aria-label={day.value}

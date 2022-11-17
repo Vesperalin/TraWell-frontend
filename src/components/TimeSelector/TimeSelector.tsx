@@ -6,12 +6,13 @@ import { Dayjs } from 'dayjs';
 import { StyledInputLabel, StyledTextField } from './TimeSelector.style';
 
 interface Props {
+  id?: string;
   time: Dayjs | null;
   setTime: (date: Dayjs | null) => void;
   label: string;
 }
 
-const TimeSelector = ({ time, setTime, label }: Props) => {
+const TimeSelector = ({ id, time, setTime, label }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   return (
@@ -25,6 +26,7 @@ const TimeSelector = ({ time, setTime, label }: Props) => {
         }}
         renderInput={(params) => (
           <StyledTextField
+            id={id}
             size={isSmallScreen ? 'small' : 'medium'}
             {...params}
           />

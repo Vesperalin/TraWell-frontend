@@ -33,6 +33,7 @@ export const DatePicker = ({ date, setDate }: Props) => {
           onChange={handleDateChange}
           renderInput={(params) => (
             <TextField
+              id='mobile-date-picker-textfield'
               {...params}
               size='small'
               variant='outlined'
@@ -49,6 +50,7 @@ export const DatePicker = ({ date, setDate }: Props) => {
           onChange={handleDateChange}
           renderInput={(params) => (
             <TextField
+              id='desktop-date-picker-textfield'
               {...params}
               variant='outlined'
               placeholder='Date'

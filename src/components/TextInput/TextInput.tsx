@@ -4,12 +4,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useStyles } from './TextInput.style';
 
 interface Props {
+  id?: string;
   label: string;
   value: string;
   setValue(value: string): void;
 }
 
-export const TextInput = ({ label, value, setValue }: Props) => {
+export const TextInput = ({ id, label, value, setValue }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const { extraPlaceTextField, focused } = useStyles({ hide: value !== '' });
 
@@ -19,6 +20,7 @@ export const TextInput = ({ label, value, setValue }: Props) => {
 
   return (
     <TextField
+      id={id}
       label={label}
       value={value}
       size={isSmallScreen ? 'small' : 'medium'}

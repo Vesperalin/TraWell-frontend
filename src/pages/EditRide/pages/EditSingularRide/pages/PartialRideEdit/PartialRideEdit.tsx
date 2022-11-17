@@ -116,6 +116,7 @@ export const PartialRideEdit = () => {
     <Box>
       <Label variant='body2'>Passenger acceptance</Label>
       <RadioGroup
+        id='passenger-acceptance-buttons'
         options={[
           { value: 'automatic', label: 'Automatic' },
           { value: 'manual', label: 'Manual' },
@@ -171,6 +172,7 @@ export const PartialRideEdit = () => {
         </DescriptionWrapper>
         <ButtonWrapper>
           <PrimaryButton
+            id='save-changes-button'
             label='Save changes'
             onClick={submitHandler}
             desktopSize={Sizes.Medium}

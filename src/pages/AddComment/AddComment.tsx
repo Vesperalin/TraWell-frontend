@@ -154,6 +154,7 @@ export const AddComment = () => {
           />
           <ButtonWrapper>
             <PrimaryButton
+              id='add-comment-button'
               label='Add'
               onClick={submitHandler}
               desktopSize={Sizes.Medium}

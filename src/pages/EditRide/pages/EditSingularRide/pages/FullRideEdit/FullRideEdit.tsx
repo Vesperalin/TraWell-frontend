@@ -174,7 +174,7 @@ export const FullRideEdit = () => {
       setHours(rideData.duration.hours.toString());
       setMinutes(rideData.duration.minutes.toString());
       setPrice(rideData.price);
-      setVehicle(rideData.vehicle.vehicle_id);
+      setVehicle(rideData.vehicle ? rideData.vehicle.vehicle_id : null);
       setPassengerAcceptance(rideData.automatic_confirm ? 'automatic' : 'manual');
       setDescription(rideData.description);
       setDescriptionChecked(rideData.description.length > 0 ? true : false);
@@ -251,6 +251,7 @@ export const FullRideEdit = () => {
     <>
       <Label variant='body2'>Passenger acceptance</Label>
       <RadioGroup
+        id='passenger-acceptance-buttons'
         options={[
           { value: 'automatic', label: 'Automatic' },
           { value: 'manual', label: 'Manual' },
@@ -281,11 +282,13 @@ export const FullRideEdit = () => {
         <FormSectionWrapper>
           <Label variant='h5'>From</Label>
           <PlaceAutocompleteInput
+            id='place-from-autocomplete'
             label='Place from'
             value={placeFrom}
             setValue={setPlaceFrom}
           />
           <TextInput
+            id='exact-place-from'
             label='Exact place from (optional)'
             value={exactPlaceFrom}
             setValue={setExactPlaceFrom}
@@ -294,11 +297,13 @@ export const FullRideEdit = () => {
         <FormSectionWrapper>
           <Label variant='h5'>To</Label>
           <PlaceAutocompleteInput
+            id='place-to-autocomplete'
             label='Place to'
             value={placeTo}
             setValue={setPlaceTo}
           />
           <TextInput
+            id='exact-place-to'
             label='Exact place to (optional)'
             value={exactPlaceTo}
             setValue={setExactPlaceTo}
@@ -380,6 +385,7 @@ export const FullRideEdit = () => {
         />
         <ButtonWrapper>
           <PrimaryButton
+            id='save-changes-button'
             label='Save changes'
             onClick={submitHandler}
             desktopSize={Sizes.Medium}

@@ -32,6 +32,7 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
       >
         <Grid item>
           <StyledTextField
+            id='duration-hours-selector'
             type='number'
             size={isSmallScreen ? 'small' : 'medium'}
             InputProps={{
@@ -44,6 +45,7 @@ const DurationSelector = ({ duration, setDuration }: Props) => {
         </Grid>
         <Grid item>
           <StyledTextField
+            id='duration-minutes-selector'
             type='number'
             size={isSmallScreen ? 'small' : 'medium'}
             InputProps={{

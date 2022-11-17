@@ -24,6 +24,7 @@ const Dropdown = ({ options, label, onChange, value }: Props) => {
     <DropdownBox component='form'>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextField
+        id='dropdown-select-ride'
         select
         value={value}
         size={isSmallScreen ? 'small' : 'medium'}

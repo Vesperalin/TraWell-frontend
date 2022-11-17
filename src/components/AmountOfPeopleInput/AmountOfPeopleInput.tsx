@@ -39,6 +39,7 @@ export const AmountOfPeopleInput = ({ amountOfPeople, setAmountOfPeople }: Props
 
   return (
     <TextField
+      id='amount-of-people-input'
       type='number'
       value={amountOfPeople}
       onChange={handleAmountChange}
