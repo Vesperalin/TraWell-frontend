@@ -14,6 +14,7 @@ export const Rating = ({ rating, setRating }: Props) => {
     <div>
       <Label variant='h4'>Rating</Label>
       <MUIRating
+        id='rating-stars-picker'
         value={rating}
         emptyIcon={<Star className={icon} />}
         onChange={(event, newValue) => {

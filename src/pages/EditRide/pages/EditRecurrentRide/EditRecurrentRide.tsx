@@ -88,7 +88,7 @@ export const EditRecurrentRide = () => {
   useEffect(() => {
     if (rideData) {
       setAmountOfPeople(rideData.seats.toString());
-      setVehicle(rideData.vehicle.vehicle_id);
+      setVehicle(rideData.vehicle ? rideData.vehicle.vehicle_id : null);
       setPassengerAcceptance(rideData.automatic_confirm ? 'automatic' : 'manual');
       setDescription(rideData.description);
       setDescriptionChecked(rideData.description.length > 0 ? true : false);
@@ -121,6 +121,7 @@ export const EditRecurrentRide = () => {
     <Box>
       <Label variant='body2'>Passenger acceptance</Label>
       <RadioGroup
+        id='passenger-acceptance-buttons'
         options={[
           { value: 'automatic', label: 'Automatic' },
           { value: 'manual', label: 'Manual' },
@@ -195,6 +196,7 @@ export const EditRecurrentRide = () => {
           </InnerWrapper>
           <ButtonWrapper>
             <PrimaryButton
+              id='save-changes'
               label='Save changes'
               onClick={submitHandler}
               desktopSize={Sizes.Medium}

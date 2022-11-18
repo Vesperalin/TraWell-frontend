@@ -42,6 +42,7 @@ const CustomModal = ({
       <StyledModal
         open={open}
         onClose={handleClose}
+        id='modal'
       >
         <StyledBox>
           <StyledHeader variant='h4'>{title}</StyledHeader>
@@ -49,6 +50,7 @@ const CustomModal = ({
           <ButtonsStyledBox>
             {secondaryButtonText && secondaryButtonAction && (
               <MediumSecondaryButton
+                id='medium-secondary-button'
                 size='medium'
                 variant='outlined'
                 onClick={secondaryButtonAction}
@@ -58,6 +60,7 @@ const CustomModal = ({
             )}
             {secondaryButtonText && secondaryButtonAction && (
               <SmallSecondaryButton
+                id='small-secondary-button'
                 size='small'
                 variant='outlined'
                 onClick={secondaryButtonAction}
@@ -66,6 +69,7 @@ const CustomModal = ({
               </SmallSecondaryButton>
             )}
             <MediumPrimaryButton
+              id='medium-primary-button'
               size='medium'
               variant='contained'
               onClick={primaryButtonAction}
@@ -73,6 +77,7 @@ const CustomModal = ({
               {primaryButtonText}
             </MediumPrimaryButton>
             <SmallPrimaryButton
+              id='small-primary-button'
               size='small'
               variant='contained'
               onClick={primaryButtonAction}

@@ -7,12 +7,13 @@ import { Dayjs } from 'dayjs';
 import { StyledInputLabel, StyledTextField } from './DateSelector.style';
 
 interface Props {
+  id?: string;
   date: Dayjs | null;
   setDate: (date: Dayjs | null) => void;
   label: string;
 }
 
-const DateSelector = ({ date, setDate, label }: Props) => {
+const DateSelector = ({ id, date, setDate, label }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   return (
@@ -27,6 +28,7 @@ const DateSelector = ({ date, setDate, label }: Props) => {
         }}
         renderInput={(params) => (
           <StyledTextField
+            id={id}
             size={isSmallScreen ? 'small' : 'medium'}
             {...params}
           />

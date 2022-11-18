@@ -8,13 +8,15 @@ interface Props {
   onClick: () => void;
   desktopSize: Sizes;
   mobileSize: Sizes;
+  id?: string;
 }
 
-export const PrimaryButton = ({ label, onClick, desktopSize, mobileSize }: Props) => {
+export const PrimaryButton = ({ id, label, onClick, desktopSize, mobileSize }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   return (
     <StyledPrimaryButton
+      id={id}
       variant='contained'
       onClick={onClick}
       size={isSmallScreen ? mobileSize : desktopSize}

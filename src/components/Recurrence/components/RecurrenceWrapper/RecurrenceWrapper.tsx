@@ -44,6 +44,7 @@ const RecurrenceWrapper = () => {
       >
         <Grid item>
           <DateSelector
+            id='start-date-selector'
             label='Start Date'
             date={recurrence.startDate}
             setDate={handleStartDateChange}
@@ -51,6 +52,7 @@ const RecurrenceWrapper = () => {
         </Grid>
         <Grid item>
           <DateSelector
+            id='end-date-selector'
             label='End Date'
             date={recurrence.endDate}
             setDate={handleEndDateChange}
@@ -64,6 +66,7 @@ const RecurrenceWrapper = () => {
       >
         <Grid item>
           <TimeSelector
+            id='start-time-selector'
             label='Start time'
             time={recurrence.startTime}
             setTime={handleStartTimeChange}

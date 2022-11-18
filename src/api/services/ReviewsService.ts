@@ -71,7 +71,7 @@ export default {
     return useQuery<NotRatedRides[], Error>(
       ['not-rated-rides', userId, token],
       async () => {
-        const response = await reviewsClient.get<NotRatedRides[]>(`rides/${userId}`, {
+        const response = await reviewsClient.get<NotRatedRides[]>(`not_rated_rides/${userId}`, {
           headers: { Authorization: 'Bearer ' + token },
         });
 

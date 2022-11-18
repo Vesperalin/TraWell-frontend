@@ -28,6 +28,7 @@ export const ChooseVehicle = ({ value, setValue }: Props) => {
     <StyledFormControl size={isSmallScreen ? 'small' : 'medium'}>
       {value === null && <InputLabel>Vehicle</InputLabel>}
       <Select
+        id='choose-vehicle-dropdown'
         value={value ? value.toString() : ''}
         label={value === null ? 'Vehicle' : ''}
         onChange={handleChange}

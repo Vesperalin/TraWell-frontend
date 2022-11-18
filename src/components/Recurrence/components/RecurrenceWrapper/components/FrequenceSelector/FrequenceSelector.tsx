@@ -20,6 +20,7 @@ const FrequenceSelector = () => {
     >
       <Grid item>
         <Dropdown
+          id='frequence-type-selector'
           label='Frequency Type'
           value={recurrence.frequencyType}
           options={frequencyTypes}

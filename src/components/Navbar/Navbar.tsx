@@ -14,15 +14,38 @@ import { User } from './components/User';
 import { StyledAppBar, MobileWrapper, DesktopWrapper } from './Navbar.style';
 
 const initialPages = [
-  { name: 'Pending requests', path: '/pending-requests/1' },
-  { name: 'My requests', path: '/my-requests/1' },
-  { name: 'My rides', path: '/own-rides/0/1' },
-  { name: 'Post a ride', path: Paths.ChooseRideType },
+  {
+    mobileId: 'pending-requests-mobile',
+    desktopId: 'pending-requests-desktop',
+    name: 'Pending requests',
+    path: '/pending-requests/1',
+  },
+  {
+    mobileId: 'my-requests-mobile',
+    desktopId: 'my-requests-desktop',
+    name: 'My requests',
+    path: '/my-requests/1',
+  },
+  {
+    mobileId: 'my-rides-mobile',
+    desktopId: 'my-rides-desktop',
+    name: 'My rides',
+    path: '/own-rides/0/1',
+  },
+  {
+    mobileId: 'post-a-ride-mobile',
+    desktopId: 'post-a-ride-desktop',
+    name: 'Post a ride',
+    path: Paths.ChooseRideType,
+  },
 ];
 
 export const Navbar = () => {
   const { login, hasRole } = useAuth();
-  const [pages, setPages] = useState<{ name: string; path: Paths | string }[]>(initialPages);
+  const [pages, setPages] =
+    useState<{ name: string; path: Paths | string; mobileId: string; desktopId: string }[]>(
+      initialPages,
+    );
 
   useEffect(() => {
     const check = async () => {
@@ -49,6 +72,7 @@ export const Navbar = () => {
               elementToPutInstead={
                 <div>
                   <PrimaryButton
+                    id='login-button-mobile'
                     label='Login'
                     onClick={() => login()}
                     desktopSize={Sizes.Medium}
@@ -57,7 +81,10 @@ export const Navbar = () => {
                 </div>
               }
             >
-              <User />
+              <User
+                id='icon-settings-mobile'
+                isMobile={true}
+              />
             </AuthorizedElement>
           </MobileWrapper>
           <DesktopWrapper>
@@ -66,6 +93,7 @@ export const Navbar = () => {
               elementToPutInstead={
                 <div>
                   <PrimaryButton
+                    id='login-button-desktop'
                     label='Login'
                     onClick={() => login()}
                     desktopSize={Sizes.Medium}
@@ -76,7 +104,10 @@ export const Navbar = () => {
             >
               <>
                 <DesktopMenu pages={pages} />
-                <User />
+                <User
+                  id='icon-settings-desktop'
+                  isMobile={false}
+                />
               </>
             </AuthorizedElement>
           </DesktopWrapper>

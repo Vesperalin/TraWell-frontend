@@ -153,6 +153,7 @@ export const AddSingularRide = () => {
     <>
       <Label variant='body2'>Passenger acceptance</Label>
       <RadioGroup
+        id='passenger-acceptance-buttons'
         options={[
           { value: 'automatic', label: 'Automatic' },
           { value: 'manual', label: 'Manual' },
@@ -170,11 +171,13 @@ export const AddSingularRide = () => {
       <FormSectionWrapper>
         <Label variant='body2'>From</Label>
         <PlaceAutocompleteInput
+          id='place-from-autocomplete'
           label='Place from'
           value={placeFrom}
           setValue={setPlaceFrom}
         />
         <TextInput
+          id='exact-place-from'
           label='Exact place from (optional)'
           value={exactPlaceFrom}
           setValue={setExactPlaceFrom}
@@ -183,11 +186,13 @@ export const AddSingularRide = () => {
       <FormSectionWrapper>
         <Label variant='body2'>To</Label>
         <PlaceAutocompleteInput
+          id='place-to-autocomplete'
           label='Place to'
           value={placeTo}
           setValue={setPlaceTo}
         />
         <TextInput
+          id='exact-place-to'
           label='Exact place to (optional)'
           value={exactPlaceTo}
           setValue={setExactPlaceTo}
@@ -269,6 +274,7 @@ export const AddSingularRide = () => {
       />
       <ButtonWrapper>
         <PrimaryButton
+          id='add-singular-ride'
           label='Add ride'
           onClick={submitHandler}
           desktopSize={Sizes.Medium}

@@ -11,6 +11,8 @@ interface Props {
   pages: {
     name: string;
     path: Paths | string;
+    mobileId: string;
+    desktopId: string;
   }[];
 }
 
@@ -54,6 +56,7 @@ export const MobileMenu = ({ pages }: Props) => {
       >
         {pages.map((page) => (
           <Link
+            id={page.mobileId}
             style={{ textDecoration: 'none' }}
             key={page.name}
             to={page.path}

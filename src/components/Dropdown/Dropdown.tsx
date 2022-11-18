@@ -7,13 +7,14 @@ import { DropdownOption } from '../Recurrence/components/RecurrenceWrapper/compo
 import { DropdownBox, StyledTextField, StyledInputLabel } from './Dropdown.style';
 
 interface Props {
+  id?: string;
   options: Array<DropdownOption>;
   label: string;
   value: string;
   onChange: (value: string) => void;
 }
 
-const Dropdown = ({ options, label, onChange, value }: Props) => {
+const Dropdown = ({ id, options, label, onChange, value }: Props) => {
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   return (
@@ -29,6 +30,7 @@ const Dropdown = ({ options, label, onChange, value }: Props) => {
       >
         {options.map((option) => (
           <MenuItem
+            id={id}
             key={option.key}
             value={option.key}
           >

@@ -3,6 +3,8 @@ import { StyledBox, StyledLink, StyledTypography } from './DesktopMenu.style';
 
 interface Props {
   pages: {
+    mobileId: string;
+    desktopId: string;
     name: string;
     path: Paths | string;
   }[];
@@ -13,6 +15,7 @@ export const DesktopMenu = ({ pages }: Props) => {
     <StyledBox>
       {pages.map((page) => (
         <StyledLink
+          id={page.desktopId}
           style={{ textDecoration: 'none' }}
           key={page.name}
           to={page.path}

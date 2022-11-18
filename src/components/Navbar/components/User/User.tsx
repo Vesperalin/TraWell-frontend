@@ -15,7 +15,12 @@ import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
 import { StyledMenu, StyledMenuItem, StyledTypography } from './User.style';
 
-export const User = () => {
+interface Props {
+  id: string;
+  isMobile: boolean;
+}
+
+export const User = ({ id, isMobile }: Props) => {
   const { logout, token } = useAuth();
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,6 +36,8 @@ export const User = () => {
   const settings = [
     {
       key: 'account_settings',
+      mobileId: 'account-settings-mobile-button',
+      desktopId: 'account-settings-desktop-button',
       name: 'Account settings',
       path: Paths.Home,
       icon: <SettingsOutlinedIcon />,
@@ -38,16 +45,27 @@ export const User = () => {
     {
       key: 'my_profile',
       name: 'My profile',
+      mobileId: 'my-profile-mobile-button',
+      desktopId: 'my-profile-desktop-button',
       path: '/profile/' + data?.user_id + '/1',
       icon: <AccountCircleOutlinedIcon />,
     },
     {
       key: 'history',
       name: 'History',
+      mobileId: 'history-mobile-button',
+      desktopId: 'history-desktop-button',
       path: '/history-rides/0/1',
       icon: <HistoryOutlinedIcon />,
     },
-    { key: 'logout', name: 'Log out', path: Paths.Home, icon: <LogoutOutlinedIcon /> },
+    {
+      key: 'logout',
+      name: 'Log out',
+      mobileId: 'logout-mobile-button',
+      desktopId: 'logout-desktop-button',
+      path: Paths.Home,
+      icon: <LogoutOutlinedIcon />,
+    },
   ];
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -61,7 +79,10 @@ export const User = () => {
   return (
     <Box>
       <Tooltip title='Open settings'>
-        <IconButton onClick={handleOpenUserMenu}>
+        <IconButton
+          onClick={handleOpenUserMenu}
+          id={id}
+        >
           <Avatar
             alternativeText={decodedToken.name}
             src={decodedToken.picture ? decodedToken.picture.toString() : ''}
@@ -85,6 +106,7 @@ export const User = () => {
       >
         {settings.map((setting) => (
           <Link
+            id={isMobile ? setting.mobileId : setting.desktopId}
             style={{ textDecoration: 'none' }}
             key={setting.key}
             to={setting.path}
