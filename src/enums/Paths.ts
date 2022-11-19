@@ -21,6 +21,7 @@ export enum Paths {
   EditPartialSingularRide = '/edit-partial-singular-ride/:rideId',
   AddComment = '/add-comment/:userId',
   HistoryRides = '/history-rides/:tab/:page',
+  UserVehicles = '/my-vehicles',
   Error = '/error',
   NotFound = '*',
 }
