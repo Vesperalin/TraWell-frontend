@@ -134,7 +134,7 @@ export const SearchedRideForPassenger = () => {
           reviewMean={reviewMean}
         />
       </DataWrapper>
-      {carDescription !== null && (
+      {carDescription && (
         <Car
           isLoading={isHistorical ? historicalIsLoading : currentIsLoading}
           carDescription={carDescription}
