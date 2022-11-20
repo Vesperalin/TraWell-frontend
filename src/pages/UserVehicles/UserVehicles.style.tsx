@@ -7,14 +7,29 @@ export const Wrapper = styled(Box)({
   display: 'flex',
   columnGap: '40px',
   flexWrap: 'wrap',
+  justifyContent: 'center',
 });
 
-export const LeftWrapper = styled(Box)({
-  flexGrow: '1',
+export const LeftWrapper = styled(Box)(({ theme }) => ({
   marginBottom: '40px',
-});
+  width: 'calc(50% - 20px)',
+  minWidth: '330px',
 
-export const RightWrapper = styled(Box)({ flexGrow: '1' });
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 'auto',
+    width: '100%',
+  },
+}));
+
+export const RightWrapper = styled(Box)(({ theme }) => ({
+  width: 'calc(50% - 20px)',
+  minWidth: '330px',
+
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 'auto',
+    width: '100%',
+  },
+}));
 
 export const Label = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.darkNavy,

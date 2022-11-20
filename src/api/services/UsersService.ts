@@ -70,4 +70,19 @@ export default {
       },
     );
   },
+  useDeleteVehicle: (token: string, carId: number) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await usersClient.delete<unknown>(`vehicles/${carId}`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
 };

@@ -1,27 +1,39 @@
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UserService from '~/api/services/UsersService';
+import { useState, useEffect } from 'react';
+import UsersService from '~/api/services/UsersService';
 import { Modal } from '~/components/Modal';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { TextInput } from '~/components/TextInput';
-import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
+import { useAuth } from '~/hooks/useAuth';
 import { Wrapper, Label, ButtonSection, ErrorMessage } from './AddVehicle.style';
 
-interface Props {
-  token: string;
-  userId: number;
-}
-
-export const AddVehicle = ({ token, userId }: Props) => {
-  const navigate = useNavigate();
+export const AddVehicle = () => {
+  const { token } = useAuth();
+  const { refetch: refetchMyId, data: myIdData } = UsersService.useGetMyId(token ? token : '');
   const [make, setMake] = useState<string>('');
   const [model, setModel] = useState<string>('');
   const [color, setColor] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { isError, refetch } = UserService.useAddVehicle(token, userId, make, model, color);
+  const { isError, refetch } = UsersService.useAddVehicle(
+    token ? token : '',
+    myIdData ? myIdData.user_id : -1,
+    make,
+    model,
+    color,
+  );
+
+  const { refetch: refetchVehicles } = UsersService.useGetUserVehicles(
+    token ? token : '',
+    myIdData ? myIdData.user_id : -1,
+  );
+
+  useEffect(() => {
+    if (token) {
+      refetchMyId();
+    }
+  }, [refetchMyId, token]);
 
   const handleAdd = () => {
     if (make.trim() === '') {
@@ -32,7 +44,11 @@ export const AddVehicle = ({ token, userId }: Props) => {
       setError('You have to give: color');
     } else {
       refetch().then(() => {
+        refetchVehicles();
         setOpenModal(true);
+        setColor('');
+        setModel('');
+        setMake('');
       });
     }
   };
@@ -88,9 +104,9 @@ export const AddVehicle = ({ token, userId }: Props) => {
         }
         showButtonForOpeningModal={false}
         handleOpen={() => setOpenModal(true)}
-        handleClose={() => navigate(Paths.Home)}
+        handleClose={() => setOpenModal(false)}
         primaryButtonText='Okay'
-        primaryButtonAction={() => navigate(Paths.Home)}
+        primaryButtonAction={() => setOpenModal(false)}
       />
     </>
   );

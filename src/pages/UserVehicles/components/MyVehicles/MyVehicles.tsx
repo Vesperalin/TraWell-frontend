@@ -4,27 +4,37 @@ import UsersService from '~/api/services/UsersService';
 import car from '~/assets/images/carDriving.webp';
 import { Loader } from '~/components/Loader';
 import { Paths } from '~/enums/Paths';
-import {
-  Wrapper,
-  VehicleWrapper,
-  TrashIcon,
-  VehicleDescription,
-  StyledImage,
-} from './MyVehicles.style';
+import { useAuth } from '~/hooks/useAuth';
+import { Vehicle } from '../Vehicle';
+import { Wrapper, StyledImage, NoVehicles } from './MyVehicles.style';
 
-interface Props {
-  token: string;
-  userId: number;
-}
-
-export const MyVehicles = ({ token, userId }: Props) => {
-  const { data, isLoading, isError, refetch } = UsersService.useGetUserVehicles(token, userId);
+export const MyVehicles = () => {
+  const { token } = useAuth();
+  const {
+    isLoading: isLoadingId,
+    refetch: refetchMyId,
+    data: myIdData,
+  } = UsersService.useGetMyId(token ? token : '');
+  const { data, isLoading, isError, refetch } = UsersService.useGetUserVehicles(
+    token ? token : '',
+    myIdData ? myIdData.user_id : -1,
+  );
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    if (token) {
+      refetchMyId();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (myIdData) {
+      refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myIdData]);
+
+  if (isLoading || isLoadingId) {
     return <Loader />;
   } else if (isError) {
     return (
@@ -36,21 +46,29 @@ export const MyVehicles = ({ token, userId }: Props) => {
         }}
       />
     );
-  } else if (data) {
+  } else if (data && !isLoading && !isError) {
     return (
       <Wrapper>
-        {data.map((vehicle) => (
-          <VehicleWrapper key={vehicle.vehicle_id}>
-            <VehicleDescription variant='h5'>
-              {vehicle.make} {vehicle.model} {vehicle.color}
-            </VehicleDescription>
-            <TrashIcon />
-          </VehicleWrapper>
-        ))}
-        <StyledImage
-          alt='car-driving'
-          src={car}
-        />
+        {Array.isArray(data) && (
+          <>
+            {data.map((vehicle) => (
+              <Vehicle
+                key={vehicle.vehicle_id}
+                token={token ? token : ''}
+                id={vehicle.vehicle_id}
+                make={vehicle.make}
+                model={vehicle.model}
+                color={vehicle.color}
+                refetchVehicles={refetch}
+              />
+            ))}
+            <StyledImage
+              alt='car-driving'
+              src={car}
+            />
+          </>
+        )}
+        {!Array.isArray(data) && <NoVehicles variant='h4'>No vehicles</NoVehicles>}
       </Wrapper>
     );
   } else {
