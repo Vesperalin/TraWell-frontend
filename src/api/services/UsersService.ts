@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { usersClient } from '~/api/clients';
 import { User } from '~/models/Users/User';
+import { Vehicle } from '~/models/Users/Vehicle';
 
 export default {
   useGetMyId: (token: string) => {
@@ -32,6 +33,40 @@ export default {
         enabled: false,
         refetchOnWindowFocus: false,
         retry: 1,
+      },
+    );
+  },
+  useGetUserVehicles: (token: string, userId: number) => {
+    return useQuery<Vehicle[], Error>(
+      [],
+      async () => {
+        const response = await usersClient.get<Vehicle[]>(`vehicles/user_vehicles/${userId}`, {
+          headers: { Authorization: 'Bearer ' + token },
+        });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      },
+    );
+  },
+  useAddVehicle: (token: string, userId: number, make: string, model: string, color: string) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await usersClient.post<unknown>(
+          `vehicles/user_vehicles/${userId}`,
+          { make: make, model: model, color: color },
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
       },
     );
   },
