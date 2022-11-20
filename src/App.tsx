@@ -200,7 +200,12 @@ const App = () => {
               />
               <Route
                 path={Paths.UserVehicles}
-                element={<PrivateRoute element={<UserVehicles />} />}
+                element={
+                  <PrivateRoute
+                    element={<UserVehicles />}
+                    role={Role.Private}
+                  />
+                }
               />
               <Route
                 path={Paths.HistoryRides}
