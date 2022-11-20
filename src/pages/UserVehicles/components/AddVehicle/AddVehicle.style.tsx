@@ -11,13 +11,11 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   rowGap: '20px',
 }));
 
-export const Section = styled(Box)(({ theme }) => ({}));
-
-export const ButtonSection = styled(Box)(({ theme }) => ({
+export const ButtonSection = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
   padding: '20px 0',
-}));
+});
 
 export const Label = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.dimmedWhite,

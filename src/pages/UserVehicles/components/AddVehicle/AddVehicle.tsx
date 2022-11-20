@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserService from '~/api/services/UsersService';
@@ -6,7 +7,7 @@ import { PrimaryButton } from '~/components/PrimaryButton';
 import { TextInput } from '~/components/TextInput';
 import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
-import { Wrapper, Section, Label, ButtonSection, ErrorMessage } from './AddVehicle.style';
+import { Wrapper, Label, ButtonSection, ErrorMessage } from './AddVehicle.style';
 
 interface Props {
   token: string;
@@ -40,7 +41,7 @@ export const AddVehicle = ({ token, userId }: Props) => {
     <>
       <Wrapper>
         {error !== '' && <ErrorMessage variant='h4'>{error}</ErrorMessage>}
-        <Section>
+        <Box>
           <Label variant='h4'>Make</Label>
           <TextInput
             id='make'
@@ -48,8 +49,8 @@ export const AddVehicle = ({ token, userId }: Props) => {
             value={make}
             setValue={setMake}
           />
-        </Section>
-        <Section>
+        </Box>
+        <Box>
           <Label variant='h4'>Model</Label>
           <TextInput
             id='model'
@@ -57,8 +58,8 @@ export const AddVehicle = ({ token, userId }: Props) => {
             value={model}
             setValue={setModel}
           />
-        </Section>
-        <Section>
+        </Box>
+        <Box>
           <Label variant='h4'>Color</Label>
           <TextInput
             id='color'
@@ -66,7 +67,7 @@ export const AddVehicle = ({ token, userId }: Props) => {
             value={color}
             setValue={setColor}
           />
-        </Section>
+        </Box>
         <ButtonSection>
           <PrimaryButton
             id='add-review-button'
