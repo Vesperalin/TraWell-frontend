@@ -1,4 +1,5 @@
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -11,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import UsersService from '~/api/services/UsersService';
 import { Paths } from '~/enums/Paths';
+import { Role } from '~/enums/Role';
 import { useAuth } from '~/hooks/useAuth';
 import { Avatar } from './components/Avatar';
 import { StyledMenu, StyledMenuItem, StyledTypography } from './User.style';
@@ -21,11 +23,22 @@ interface Props {
 }
 
 export const User = ({ id, isMobile }: Props) => {
-  const { logout, token } = useAuth();
+  const { logout, token, hasRole } = useAuth();
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const decodedToken = jwt_decode<any>(token ? token : '');
   const { data, refetch } = UsersService.useGetMyId(token ? token : '');
+  const [isPrivateRole, setIsPrivateRole] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = async () => {
+      if (await hasRole(Role.Private)) {
+        setIsPrivateRole(true);
+      }
+    };
+    check();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -51,6 +64,14 @@ export const User = ({ id, isMobile }: Props) => {
       icon: <AccountCircleOutlinedIcon />,
     },
     {
+      key: 'my_vehicles',
+      name: 'My vehicles',
+      mobileId: 'my-vehicles-mobile-button',
+      desktopId: 'my-vehicles-desktop-button',
+      path: '/my-vehicles',
+      icon: <DirectionsCarIcon />,
+    },
+    {
       key: 'history',
       name: 'History',
       mobileId: 'history-mobile-button',
@@ -67,6 +88,13 @@ export const User = ({ id, isMobile }: Props) => {
       icon: <LogoutOutlinedIcon />,
     },
   ];
+
+  let indexOfLogout = 4;
+
+  if (!isPrivateRole) {
+    settings.splice(2, 1);
+    indexOfLogout--;
+  }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElementUser(event.currentTarget);
@@ -110,7 +138,7 @@ export const User = ({ id, isMobile }: Props) => {
             style={{ textDecoration: 'none' }}
             key={setting.key}
             to={setting.path}
-            {...(setting.key === settings[3].key
+            {...(setting.key === settings[indexOfLogout].key
               ? { onClick: () => logout({ redirectUri: Paths.Home }) }
               : {})}
           >

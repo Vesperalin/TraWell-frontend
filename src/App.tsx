@@ -72,6 +72,9 @@ const AddComment = lazy(() =>
 const History = lazy(() =>
   import('~/pages/History').then((module) => ({ default: module.History })),
 );
+const UserVehicles = lazy(() =>
+  import('~/pages/UserVehicles').then((module) => ({ default: module.UserVehicles })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -194,6 +197,15 @@ const App = () => {
               <Route
                 path={Paths.AddComment}
                 element={<PrivateRoute element={<AddComment />} />}
+              />
+              <Route
+                path={Paths.UserVehicles}
+                element={
+                  <PrivateRoute
+                    element={<UserVehicles />}
+                    role={Role.Private}
+                  />
+                }
               />
               <Route
                 path={Paths.HistoryRides}
