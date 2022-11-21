@@ -22,6 +22,7 @@ export enum Paths {
   AddComment = '/add-comment/:userId',
   HistoryRides = '/history-rides/:tab/:page',
   UserVehicles = '/my-vehicles',
+  AccountSettings = '/account-settings',
   Error = '/error',
   NotFound = '*',
 }

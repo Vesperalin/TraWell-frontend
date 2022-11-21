@@ -52,7 +52,7 @@ export const User = ({ id, isMobile }: Props) => {
       mobileId: 'account-settings-mobile-button',
       desktopId: 'account-settings-desktop-button',
       name: 'Account settings',
-      path: Paths.Home,
+      path: Paths.AccountSettings,
       icon: <SettingsOutlinedIcon />,
     },
     {
