@@ -2,8 +2,9 @@ import Skeleton from '@mui/material/Skeleton';
 import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ridesClient } from '~/api/clients/ridesClient';
+import UsersService from '~/api/services/UsersService';
 import { Modal } from '~/components/Modal';
 import { PrimaryButton } from '~/components/PrimaryButton';
 import { Sizes } from '~/enums/StyleSettings';
@@ -12,6 +13,7 @@ import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
 import { SelectSeats } from '../SelectSeats';
 import { Wrapper, Date, DataWrapper, RideType, ButtonWrapper } from './UpperDataWrapper.style';
 interface Props {
+  userId: number | undefined;
   availableSeats: number | undefined;
   isLoading: boolean;
   date: string | undefined;
@@ -21,6 +23,7 @@ interface Props {
 }
 
 export const UpperDataWrapper = ({
+  userId,
   availableSeats,
   isLoading,
   date,
@@ -29,11 +32,21 @@ export const UpperDataWrapper = ({
   rideId,
 }: Props) => {
   const { authenticated, token } = useAuth();
+  const { data: userData } = UsersService.useGetMyId(token ? token : '');
   const [seatsToBook, setSeatsToBook] = useState<string>('');
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const [isOwnRide, setIsOwnRide] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData && userId) {
+      if (userData.user_id === userId) {
+        setIsOwnRide(true);
+      }
+    }
+  }, [userData, userId]);
 
   const bookRide = async () => {
     setOpenModal(false);
@@ -89,7 +102,7 @@ export const UpperDataWrapper = ({
             </Date>
             <RideType variant='h3'>{isPrivate ? 'Private ride' : 'Company ride'}</RideType>
           </DataWrapper>
-          {showButton && authenticated && availableSeats > 0 && (
+          {!isOwnRide && showButton && authenticated && availableSeats > 0 && (
             <ButtonWrapper>
               <SelectSeats
                 seatsToBook={seatsToBook}
