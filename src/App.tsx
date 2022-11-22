@@ -75,6 +75,9 @@ const History = lazy(() =>
 const UserVehicles = lazy(() =>
   import('~/pages/UserVehicles').then((module) => ({ default: module.UserVehicles })),
 );
+const AccountSettings = lazy(() =>
+  import('~/pages/AccountSettings').then((module) => ({ default: module.AccountSettings })),
+);
 const NotFound = lazy(() =>
   import('~/pages/NotFound').then((module) => ({ default: module.NotFound })),
 );
@@ -206,6 +209,10 @@ const App = () => {
                     role={Role.Private}
                   />
                 }
+              />
+              <Route
+                path={Paths.AccountSettings}
+                element={<AccountSettings />}
               />
               <Route
                 path={Paths.HistoryRides}

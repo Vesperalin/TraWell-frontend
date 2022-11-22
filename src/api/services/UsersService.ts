@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useQuery } from 'react-query';
 import { usersClient } from '~/api/clients';
 import { User } from '~/models/Users/User';
@@ -27,6 +28,31 @@ export default {
         const response = await usersClient.get<User>(`users/${userId}`, {
           headers: { Authorization: 'Bearer ' + token },
         });
+        return response.data;
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
+    );
+  },
+  useUpdateUserData: (
+    token: string,
+    userId: number,
+    facebook: string | undefined,
+    instagram: string | undefined,
+  ) => {
+    return useQuery<unknown, Error>(
+      [],
+      async () => {
+        const response = await usersClient.patch<unknown>(
+          `users/${userId}`,
+          { ...(facebook && { facebook: facebook }), ...(instagram && { instagram: instagram }) },
+          {
+            headers: { Authorization: 'Bearer ' + token },
+          },
+        );
         return response.data;
       },
       {
