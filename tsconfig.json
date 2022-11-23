@@ -53,6 +53,6 @@
       ],
     },
   },
-  "include": ["src"],
+  "include": ["src", "jest-setup.ts", "babel.config.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
