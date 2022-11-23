@@ -26,7 +26,7 @@ import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
 import { UserFunctionType } from '~/enums/UserFunctionType';
 import { useAuth } from '~/hooks/useAuth';
-import { calculateAge } from '~/utils/CalculateAge';
+import { calculateAge } from '~/utils/CalculateAge/CalculateAge';
 import { Comment } from './components/Comment';
 import { NoCommentsFound } from './components/NoCommentsFound';
 import { SocialMedia } from './components/SocialMedia';
