@@ -1,4 +1,4 @@
-import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit/TransformToDoubleDigit';
+import { transformToDoubleDigit } from '../TransformToDoubleDigit';
 
 export const transformToTime = (
   lengthInMinutes: number,
