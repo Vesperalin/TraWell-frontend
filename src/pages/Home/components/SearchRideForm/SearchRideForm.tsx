@@ -87,6 +87,7 @@ export const SearchRideForm = () => {
       </RowWrapper>
       <ButtonWrapper>
         <PrimaryButton
+          id='find-button'
           label='Find'
           onClick={handleButtonClick}
           desktopSize={Sizes.Large}
