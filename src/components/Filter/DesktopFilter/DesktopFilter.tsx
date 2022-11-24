@@ -24,7 +24,7 @@ interface Props {
 
 export const DesktopFilter = ({ filters }: Props) => {
   return (
-    <StyledBox>
+    <StyledBox id='desktop-wrapper'>
       {filters.map((filter) => {
         if (filter.type === TypeOfFilter.RadioButtonsFilter) {
           return (
