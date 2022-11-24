@@ -6,6 +6,8 @@ describe('CalculateAge', () => {
 
     const dateOfBirth = new Date(2000, 1, 27);
     expect(calculateAge(dateOfBirth)).toBe(22);
+
+    jest.clearAllMocks();
   });
 
   test('if age is not correct', () => {
@@ -13,6 +15,8 @@ describe('CalculateAge', () => {
 
     const dateOfBirth = new Date(1999, 11, 23);
     expect(calculateAge(dateOfBirth)).not.toBe(22);
+
+    jest.clearAllMocks();
   });
 });
 
