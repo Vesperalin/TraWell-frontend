@@ -141,7 +141,6 @@ export const OwnRideForDriver = () => {
           ) : (
             <AdditionalDataWrapper>
               <SeatsText variant='h4'>
-                Available seats:{' '}
                 <span>
                   {isHistorical ? historicalData?.available_seats : currentData?.available_seats}
                 </span>
