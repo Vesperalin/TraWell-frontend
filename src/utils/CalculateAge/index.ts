@@ -1,0 +1,1 @@
+export { calculateAge } from './CalculateAge';

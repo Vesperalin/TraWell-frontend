@@ -93,8 +93,10 @@ export const PartialRideEdit = () => {
   const submitHandler = () => {
     if (amountOfPeople === null || amountOfPeople.trim() === '') {
       setError('You have to choose amount of people');
+      window.scrollTo(0, 0);
     } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
+      window.scrollTo(0, 0);
     } else {
       refetchEditData().then(() => {
         setOpenModal(true);

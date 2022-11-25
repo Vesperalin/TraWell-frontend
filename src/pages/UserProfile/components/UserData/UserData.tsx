@@ -1,8 +1,5 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-// eslint-disable-next-line camelcase
-import jwt_decode from 'jwt-decode';
-import { useAuth } from '~/hooks/useAuth';
 import {
   StyledUserWrapper,
   AvatarAndReviewWrapper,
@@ -20,12 +17,10 @@ interface Props {
   altText: string;
   review: string;
   age: number;
+  name: string;
 }
 
-export const UserData = ({ src, altText, review, age }: Props) => {
-  const { token } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const decodedToken = jwt_decode<any>(token ? token : '');
+export const UserData = ({ src, altText, review, age, name }: Props) => {
   return (
     <Box>
       <StyledUserWrapper>
@@ -43,7 +38,7 @@ export const UserData = ({ src, altText, review, age }: Props) => {
           </ReviewWrapper>
         </AvatarAndReviewWrapper>
       </StyledUserWrapper>
-      <NameAndSurnameTypography variant='h3'>{decodedToken.name}</NameAndSurnameTypography>
+      <NameAndSurnameTypography variant='h3'>{name}</NameAndSurnameTypography>
       <AgeTypography variant='h5'>Age: {age}</AgeTypography>
     </Box>
   );

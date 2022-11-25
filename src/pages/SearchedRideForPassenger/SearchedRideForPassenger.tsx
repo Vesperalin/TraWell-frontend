@@ -100,6 +100,7 @@ export const SearchedRideForPassenger = () => {
         Back
       </BackButton>
       <UpperDataWrapper
+        userId={isHistorical ? historicalData?.driver.user_id : currentData?.driver.user_id}
         availableSeats={
           isHistorical ? historicalData?.available_seats : currentData?.available_seats
         }

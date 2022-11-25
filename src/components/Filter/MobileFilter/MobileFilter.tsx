@@ -53,7 +53,7 @@ export const MobileFilter = ({ filters }: Props) => {
         onClose={handleClose}
         className={modal}
       >
-        <FilterWrapper>
+        <FilterWrapper id='mobile-wrapper'>
           <CloseWrapper>
             <CloseIcon
               onClick={handleClose}

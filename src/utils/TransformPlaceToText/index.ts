@@ -1,0 +1,1 @@
+export { transformPlaceToText } from './TransformPlaceToText';
