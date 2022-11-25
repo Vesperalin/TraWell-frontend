@@ -169,6 +169,7 @@ export const UserProfile = () => {
                 altText={data.first_name + ' ' + data.last_name}
                 review={data.avg_rate}
                 age={age}
+                name={data.first_name + ' ' + data.last_name}
               />
               <SocialMedia
                 facebookLink={data.facebook}
