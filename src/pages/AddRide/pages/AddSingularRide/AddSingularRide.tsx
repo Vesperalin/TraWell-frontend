@@ -108,30 +108,43 @@ export const AddSingularRide = () => {
   const submitHandler = () => {
     if (placeFrom === null) {
       setError('You have to choose starting place - "Place from"');
+      window.scrollTo(0, 0);
     } else if (placeTo === null) {
       setError('You have to choose destination place - "Place to"');
+      window.scrollTo(0, 0);
     } else if (startDate === null) {
       setError('You have to choose start date');
+      window.scrollTo(0, 0);
     } else if (startTime === null) {
       setError('You have to choose start time');
+      window.scrollTo(0, 0);
     } else if (!startDate.isValid()) {
       setError('You have to choose valid date');
+      window.scrollTo(0, 0);
     } else if (!startTime.isValid()) {
       setError('You have to choose valid time');
+      window.scrollTo(0, 0);
     } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
       setError('You have to choose amount of people');
+      window.scrollTo(0, 0);
     } else if (hours === null || hours.trim() === '') {
       setError('You have to choose hours. If none, give: 0');
-    } else if (minutes === null || minutes.trim() === '') {
-      setError('You have to choose minutes. If none, give: 0');
+      window.scrollTo(0, 0);
+    } else if (minutes === null || minutes.trim() === '' || minutes.trim() === '0') {
+      setError('You have to choose minutes.');
+      window.scrollTo(0, 0);
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
+      window.scrollTo(0, 0);
     } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
+      window.scrollTo(0, 0);
     } else if (exactPlaceFrom.length > 100) {
       setError('"Exact place from" is too long. Maximum is 100 signs.');
+      window.scrollTo(0, 0);
     } else if (exactPlaceTo.length > 100) {
       setError('"Exact place to" is too long. Maximum is 100 signs.');
+      window.scrollTo(0, 0);
     } else {
       refetch().then(() => {
         setOpenModal(true);

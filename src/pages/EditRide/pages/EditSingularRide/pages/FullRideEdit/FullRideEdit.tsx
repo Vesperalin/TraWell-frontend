@@ -220,8 +220,8 @@ export const FullRideEdit = () => {
       setError('You have to choose amount of people');
     } else if (hours === null || hours.trim() === '') {
       setError('You have to choose hours. If none, give: 0');
-    } else if (minutes === null || minutes.trim() === '') {
-      setError('You have to choose minutes. If none, give: 0');
+    } else if (minutes === null || minutes.trim() === '' || minutes.trim() === '0') {
+      setError('You have to choose minutes.');
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
     } else if (checkIfHasRole(Role.Private) && vehicle === null) {
