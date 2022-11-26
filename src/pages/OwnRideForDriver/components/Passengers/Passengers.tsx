@@ -41,6 +41,7 @@ export const Passengers = ({ isLoading, passengers }: Props) => {
                       name={`${passenger.user.first_name}`}
                       imageSource={passenger.user.avatar}
                       reviewMean={Number(passenger.user.avg_rate)}
+                      className='user-element'
                     />
                   </AvatarWrapper>
                 );
