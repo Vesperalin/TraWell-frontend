@@ -48,6 +48,7 @@ export const RoadMap = ({
           >
             <Label variant='h5'>Don&apos;t add</Label>
             <AntSwitch
+              id='map-switch-button'
               checked={checked}
               onChange={handleChecked}
             />

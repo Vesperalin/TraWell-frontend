@@ -179,6 +179,7 @@ export const UserProfile = () => {
             {!isTheSame && (
               <AuthorizedElement>
                 <PrimaryButton
+                  id='add-review'
                   label='Add review'
                   onClick={onClickHandler}
                   desktopSize={Sizes.Medium}
