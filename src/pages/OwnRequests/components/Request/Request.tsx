@@ -103,7 +103,10 @@ export const Request = ({
             placeTo={placeTo}
             exactPlaceTo={exactPlaceTo}
           />
-          <StyledButton onClick={handleDetailsView}>
+          <StyledButton
+            onClick={handleDetailsView}
+            className='details-button'
+          >
             details
             <ArrowForwardIcon fontSize='small' />
           </StyledButton>
@@ -124,12 +127,14 @@ export const Request = ({
               requestStatus === RequestStatus.Pending) && (
               <>
                 <MediumPrimaryButton
+                  className='cancel-medium-button'
                   size='medium'
                   onClick={onCancel}
                 >
                   cancel
                 </MediumPrimaryButton>
                 <SmallPrimaryButton
+                  className='cancel-small-button'
                   size='small'
                   onClick={onCancel}
                 >

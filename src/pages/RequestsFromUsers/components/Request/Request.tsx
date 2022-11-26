@@ -134,7 +134,10 @@ export const Request = ({
             placeTo={placeTo}
             exactPlaceTo={exactPlaceTo}
           />
-          <StyledButton onClick={handleDetailsView}>
+          <StyledButton
+            onClick={handleDetailsView}
+            className='details-button'
+          >
             details
             <ArrowForwardIcon fontSize='small' />
           </StyledButton>
@@ -151,24 +154,28 @@ export const Request = ({
             <MediumSecondaryButton
               size='medium'
               onClick={() => setDeclineAcceptQuestionModal(true)}
+              className='decline-medium-button'
             >
               decline
             </MediumSecondaryButton>
             <SmallSecondaryButton
               size='small'
               onClick={() => setDeclineAcceptQuestionModal(true)}
+              className='decline-small-button'
             >
               decline
             </SmallSecondaryButton>
             <MediumPrimaryButton
               size='medium'
               onClick={() => setShowAcceptQuestionModal(true)}
+              className='accept-medium-button'
             >
               accept
             </MediumPrimaryButton>
             <SmallPrimaryButton
               size='small'
               onClick={() => setShowAcceptQuestionModal(true)}
+              className='accept-small-button'
             >
               accept
             </SmallPrimaryButton>

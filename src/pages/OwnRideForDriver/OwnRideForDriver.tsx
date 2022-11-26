@@ -173,6 +173,7 @@ export const OwnRideForDriver = () => {
       />
       {!isHistorical && (
         <PrimaryButton
+          id='edit-ride'
           label='Edit'
           onClick={handleEdit}
           desktopSize={Sizes.Medium}
