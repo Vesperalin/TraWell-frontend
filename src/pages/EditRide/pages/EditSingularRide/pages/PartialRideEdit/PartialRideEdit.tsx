@@ -82,7 +82,7 @@ export const PartialRideEdit = () => {
 
   useEffect(() => {
     if (rideData) {
-      setAmountOfPeople(rideData.available_seats.toString());
+      setAmountOfPeople(rideData.seats.toString());
       setVehicle(rideData.vehicle ? rideData.vehicle.vehicle_id : null);
       setPassengerAcceptance(rideData.automatic_confirm ? 'automatic' : 'manual');
       setDescription(rideData.description);

@@ -170,7 +170,7 @@ export const FullRideEdit = () => {
       setExactPlaceTo(rideData.area_to);
       setStartDate(dayjs(rideData.start_date));
       setStartTime(dayjs(rideData.start_date));
-      setAmountOfPeople(rideData.available_seats.toString());
+      setAmountOfPeople(rideData.seats.toString());
       setHours(rideData.duration.hours.toString());
       setMinutes(rideData.duration.minutes.toString());
       setPrice(rideData.price);
