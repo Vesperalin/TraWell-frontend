@@ -3,10 +3,12 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ridesClient } from '~/api/clients/ridesClient';
 import UsersService from '~/api/services/UsersService';
 import { Modal } from '~/components/Modal';
 import { PrimaryButton } from '~/components/PrimaryButton';
+import { Paths } from '~/enums/Paths';
 import { Sizes } from '~/enums/StyleSettings';
 import { useAuth } from '~/hooks/useAuth';
 import { transformToDoubleDigit } from '~/utils/TransformToDoubleDigit';
@@ -31,6 +33,7 @@ export const UpperDataWrapper = ({
   showButton,
   rideId,
 }: Props) => {
+  const navigate = useNavigate();
   const { authenticated, token } = useAuth();
   const { data: userData } = UsersService.useGetMyId(token ? token : '');
   const [seatsToBook, setSeatsToBook] = useState<string>('');
@@ -65,7 +68,6 @@ export const UpperDataWrapper = ({
       .then((data) => {
         setShowInfoModal(true);
         setText(data as string);
-        // refetchData();
       })
       .catch((error) => {
         setShowInfoModal(true);
@@ -139,9 +141,9 @@ export const UpperDataWrapper = ({
             title='Book ride'
             text={text}
             handleOpen={() => setShowInfoModal(true)}
-            handleClose={() => setShowInfoModal(false)}
+            handleClose={() => navigate(Paths.Home)}
             primaryButtonText='Okay'
-            primaryButtonAction={() => setShowInfoModal(false)}
+            primaryButtonAction={() => navigate(Paths.Home)}
             showButtonForOpeningModal={false}
           />
         )}
