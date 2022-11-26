@@ -26,7 +26,6 @@ export const SearchedRideForPassenger = () => {
   }, [state]);
 
   useEffect(() => {
-    console.log(pathname.includes('searched-historical') ? true : false);
     setIsHistorical(pathname.includes('searched-historical') ? true : false);
   }, [pathname]);
 
