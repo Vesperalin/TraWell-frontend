@@ -661,7 +661,7 @@ export default {
     return useQuery<SingleRideInRecurrentRide[], Error>(
       ['nextRides', id, startDate],
       async () => {
-        const date = startDate ? `?single_start_date=${startDate}` : '';
+        const date = startDate !== null ? `?single_start_date=${startDate}` : '';
 
         const response = await ridesClient.get<SingleRideInRecurrentRide[]>(
           `recurrent_rides/${id}/single_rides/${date}`,

@@ -17,7 +17,7 @@ export const TimeFilter = ({ filter }: Props) => {
   const { timePicker } = useStyles(theme);
 
   const handleTimeChange = (newTime: Dayjs | null) => {
-    if (newTime?.isValid()) {
+    if (newTime?.isValid() || newTime == null) {
       setValue(newTime);
     }
   };
