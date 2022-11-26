@@ -23,7 +23,7 @@ export const PrivateRoute = ({ element, role }: Props) => {
       }
     };
     check();
-    console.log('');
+    console.log();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
