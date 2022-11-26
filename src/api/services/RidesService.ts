@@ -519,7 +519,7 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && seats && vehicle) {
+        if (token && seats) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
 
           const response = await ridesClient.patch<unknown>(
@@ -555,7 +555,7 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && seats && vehicle) {
+        if (token && seats) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
 
           const response = await ridesClient.patch<unknown>(
