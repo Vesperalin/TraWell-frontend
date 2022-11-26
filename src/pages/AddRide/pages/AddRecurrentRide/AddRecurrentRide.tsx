@@ -141,8 +141,17 @@ export const AddRecurrentRide = () => {
     } else if (recurrence.duration.hours === null) {
       setError('You have to choose hours. If none, give: 0');
       window.scrollTo(0, 0);
-    } else if (recurrence.duration.minutes === null || recurrence.duration.minutes === 0) {
-      setError('You have to choose minutes.');
+    } else if (recurrence.duration.minutes === null) {
+      setError('You have to choose minutes. If none, give: 0');
+      window.scrollTo(0, 0);
+    } else if (recurrence.duration.hours === 0 && recurrence.duration.minutes === 0) {
+      setError('You have to choose duration of ride.');
+      window.scrollTo(0, 0);
+    } else if (recurrence.duration.minutes > 59) {
+      setError('Minutes can not be greater than 59 minutes.');
+      window.scrollTo(0, 0);
+    } else if (recurrence.duration.hours > 1000) {
+      setError('Hours can not be greater than 1000 hours.');
       window.scrollTo(0, 0);
     } else {
       refetch().then(() => {
