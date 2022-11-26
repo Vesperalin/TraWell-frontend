@@ -107,7 +107,6 @@ export const Request = ({
       .then((data) => {
         setShowInfoModal(true);
         setText(data as string);
-        refetchData();
       })
       .catch((error) => {
         setShowInfoModal(true);
@@ -210,9 +209,15 @@ export const Request = ({
           title='Request decision'
           text={text}
           handleOpen={() => setShowInfoModal(true)}
-          handleClose={() => setShowInfoModal(false)}
+          handleClose={() => {
+            setShowInfoModal(false);
+            refetchData();
+          }}
           primaryButtonText='Okay'
-          primaryButtonAction={() => setShowInfoModal(false)}
+          primaryButtonAction={() => {
+            setShowInfoModal(false);
+            refetchData();
+          }}
           showButtonForOpeningModal={false}
         />
       )}
