@@ -245,7 +245,16 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && placeFrom && placeTo && startDate && price && seats && hours && minutes) {
+        if (
+          token &&
+          placeFrom &&
+          placeTo &&
+          startDate &&
+          price &&
+          seats &&
+          hours !== null &&
+          minutes !== null
+        ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
 
@@ -341,9 +350,7 @@ export default {
           price &&
           seats &&
           hours !== null &&
-          hours >= 0 &&
-          minutes !== null &&
-          minutes >= 0
+          minutes !== null
         ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
@@ -443,9 +450,8 @@ export default {
           startDate &&
           price &&
           seats &&
-          vehicle &&
-          hours &&
-          minutes
+          hours !== null &&
+          minutes !== null
         ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
