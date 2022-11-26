@@ -237,31 +237,6 @@ export const FullRideEdit = () => {
     }
   };
 
-  const chooseVehicle: ReactNode = (
-    <>
-      <Label variant='body2'>Vehicle</Label>
-      <ChooseVehicle
-        value={vehicle}
-        setValue={setVehicle}
-      />
-    </>
-  );
-
-  const acceptance: ReactNode = (
-    <>
-      <Label variant='body2'>Passenger acceptance</Label>
-      <RadioGroup
-        id='passenger-acceptance-buttons'
-        options={[
-          { value: 'automatic', label: 'Automatic' },
-          { value: 'manual', label: 'Manual' },
-        ]}
-        defaultValue='automatic'
-        setValue={setPassengerAcceptance}
-      />
-    </>
-  );
-
   if (isLoadingRideData) {
     return <Loader />;
   } else if (isErrorRideData) {
@@ -274,7 +249,32 @@ export const FullRideEdit = () => {
         }}
       />
     );
-  } else {
+  } else if (rideData) {
+    const chooseVehicle: ReactNode = (
+      <>
+        <Label variant='body2'>Vehicle</Label>
+        <ChooseVehicle
+          value={vehicle}
+          setValue={setVehicle}
+        />
+      </>
+    );
+
+    const acceptance: ReactNode = (
+      <>
+        <Label variant='body2'>Passenger acceptance</Label>
+        <RadioGroup
+          id='passenger-acceptance-buttons'
+          options={[
+            { value: 'automatic', label: 'Automatic' },
+            { value: 'manual', label: 'Manual' },
+          ]}
+          defaultValue={rideData.automatic_confirm ? 'automatic' : 'manual'}
+          setValue={setPassengerAcceptance}
+        />
+      </>
+    );
+
     return (
       <Form>
         <Title variant='h3'>Edit a ride</Title>
@@ -408,5 +408,7 @@ export const FullRideEdit = () => {
         />
       </Form>
     );
+  } else {
+    return <></>;
   }
 };
