@@ -1,4 +1,4 @@
 export enum UserFunctionType {
   Driver = 'Driver',
-  Rider = 'Rider',
+  Passenger = 'Passenger',
 }

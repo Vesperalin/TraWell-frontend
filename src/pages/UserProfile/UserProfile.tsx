@@ -220,7 +220,7 @@ export const UserProfile = () => {
                         asWho={
                           comment.was_rated_driver
                             ? UserFunctionType.Driver
-                            : UserFunctionType.Rider
+                            : UserFunctionType.Passenger
                         }
                         description={comment.description}
                         givenStars={comment.stars}
