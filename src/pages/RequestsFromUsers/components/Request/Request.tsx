@@ -59,7 +59,8 @@ export const Request = ({
   const [showAcceptQuestionModal, setShowAcceptQuestionModal] = useState<boolean>(false);
   const [showDeclineQuestionModal, setDeclineAcceptQuestionModal] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
-  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const [showInfoModalDecline, setShowInfoModalDecline] = useState<boolean>(false);
+  const [showInfoModalAccept, setShowInfoModalAccept] = useState<boolean>(false);
 
   const onAccept = async () => {
     setShowAcceptQuestionModal(false);
@@ -76,18 +77,22 @@ export const Request = ({
         return response.data;
       })
       .then((data) => {
-        setShowInfoModal(true);
-        setText(data as string);
-        if (currentPage === 1) {
-          refetchData();
-        } else {
-          setCurrentPage(1);
-        }
+        setText('Accepted request successfully');
       })
       .catch((error) => {
-        setShowInfoModal(true);
         setText(error.request.response.slice(1, -1));
       });
+
+    setShowInfoModalAccept(true);
+  };
+
+  const close = () => {
+    if (currentPage === 1) {
+      refetchData();
+    } else {
+      setCurrentPage(1);
+    }
+    setShowInfoModalAccept(false);
   };
 
   const onDecline = async () => {
@@ -105,11 +110,11 @@ export const Request = ({
         return response.data;
       })
       .then((data) => {
-        setShowInfoModal(true);
+        setShowInfoModalDecline(true);
         setText(data as string);
       })
       .catch((error) => {
-        setShowInfoModal(true);
+        setShowInfoModalDecline(true);
         setText(error.request.response.slice(1, -1));
       });
   };
@@ -210,21 +215,33 @@ export const Request = ({
           secondaryButtonAction={() => setDeclineAcceptQuestionModal(false)}
         />
       )}
-      {showInfoModal && (
+      {showInfoModalDecline && (
         <Modal
-          open={showInfoModal}
-          title='Request decision'
+          open={showInfoModalDecline}
+          title='Request declination'
           text={text}
-          handleOpen={() => setShowInfoModal(true)}
+          handleOpen={() => setShowInfoModalDecline(true)}
           handleClose={() => {
-            setShowInfoModal(false);
+            setShowInfoModalDecline(false);
             refetchData();
           }}
           primaryButtonText='Okay'
           primaryButtonAction={() => {
-            setShowInfoModal(false);
+            setShowInfoModalDecline(false);
             refetchData();
           }}
+          showButtonForOpeningModal={false}
+        />
+      )}
+      {showInfoModalAccept && (
+        <Modal
+          open={showInfoModalAccept}
+          title='Request acceptance'
+          text={text}
+          handleOpen={() => setShowInfoModalAccept(true)}
+          handleClose={close}
+          primaryButtonText='Okay'
+          primaryButtonAction={close}
           showButtonForOpeningModal={false}
         />
       )}
