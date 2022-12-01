@@ -113,6 +113,7 @@ export const UpperDataWrapper = ({
                 setSeatsToBook={setSeatsToBook}
               />
               <PrimaryButton
+                id='book-ride-button'
                 label='Book ride'
                 onClick={() => setOpenModal(true)}
                 desktopSize={Sizes.Medium}

@@ -45,7 +45,12 @@ const CustomModal = ({
         id='modal'
       >
         <StyledBox>
-          <StyledHeader variant='h4'>{title}</StyledHeader>
+          <StyledHeader
+            variant='h4'
+            id='modal-title'
+          >
+            {title}
+          </StyledHeader>
           <Typography variant='h5'>{text}</Typography>
           <ButtonsStyledBox>
             {secondaryButtonText && secondaryButtonAction && (
