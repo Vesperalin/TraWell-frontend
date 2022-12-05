@@ -2,7 +2,7 @@ import Keycloak from 'keycloak-js';
 
 const keycloakConfig = {
   realm: 'TraWell',
-  url: 'http://localhost:8403/auth',
+  url: 'http://trawell.westeurope.cloudapp.azure.com:8403/auth',
   clientId: 'react',
   'ssl-required': 'external',
   resource: 'react',
