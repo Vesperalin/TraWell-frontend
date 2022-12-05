@@ -18,7 +18,8 @@ const Dropdown = ({ options, label, onChange, value }: Props) => {
     if (options.length > 0) {
       onChange(options[0].key);
     }
-  }, [onChange, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <DropdownBox component='form'>
