@@ -71,7 +71,8 @@ export const AddComment = () => {
 
   useEffect(() => {
     if (dataNotRatedRides && ride !== null) {
-      const tempRide = dataNotRatedRides.filter((ride) => ride.ride_id === ride.ride_id);
+      const tempRide = dataNotRatedRides.filter((rideObj) => rideObj.ride_id === ride);
+      console.log(tempRide);
       if (tempRide.length > 0) {
         setUserType(tempRide[0].was_driver ? 'driver' : 'passenger');
       }
