@@ -141,6 +141,7 @@ export const OwnRideForDriver = () => {
           ) : (
             <AdditionalDataWrapper>
               <SeatsText variant='h4'>
+                Available seats:
                 <span>
                   {isHistorical ? historicalData?.available_seats : currentData?.available_seats}
                 </span>
@@ -172,6 +173,7 @@ export const OwnRideForDriver = () => {
       />
       {!isHistorical && (
         <PrimaryButton
+          id='edit-ride'
           label='Edit'
           onClick={handleEdit}
           desktopSize={Sizes.Medium}

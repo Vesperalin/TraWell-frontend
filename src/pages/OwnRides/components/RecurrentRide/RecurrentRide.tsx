@@ -97,15 +97,24 @@ export const RecurrentRide = ({
           />
         </div>
         <InnerWrapper>
-          <StyledEditRideButton onClick={handleEdit}>
+          <StyledEditRideButton
+            onClick={handleEdit}
+            className='edit-button'
+          >
             <span>edit</span>
             <ArrowForwardIcon fontSize='small' />
           </StyledEditRideButton>
-          <StyledDeleteRideButton onClick={() => setShowQuestionModal(true)}>
+          <StyledDeleteRideButton
+            onClick={() => setShowQuestionModal(true)}
+            className='delete-button'
+          >
             <span>delete</span>
             <ArrowForwardIcon fontSize='small' />
           </StyledDeleteRideButton>
-          <StyledDetailsRideButton onClick={handleOwnRideDetails}>
+          <StyledDetailsRideButton
+            onClick={handleOwnRideDetails}
+            className='details-button'
+          >
             <span>details</span>
             <ArrowForwardIcon fontSize='small' />
           </StyledDetailsRideButton>

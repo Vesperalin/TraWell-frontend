@@ -106,24 +106,36 @@ export const SingularRide = ({
         </div>
         <InnerWrapper editable={editable}>
           {editable && (
-            <StyledEditRideButton onClick={handleEdit}>
+            <StyledEditRideButton
+              onClick={handleEdit}
+              className='edit-button'
+            >
               <span>edit</span>
               <ArrowForwardIcon fontSize='small' />
             </StyledEditRideButton>
           )}
           {editable && (
-            <StyledDeleteRideButton onClick={() => setShowQuestionModal(true)}>
+            <StyledDeleteRideButton
+              onClick={() => setShowQuestionModal(true)}
+              className='delete-button'
+            >
               <span>delete</span>
               <ArrowForwardIcon fontSize='small' />
             </StyledDeleteRideButton>
           )}
           {editable ? (
-            <StyledDetailsRideButton onClick={handleOwnRideDetails}>
+            <StyledDetailsRideButton
+              onClick={handleOwnRideDetails}
+              className='details-own-rides-button'
+            >
               <span>details</span>
               <ArrowForwardIcon fontSize='small' />
             </StyledDetailsRideButton>
           ) : (
-            <StyledDetailsRideButton onClick={handleOtherRideDetails}>
+            <StyledDetailsRideButton
+              onClick={handleOtherRideDetails}
+              className='details-button'
+            >
               <span>details</span>
               <ArrowForwardIcon fontSize='small' />
             </StyledDetailsRideButton>

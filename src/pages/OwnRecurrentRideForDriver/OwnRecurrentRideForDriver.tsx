@@ -157,6 +157,7 @@ export const OwnRecurrentRideForDriver = () => {
       />
       {!isHistorical && (
         <PrimaryButton
+          id='edit-recurrent-ride'
           label='Edit'
           onClick={handleEdit}
           desktopSize={Sizes.Medium}

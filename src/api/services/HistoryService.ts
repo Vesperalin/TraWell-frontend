@@ -46,12 +46,18 @@ export default {
     );
   },
   useRideForPassenger: (rideId: number) => {
-    return useQuery<RideForPassengerResponse, Error>(['rideForPassenger', rideId], async () => {
-      const response = await historyClient.get<RideForPassengerResponse>(
-        `history_rides/${rideId}/`,
-      );
-      return response.data;
-    });
+    return useQuery<RideForPassengerResponse, Error>(
+      ['rideForPassenger', rideId],
+      async () => {
+        const response = await historyClient.get<RideForPassengerResponse>(
+          `history_rides/${rideId}/`,
+        );
+        return response.data;
+      },
+      {
+        refetchOnWindowFocus: false,
+      },
+    );
   },
   useOwnRecurrentRides: (
     page: number,

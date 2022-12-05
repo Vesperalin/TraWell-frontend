@@ -245,7 +245,16 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && placeFrom && placeTo && startDate && price && seats && hours && minutes) {
+        if (
+          token &&
+          placeFrom &&
+          placeTo &&
+          startDate &&
+          price &&
+          seats &&
+          hours !== null &&
+          minutes !== null
+        ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
 
@@ -341,9 +350,7 @@ export default {
           price &&
           seats &&
           hours !== null &&
-          hours >= 0 &&
-          minutes !== null &&
-          minutes >= 0
+          minutes !== null
         ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
@@ -443,9 +450,8 @@ export default {
           startDate &&
           price &&
           seats &&
-          vehicle &&
-          hours &&
-          minutes
+          hours !== null &&
+          minutes !== null
         ) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
           const points: { lat: number; lng: number; sequence_no: number }[] = [];
@@ -519,7 +525,7 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && seats && vehicle) {
+        if (token && seats) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
 
           const response = await ridesClient.patch<unknown>(
@@ -555,7 +561,7 @@ export default {
     return useQuery<unknown, Error>(
       [],
       async () => {
-        if (token && seats && vehicle) {
+        if (token && seats) {
           const automaticConfirm = passengerAcceptance === 'automatic' ? true : false;
 
           const response = await ridesClient.patch<unknown>(
@@ -655,7 +661,7 @@ export default {
     return useQuery<SingleRideInRecurrentRide[], Error>(
       ['nextRides', id, startDate],
       async () => {
-        const date = startDate ? `?single_start_date=${startDate}` : '';
+        const date = startDate !== null ? `?single_start_date=${startDate}` : '';
 
         const response = await ridesClient.get<SingleRideInRecurrentRide[]>(
           `recurrent_rides/${id}/single_rides/${date}`,

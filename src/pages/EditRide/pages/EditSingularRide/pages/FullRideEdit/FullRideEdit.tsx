@@ -170,7 +170,7 @@ export const FullRideEdit = () => {
       setExactPlaceTo(rideData.area_to);
       setStartDate(dayjs(rideData.start_date));
       setStartTime(dayjs(rideData.start_date));
-      setAmountOfPeople(rideData.available_seats.toString());
+      setAmountOfPeople(rideData.seats.toString());
       setHours(rideData.duration.hours.toString());
       setMinutes(rideData.duration.minutes.toString());
       setPrice(rideData.price);
@@ -206,61 +206,58 @@ export const FullRideEdit = () => {
   const submitHandler = () => {
     if (placeFrom === null) {
       setError('You have to choose starting place - "Place from"');
+      window.scrollTo(0, 0);
     } else if (placeTo === null) {
       setError('You have to choose destination place - "Place to"');
+      window.scrollTo(0, 0);
     } else if (startDate === null) {
       setError('You have to choose start date');
+      window.scrollTo(0, 0);
     } else if (startTime === null) {
       setError('You have to choose start time');
+      window.scrollTo(0, 0);
     } else if (!startDate.isValid()) {
       setError('You have to choose valid date');
+      window.scrollTo(0, 0);
     } else if (!startTime.isValid()) {
       setError('You have to choose valid time');
+      window.scrollTo(0, 0);
     } else if (amountOfPeople === null || amountOfPeople.trim() === '') {
       setError('You have to choose amount of people');
+      window.scrollTo(0, 0);
     } else if (hours === null || hours.trim() === '') {
-      setError('You have to choose hours. If none, give: 0');
-    } else if (minutes === null || minutes.trim() === '' || minutes.trim() === '0') {
-      setError('You have to choose minutes.');
+      setError('You have to choose hours. If none, give: 0.');
+      window.scrollTo(0, 0);
+    } else if (minutes === null || minutes.trim() === '') {
+      setError('You have to choose minutes. If none, give: 0.');
+      window.scrollTo(0, 0);
+    } else if (hours === '0' && minutes === '0') {
+      setError('You have to choose duration of ride.');
+      window.scrollTo(0, 0);
+    } else if (Number(minutes) > 59) {
+      setError('Minutes can not be greater than 59 minutes.');
+      window.scrollTo(0, 0);
+    } else if (Number(hours) > 1000) {
+      setError('Hours can not be greater than 1000 hours.');
+      window.scrollTo(0, 0);
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');
+      window.scrollTo(0, 0);
     } else if (checkIfHasRole(Role.Private) && vehicle === null) {
       setError('You have to choose vehicle');
+      window.scrollTo(0, 0);
     } else if (exactPlaceFrom.length > 100) {
       setError('"Exact place from" is too long. Maximum is 100 signs.');
+      window.scrollTo(0, 0);
     } else if (exactPlaceTo.length > 100) {
       setError('"Exact place to" is too long. Maximum is 100 signs.');
+      window.scrollTo(0, 0);
     } else {
       refetchEditData().then(() => {
         setOpenModal(true);
       });
     }
   };
-
-  const chooseVehicle: ReactNode = (
-    <>
-      <Label variant='body2'>Vehicle</Label>
-      <ChooseVehicle
-        value={vehicle}
-        setValue={setVehicle}
-      />
-    </>
-  );
-
-  const acceptance: ReactNode = (
-    <>
-      <Label variant='body2'>Passenger acceptance</Label>
-      <RadioGroup
-        id='passenger-acceptance-buttons'
-        options={[
-          { value: 'automatic', label: 'Automatic' },
-          { value: 'manual', label: 'Manual' },
-        ]}
-        defaultValue='automatic'
-        setValue={setPassengerAcceptance}
-      />
-    </>
-  );
 
   if (isLoadingRideData) {
     return <Loader />;
@@ -274,7 +271,32 @@ export const FullRideEdit = () => {
         }}
       />
     );
-  } else {
+  } else if (rideData) {
+    const chooseVehicle: ReactNode = (
+      <>
+        <Label variant='body2'>Vehicle</Label>
+        <ChooseVehicle
+          value={vehicle}
+          setValue={setVehicle}
+        />
+      </>
+    );
+
+    const acceptance: ReactNode = (
+      <>
+        <Label variant='body2'>Passenger acceptance</Label>
+        <RadioGroup
+          id='passenger-acceptance-buttons'
+          options={[
+            { value: 'automatic', label: 'Automatic' },
+            { value: 'manual', label: 'Manual' },
+          ]}
+          defaultValue={rideData.automatic_confirm ? 'automatic' : 'manual'}
+          setValue={setPassengerAcceptance}
+        />
+      </>
+    );
+
     return (
       <Form>
         <Title variant='h3'>Edit a ride</Title>
@@ -408,5 +430,7 @@ export const FullRideEdit = () => {
         />
       </Form>
     );
+  } else {
+    return <></>;
   }
 };

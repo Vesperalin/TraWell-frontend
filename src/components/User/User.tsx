@@ -10,6 +10,7 @@ export interface Props {
   name: string;
   imageSource: string;
   reviewMean: number;
+  className?: string;
 }
 
 export const User = ({
@@ -19,6 +20,7 @@ export const User = ({
   name,
   imageSource,
   reviewMean,
+  className,
 }: Props) => {
   const navigate = useNavigate();
 
@@ -32,6 +34,7 @@ export const User = ({
       isAvatarFirstDesktop={isAvatarFirstDesktop}
       isAvatarFirstMobile={isAvatarFirstMobile}
       onClick={handleUserClick}
+      className={className}
     >
       <AvatarWrapper>
         <Avatar

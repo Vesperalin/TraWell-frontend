@@ -164,7 +164,7 @@ export const RequestsFromUsers = () => {
                   setCurrentPage={setCurrentPage}
                   requestId={result.id}
                   rideId={result.ride.ride_id}
-                  userId={result.ride.driver.user_id}
+                  userId={result.user ? result.user.user_id : -1}
                   startDate={dayjs(result.ride.start_date)}
                   placeFrom={result.ride.city_from.name}
                   exactPlaceFrom={result.ride.area_from}

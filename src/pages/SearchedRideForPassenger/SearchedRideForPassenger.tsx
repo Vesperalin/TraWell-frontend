@@ -1,5 +1,5 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import HistoryService from '~/api/services/HistoryService';
 import RidesService from '~/api/services/RidesService';
@@ -16,9 +16,18 @@ export const SearchedRideForPassenger = () => {
   const navigate = useNavigate();
   const { rideId } = useParams();
   const { state, pathname } = useLocation();
-  const showButton =
-    state == null || (state !== null && (state.showButton as boolean)) ? true : false;
-  const isHistorical = pathname.includes('searched-historical') ? true : false;
+  const [showButton, setShowButton] = useState<boolean>(true);
+  const [isHistorical, setIsHistorical] = useState<boolean>(false);
+
+  useEffect(() => {
+    setShowButton(
+      state == null || (state !== null && (state.showButton as boolean)) ? true : false,
+    );
+  }, [state]);
+
+  useEffect(() => {
+    setIsHistorical(pathname.includes('searched-historical') ? true : false);
+  }, [pathname]);
 
   const {
     data: currentData,

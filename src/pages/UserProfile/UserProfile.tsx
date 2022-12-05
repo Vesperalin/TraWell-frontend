@@ -179,6 +179,7 @@ export const UserProfile = () => {
             {!isTheSame && (
               <AuthorizedElement>
                 <PrimaryButton
+                  id='add-review'
                   label='Add review'
                   onClick={onClickHandler}
                   desktopSize={Sizes.Medium}
@@ -219,7 +220,7 @@ export const UserProfile = () => {
                         asWho={
                           comment.was_rated_driver
                             ? UserFunctionType.Driver
-                            : UserFunctionType.Rider
+                            : UserFunctionType.Passenger
                         }
                         description={comment.description}
                         givenStars={comment.stars}

@@ -128,10 +128,19 @@ export const AddSingularRide = () => {
       setError('You have to choose amount of people');
       window.scrollTo(0, 0);
     } else if (hours === null || hours.trim() === '') {
-      setError('You have to choose hours. If none, give: 0');
+      setError('You have to choose hours. If none, give: 0.');
       window.scrollTo(0, 0);
-    } else if (minutes === null || minutes.trim() === '' || minutes.trim() === '0') {
-      setError('You have to choose minutes.');
+    } else if (minutes === null || minutes.trim() === '') {
+      setError('You have to choose minutes. If none, give: 0.');
+      window.scrollTo(0, 0);
+    } else if (hours === '0' && minutes === '0') {
+      setError('You have to choose duration of ride.');
+      window.scrollTo(0, 0);
+    } else if (Number(minutes) > 59) {
+      setError('Minutes can not be greater than 59 minutes.');
+      window.scrollTo(0, 0);
+    } else if (Number(hours) > 1000) {
+      setError('Hours can not be greater than 1000 hours.');
       window.scrollTo(0, 0);
     } else if (price === null || price.trim() === '') {
       setError('You have to choose price per passenger');

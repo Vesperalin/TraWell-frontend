@@ -37,6 +37,7 @@ export const Description = ({ value, setValue, label, checked, setChecked }: Pro
         >
           <Label variant='h5'>Don&apos;t add</Label>
           <AntSwitch
+            id='description-switch-button'
             checked={checked}
             onChange={handleChecked}
           />
