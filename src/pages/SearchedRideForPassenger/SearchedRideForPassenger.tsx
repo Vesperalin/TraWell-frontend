@@ -17,7 +17,7 @@ export const SearchedRideForPassenger = () => {
   const { rideId } = useParams();
   const { state, pathname } = useLocation();
   const [showButton, setShowButton] = useState<boolean>(true);
-  const [isHistorical, setIsHistorical] = useState<boolean>(false);
+  const [isHistorical, setIsHistorical] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     setShowButton(
@@ -51,7 +51,7 @@ export const SearchedRideForPassenger = () => {
     if (rideId) {
       if (isHistorical) {
         historicalRefetch();
-      } else {
+      } else if (isHistorical === false) {
         currentRefetch();
       }
     }
