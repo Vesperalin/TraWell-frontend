@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const StyledBox = styled(Box)({
   flexGrow: '1',
@@ -10,11 +10,14 @@ export const StyledBox = styled(Box)({
   justifyContent: 'flex-end',
 });
 
-export const StyledLink = styled(Link)({
+export const StyledNavLink = styled(NavLink)(({ theme }) => ({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
-});
+  '&.active': {
+    backgroundColor: theme.palette.common.dimmedWhite,
+  },
+}));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   textTransform: 'uppercase',
