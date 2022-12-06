@@ -78,7 +78,7 @@ export default {
         return response.data;
       },
       {
-        enabled: true,
+        enabled: false,
         refetchOnWindowFocus: false,
       },
     );
