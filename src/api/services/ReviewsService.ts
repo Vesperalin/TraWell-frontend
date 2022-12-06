@@ -96,6 +96,8 @@ export default {
       {
         enabled: false,
         refetchOnWindowFocus: false,
+        retry: false,
+        cacheTime: 0,
       },
     );
   },
