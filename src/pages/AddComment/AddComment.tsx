@@ -175,7 +175,7 @@ export const AddComment = () => {
           handleOpen={() => setOpenModal(true)}
           handleClose={() => navigate(Paths.Home)}
           primaryButtonText='Okay'
-          primaryButtonAction={() => navigate(Paths.Home)}
+          primaryButtonAction={() => navigate(`/profile/${userId}/1`)}
         />
       </>
     );

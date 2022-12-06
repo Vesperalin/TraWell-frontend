@@ -1,5 +1,5 @@
 import { Paths } from '~/enums/Paths';
-import { StyledBox, StyledLink, StyledTypography } from './DesktopMenu.style';
+import { StyledBox, StyledNavLink, StyledTypography } from './DesktopMenu.style';
 
 interface Props {
   pages: {
@@ -14,14 +14,15 @@ export const DesktopMenu = ({ pages }: Props) => {
   return (
     <StyledBox>
       {pages.map((page) => (
-        <StyledLink
+        <StyledNavLink
           id={page.desktopId}
           style={{ textDecoration: 'none' }}
           key={page.name}
           to={page.path}
+          className={(isActive) => (isActive ? 'active' : 'inactive')}
         >
           <StyledTypography variant='subtitle2'>{page.name}</StyledTypography>
-        </StyledLink>
+        </StyledNavLink>
       ))}
     </StyledBox>
   );

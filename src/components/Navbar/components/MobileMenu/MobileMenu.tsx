@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Paths } from '~/enums/Paths';
-import { StyledMenuItem, StyledIconButton } from './MobileMenu.style';
+import { StyledMenuItem, StyledIconButton, StyledNavLink } from './MobileMenu.style';
 
 interface Props {
   pages: {
@@ -55,16 +54,17 @@ export const MobileMenu = ({ pages }: Props) => {
         color='#47B5FF'
       >
         {pages.map((page) => (
-          <Link
+          <StyledNavLink
             id={page.mobileId}
             style={{ textDecoration: 'none' }}
             key={page.name}
             to={page.path}
+            className={(isActive) => (isActive ? 'active' : 'inactive')}
           >
             <StyledMenuItem onClick={handleCloseNavMenu}>
               <Typography variant='subtitle2'>{page.name}</Typography>
             </StyledMenuItem>
-          </Link>
+          </StyledNavLink>
         ))}
       </Menu>
     </Box>
